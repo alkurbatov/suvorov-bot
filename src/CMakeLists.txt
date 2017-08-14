@@ -1,14 +1,12 @@
 # All the source files for the bot.
 file(GLOB BOT_SOURCES "*.cpp" "*.h")
 
-include_directories("${SC2Api_INCLUDE_DIRS}")
+include_directories(SYSTEM "${SC2Api_INCLUDE_DIRS}")
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
-
-if (APPLE)
-    # Supress annoying 'deprecated' warnings caused by sc2api headers.
-    set(CMAKE_CXX_FLAGS "-Wno-deprecated")
-endif ()
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic -Weffc++ -Woverloaded-virtual \
+-Wctor-dtor-privacy -Wnon-virtual-dtor -Wold-style-cast -Wconversion \
+-Wsign-conversion -Winit-self -Wunreachable-code \
+")
 
 # Create the executable.
 add_executable(Suvorov ${BOT_SOURCES})
