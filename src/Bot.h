@@ -100,10 +100,10 @@ void TryBuildStructure(sc2::ABILITY_ID ability_type_for_structure) {
 
 void TryBuildSupplyDepot() {
     const sc2::ObservationInterface* observation = Observation();
-    unsigned prediction = CountUnitType(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT) * 2 + 2;
+    size_t prediction = CountUnitType(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT) * 2 + 2;
 
     // If we are not supply capped, don't build a supply depot.
-    if (observation->GetFoodUsed() <= observation->GetFoodCap() - prediction)
+    if (observation->GetFoodUsed() <= observation->GetFoodCap() - static_cast<int32_t>(prediction))
         return;
 
     // Try and build a depot. Find a random SCV and give it the order.
@@ -132,8 +132,6 @@ size_t CountUnitType(sc2::UNIT_TYPEID unit_type) {
 }
 
 void TryBuildBarracks() {
-    const sc2::ObservationInterface* observation = Observation();
-
     if (CountUnitType(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT) < 1) {
         return;
     }
