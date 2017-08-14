@@ -1,0 +1,9 @@
+# Cmake build routine
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+
+# Build output
+bin/
+

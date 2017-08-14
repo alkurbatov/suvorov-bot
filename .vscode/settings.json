@@ -1,0 +1,13 @@
+{
+    "files.exclude": {
+        "bin/": true,
+        "**/CMakeFiles": true,
+        "**/CMakeCache.txt": true,
+        "**/Makefile": true,
+        "**/cmake_install.cmake": true
+    },
+    "files.associations": {
+        "algorithm": "cpp",
+        "random": "cpp"
+    }
+}
