@@ -1,5 +1,6 @@
 #include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_coordinator.h>
+#include <sc2utils/sc2_manage_process.h>
 
 #include "Bot.h"
 
@@ -17,6 +18,8 @@ int main(int argc, char *argv[]) {
     coordinator.StartGame("/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map");
 
     while (coordinator.Update()) {
+        // Slow down game speed for better look & feel while making experiments.
+        sc2::SleepFor(15);
     }
 
     return 0;
