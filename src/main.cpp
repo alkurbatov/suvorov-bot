@@ -5,8 +5,13 @@
 #include "Bot.h"
 
 int main(int argc, char *argv[]) {
+    if (argc < 2) {
+        std::cerr << "Please specify absolute path to the map file!" << std::endl;
+        return -1;
+    }
+
     sc2::Coordinator coordinator;
-    coordinator.LoadSettings(argc, argv);
+    coordinator.LoadSettings(1, argv);
 
     Bot bot;
     coordinator.SetParticipants({
@@ -15,7 +20,7 @@ int main(int argc, char *argv[]) {
     });
 
     coordinator.LaunchStarcraft();
-    coordinator.StartGame("/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map");
+    coordinator.StartGame(argv[1]);
 
     while (coordinator.Update()) {
         // Slow down game speed for better look & feel while making experiments.
