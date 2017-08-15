@@ -1,0 +1,20 @@
+// For additional details please refer to
+// https://github.com/Microsoft/vscode-cpptools/blob/master/launch.md
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/Suvorov",
+            "args": ["/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/bin",
+            "MIMode": "lldb",
+            "logging": {
+                "moduleLoad": false
+            }
+        }
+    ]
+}
