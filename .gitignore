@@ -1,9 +1,12 @@
-# Cmake build routine
+# Cmake build routine.
 CMakeCache.txt
 CMakeFiles/
 Makefile
 cmake_install.cmake
 
-# Build output
+# Build output.
 bin/
+
+# Logs.
+*.log
 

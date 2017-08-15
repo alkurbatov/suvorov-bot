@@ -5,7 +5,12 @@
 #include <sc2api/sc2_typeenums.h>
 #include <sc2api/sc2_interfaces.h>
 
+#include <boost/log/trivial.hpp>
+#include <boost/log/sources/severity_logger.hpp>
+
 #include <iostream>
+
+using namespace boost::log::trivial;
 
 // The main bot class.
 struct Bot: sc2::Agent
@@ -13,22 +18,18 @@ struct Bot: sc2::Agent
 
 virtual void OnGameStart() final
 {
-    std::cout << "Hello, World!" << std::endl;
+    BOOST_LOG_SEV(m_logger, info) << "New Game started!";
 }
 
 virtual void OnStep() final {
-    //std::cout << "Loop Step #" << Observation()->GetGameLoop() << std::endl;
-
-    //std::cout << "Minerals: " <<  Observation()->GetMinerals()
-    //    << " Gas: " <<  Observation()->GetVespene()
-    //    << std::endl;
+    BOOST_LOG_SEV(m_logger, info) << "Loop Step #" << Observation()->GetGameLoop();
 
     TryBuildSupplyDepot();
     TryBuildBarracks();
 }
 
 virtual void OnUnitCreated(const sc2::Unit& unit) final {
-    std::cout << "Unit was created, tag: " << unit.tag << std::endl;
+    BOOST_LOG_SEV(m_logger, info) << "Unit was created, tag: " << unit.tag;
 }
 
 virtual void OnUnitIdle(const sc2::Unit& unit) final {
@@ -143,4 +144,5 @@ void TryBuildBarracks() {
     TryBuildStructure(sc2::ABILITY_ID::BUILD_BARRACKS);
 }
 
+    boost::log::sources::severity_logger<severity_level> m_logger;
 };
