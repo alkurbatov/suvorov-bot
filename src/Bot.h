@@ -22,14 +22,14 @@ virtual void OnGameStart() final
 }
 
 virtual void OnStep() final {
-    BOOST_LOG_SEV(m_logger, info) << "Loop Step #" << Observation()->GetGameLoop();
-
     TryBuildSupplyDepot();
     TryBuildBarracks();
 }
 
 virtual void OnUnitCreated(const sc2::Unit* unit) final {
-    BOOST_LOG_SEV(m_logger, info) << "Unit was created, tag: " << unit->tag;
+    BOOST_LOG_SEV(m_logger, info) <<
+        "Loop Step #" << Observation()->GetGameLoop() <<
+        ": Unit was created, tag: " << unit->tag;
 }
 
 virtual void OnUnitIdle(const sc2::Unit* unit) final {
