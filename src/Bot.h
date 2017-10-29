@@ -35,7 +35,13 @@ virtual void OnUnitCreated(const sc2::Unit* unit) final {
 virtual void OnUnitIdle(const sc2::Unit* unit) final {
     switch (unit->unit_type.ToType()) {
         case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER: {
-            Actions()->UnitCommand(unit, sc2::ABILITY_ID::TRAIN_SCV);
+            // unit->assigned_harvesters and unit->ideal_harvesters are zeroes
+            // on game start but we need to start building SCVs anyways.
+            if (unit->assigned_harvesters == 0 ||
+                    unit->assigned_harvesters < unit->ideal_harvesters) {
+                Actions()->UnitCommand(unit, sc2::ABILITY_ID::TRAIN_SCV);
+            }
+
             break;
         }
 
