@@ -28,12 +28,12 @@ virtual void OnStep() final {
     TryBuildBarracks();
 }
 
-virtual void OnUnitCreated(const sc2::Unit& unit) final {
-    BOOST_LOG_SEV(m_logger, info) << "Unit was created, tag: " << unit.tag;
+virtual void OnUnitCreated(const sc2::Unit* unit) final {
+    BOOST_LOG_SEV(m_logger, info) << "Unit was created, tag: " << unit->tag;
 }
 
-virtual void OnUnitIdle(const sc2::Unit& unit) final {
-    switch (unit.unit_type.ToType()) {
+virtual void OnUnitIdle(const sc2::Unit* unit) final {
+    switch (unit->unit_type.ToType()) {
         case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER: {
             Actions()->UnitCommand(unit, sc2::ABILITY_ID::TRAIN_SCV);
             break;
@@ -41,7 +41,7 @@ virtual void OnUnitIdle(const sc2::Unit& unit) final {
 
         case sc2::UNIT_TYPEID::TERRAN_SCV: {
             uint64_t mineral_target;
-            if (!FindNearestMineralPatch(unit.pos, mineral_target)) {
+            if (!FindNearestMineralPatch(unit->pos, mineral_target)) {
                 break;
             }
             Actions()->UnitCommand(unit, sc2::ABILITY_ID::SMART, mineral_target);
@@ -75,26 +75,29 @@ void TryBuildStructure(sc2::ABILITY_ID ability_type_for_structure) {
 
     // If a unit already is building a supply structure of this type, do nothing.
     // Also get an scv to build the structure.
-    sc2::Unit unit_to_build;
+    const sc2::Unit* unit_to_build = nullptr;
     sc2::Units units = observation->GetUnits(sc2::Unit::Alliance::Self);
     for (const auto& unit : units) {
-        for (const auto& order : unit.orders) {
+        for (const auto& order : unit->orders) {
             if (order.ability_id == ability_type_for_structure) {
                 return;
             }
         }
 
-        if (unit.unit_type ==  sc2::UNIT_TYPEID::TERRAN_SCV) {
+        if (unit->unit_type ==  sc2::UNIT_TYPEID::TERRAN_SCV) {
             unit_to_build = unit;
         }
     }
+
+    if (!unit_to_build)
+        return;
 
     float rx = sc2::GetRandomScalar();
     float ry = sc2::GetRandomScalar();
 
     Actions()->UnitCommand(unit_to_build,
         ability_type_for_structure,
-        sc2::Point2D(unit_to_build.pos.x + rx * 15.0f, unit_to_build.pos.y + ry * 15.0f));
+        sc2::Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f));
 
     return;
 }
@@ -115,13 +118,13 @@ bool FindNearestMineralPatch(const sc2::Point2D& start, uint64_t& target) {
     sc2::Units units = Observation()->GetUnits(sc2::Unit::Alliance::Neutral);
     float distance = std::numeric_limits<float>::max();
     for (const auto& u : units) {
-        if (u.unit_type != sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD)
+        if (u->unit_type != sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD)
             continue;
 
-        float d = sc2::DistanceSquared2D(u.pos, start);
+        float d = sc2::DistanceSquared2D(u->pos, start);
         if (d < distance) {
             distance = d;
-            target = u.tag;
+            target = u->tag;
         }
     }
 
