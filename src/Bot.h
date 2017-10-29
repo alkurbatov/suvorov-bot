@@ -19,6 +19,8 @@ struct Bot: sc2::Agent
 virtual void OnGameStart() final
 {
     BOOST_LOG_SEV(m_logger, info) << "New Game started!";
+
+    m_startLocation = Observation()->GetStartLocation();
 }
 
 virtual void OnStep() final {
@@ -46,10 +48,10 @@ virtual void OnUnitIdle(const sc2::Unit* unit) final {
         }
 
         case sc2::UNIT_TYPEID::TERRAN_SCV: {
-            uint64_t mineral_target;
-            if (!FindNearestMineralPatch(unit->pos, mineral_target)) {
+            const sc2::Unit* mineral_target = FindNearestMineralPatch(m_startLocation);
+            if (!mineral_target)
                 break;
-            }
+
             Actions()->UnitCommand(unit, sc2::ABILITY_ID::SMART, mineral_target);
             break;
         }
@@ -120,9 +122,11 @@ void TryBuildSupplyDepot() {
     TryBuildStructure(sc2::ABILITY_ID::BUILD_SUPPLYDEPOT);
 }
 
-bool FindNearestMineralPatch(const sc2::Point2D& start, uint64_t& target) {
-    sc2::Units units = Observation()->GetUnits(sc2::Unit::Alliance::Neutral);
+const sc2::Unit* FindNearestMineralPatch(const sc2::Point2D& start) {
+    const sc2::Unit* target = nullptr;
     float distance = std::numeric_limits<float>::max();
+    sc2::Units units = Observation()->GetUnits(sc2::Unit::Alliance::Neutral);
+
     for (const auto& u : units) {
         if (u->unit_type != sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD)
             continue;
@@ -130,11 +134,11 @@ bool FindNearestMineralPatch(const sc2::Point2D& start, uint64_t& target) {
         float d = sc2::DistanceSquared2D(u->pos, start);
         if (d < distance) {
             distance = d;
-            target = u->tag;
+            target = u;
         }
     }
 
-    return (distance != std::numeric_limits<float>::max());
+    return target;
 }
 
 size_t CountUnitType(sc2::UNIT_TYPEID unit_type) {
@@ -152,6 +156,9 @@ void TryBuildBarracks() {
 
     TryBuildStructure(sc2::ABILITY_ID::BUILD_BARRACKS);
 }
+
+private:
+    sc2::Point3D m_startLocation;
 
     boost::log::sources::severity_logger<severity_level> m_logger;
 };
