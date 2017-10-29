@@ -20,7 +20,8 @@ virtual void OnGameStart() final
 {
     BOOST_LOG_SEV(m_logger, info) << "New Game started!";
 
-    m_startLocation = Observation()->GetStartLocation();
+    m_observation = Observation();
+    m_startLocation = m_observation->GetStartLocation();
 }
 
 virtual void OnStep() final {
@@ -30,7 +31,7 @@ virtual void OnStep() final {
 
 virtual void OnUnitCreated(const sc2::Unit* unit) final {
     BOOST_LOG_SEV(m_logger, info) <<
-        "Loop Step #" << Observation()->GetGameLoop() <<
+        "Loop Step #" << m_observation->GetGameLoop() <<
         ": Unit was created, tag: " << unit->tag;
 }
 
@@ -65,7 +66,7 @@ virtual void OnUnitIdle(const sc2::Unit* unit) final {
            if (CountUnitType(sc2::UNIT_TYPEID::TERRAN_MARINE) < 13)
                 break;
 
-            const sc2::GameInfo& game_info = Observation()->GetGameInfo();
+            const sc2::GameInfo& game_info = m_observation->GetGameInfo();
             Actions()->UnitCommand(unit, sc2::ABILITY_ID::ATTACK_ATTACK, game_info.enemy_start_locations.front());
             break;
         }
@@ -79,12 +80,10 @@ virtual void OnUnitIdle(const sc2::Unit* unit) final {
 private:
 
 void TryBuildStructure(sc2::ABILITY_ID ability_type_for_structure) {
-    const sc2::ObservationInterface* observation = Observation();
-
     // If a unit already is building a supply structure of this type, do nothing.
     // Also get an scv to build the structure.
     const sc2::Unit* unit_to_build = nullptr;
-    sc2::Units units = observation->GetUnits(sc2::Unit::Alliance::Self);
+    sc2::Units units = m_observation->GetUnits(sc2::Unit::Alliance::Self);
     for (const auto& unit : units) {
         for (const auto& order : unit->orders) {
             if (order.ability_id == ability_type_for_structure) {
@@ -111,11 +110,10 @@ void TryBuildStructure(sc2::ABILITY_ID ability_type_for_structure) {
 }
 
 void TryBuildSupplyDepot() {
-    const sc2::ObservationInterface* observation = Observation();
     size_t prediction = CountUnitType(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT) * 2 + 2;
 
     // If we are not supply capped, don't build a supply depot.
-    if (observation->GetFoodUsed() <= observation->GetFoodCap() - static_cast<int32_t>(prediction))
+    if (m_observation->GetFoodUsed() <= m_observation->GetFoodCap() - static_cast<int32_t>(prediction))
         return;
 
     // Try and build a depot. Find a random SCV and give it the order.
@@ -125,7 +123,7 @@ void TryBuildSupplyDepot() {
 const sc2::Unit* FindNearestMineralPatch(const sc2::Point2D& start) {
     const sc2::Unit* target = nullptr;
     float distance = std::numeric_limits<float>::max();
-    sc2::Units units = Observation()->GetUnits(sc2::Unit::Alliance::Neutral);
+    sc2::Units units = m_observation->GetUnits(sc2::Unit::Alliance::Neutral);
 
     for (const auto& u : units) {
         if (u->unit_type != sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD)
@@ -142,7 +140,7 @@ const sc2::Unit* FindNearestMineralPatch(const sc2::Point2D& start) {
 }
 
 size_t CountUnitType(sc2::UNIT_TYPEID unit_type) {
-    return Observation()->GetUnits(sc2::Unit::Alliance::Self, sc2::IsUnit(unit_type)).size();
+    return m_observation->GetUnits(sc2::Unit::Alliance::Self, sc2::IsUnit(unit_type)).size();
 }
 
 void TryBuildBarracks() {
@@ -158,6 +156,7 @@ void TryBuildBarracks() {
 }
 
 private:
+    const sc2::ObservationInterface* m_observation;
     sc2::Point3D m_startLocation;
 
     boost::log::sources::severity_logger<severity_level> m_logger;
