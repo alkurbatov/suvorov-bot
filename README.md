@@ -45,8 +45,8 @@ $ cmake .
 # Build.
 $ make
 
-# Launch the bot on the specfied map.
-$ ./bin/Suvorov "tmp/Ladder2017Season3/InterloperLE.SC2Map"
+# Launch the bot with the specified absolute path to a SC2 map.
+$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
 ```
 ## License
 
