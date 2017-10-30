@@ -2,6 +2,7 @@
 Starcraft 2 Terran bot.
 
 ## Build instructions
+### Linux and OS X
 1. Build SC2 API project.
 ```bash
 $ git clone --recursive https://github.com/Blizzard/s2client-api && cd s2client-api
@@ -49,6 +50,11 @@ $ make
 # Launch the bot with the specified absolute path to a SC2 map.
 $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
 ```
+
+### Windows
+
+Not implemented.
+
 ## License
 
 Copyright (c) 2017
