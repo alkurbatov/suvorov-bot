@@ -22,3 +22,8 @@ target_link_libraries(Suvorov
 if (APPLE)
     target_link_libraries(Suvorov "-framework Carbon")
 endif ()
+
+# Linux specific.
+if (UNIX AND NOT APPLE)
+    target_link_libraries(Suvorov pthread dl)
+endif ()
