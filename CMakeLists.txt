@@ -8,7 +8,7 @@ set(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin")
 # Include custom macros to find SC2Api.
 set (CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-find_package(Boost 1.59 REQUIRED log log_setup system thread)
+find_package(Boost 1.58 REQUIRED log log_setup system thread)
 
 find_package(SC2Api REQUIRED)
 
