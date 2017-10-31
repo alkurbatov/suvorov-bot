@@ -102,11 +102,8 @@ void TryBuildStructure(sc2::ABILITY_ID ability_type_for_structure) {
     float rx = sc2::GetRandomScalar();
     float ry = sc2::GetRandomScalar();
 
-    Actions()->UnitCommand(unit_to_build,
-        ability_type_for_structure,
-        sc2::Point2D(unit_to_build->pos.x + rx * 15.0f, unit_to_build->pos.y + ry * 15.0f));
-
-    return;
+    Actions()->UnitCommand(unit_to_build, ability_type_for_structure,
+        sc2::Point2D(m_startLocation.x + rx * 15.0f, m_startLocation.y + ry * 15.0f));
 }
 
 void TryBuildSupplyDepot() {
