@@ -8,7 +8,7 @@
 #include <boost/log/utility/setup/common_attributes.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 
-#include "Bot.h"
+#include "Dispatcher.h"
 
 void initLogging()
 {
@@ -31,7 +31,7 @@ void initLogging()
     logging::add_common_attributes();
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     if (argc < 2) {
         std::cerr << "Please specify absolute path to the map file!" << std::endl;
         return -1;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(1, argv);
 
-    Bot bot;
+    Dispatcher bot;
     coordinator.SetParticipants({
         CreateParticipant(sc2::Race::Terran, &bot),
         CreateComputer(sc2::Race::Zerg)
