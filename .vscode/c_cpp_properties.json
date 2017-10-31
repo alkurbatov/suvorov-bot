@@ -9,7 +9,7 @@
                 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
                 "/usr/include",
                 "/opt/local/include",
-                "/opt/local/include/sc2api/proto",
+                "/opt/local/include/sc2api",
                 "/opt/local/include/sc2api/contrib/protobuf/src",
                 "${workspaceRoot}/src"
             ],
