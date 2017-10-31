@@ -1,8 +1,13 @@
-# Cmake build routine.
+# CMake build routine.
 CMakeCache.txt
 CMakeFiles/
 Makefile
 cmake_install.cmake
+
+# IDE - VSCode
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
 
 # Build output.
 bin/
