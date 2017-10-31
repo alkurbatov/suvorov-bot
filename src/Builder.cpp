@@ -14,6 +14,9 @@ void Builder::buildStructure(const sc2::Point2D& starting_point, sc2::ABILITY_ID
     sc2::Units units = m_observation->GetUnits(sc2::Unit::Alliance::Self);
     for (const auto& unit : units)
     {
+        if (unit->unit_type != sc2::UNIT_TYPEID::TERRAN_SCV)
+            continue;
+
         for (const auto& order : unit->orders)
         {
             // If a unit already is building a structure of this type, do nothing.
@@ -21,10 +24,8 @@ void Builder::buildStructure(const sc2::Point2D& starting_point, sc2::ABILITY_ID
                 return;
         }
 
-        if (unit->unit_type == sc2::UNIT_TYPEID::TERRAN_SCV)
-        {
+        if (!unit_to_build)
             unit_to_build = unit;
-        }
     }
 
     if (!unit_to_build)
