@@ -8,9 +8,11 @@ class Overseer: boost::noncopyable
 public:
     explicit Overseer(const sc2::ObservationInterface* observation_);
 
-    size_t countUnitType(sc2::UNIT_TYPEID unit_type) const;
+    size_t countUnitType(sc2::UNIT_TYPEID type_) const;
 
-    const sc2::Unit* findNearestMineralPatch(const sc2::Point2D& start) const;
+    bool techRequirementMet(sc2::UNIT_TYPEID req_) const;
+
+    const sc2::Unit* findNearestMineralPatch(const sc2::Point2D& start_) const;
 
     sc2::Point2D getEnemyStartingLocation() const;
 
