@@ -16,20 +16,18 @@ size_t Overseer::countUnitType(sc2::UNIT_TYPEID unit_type) const
 
 const sc2::Unit* Overseer::findNearestMineralPatch(const sc2::Point2D& start) const
 {
-    const sc2::Unit *target = nullptr;
     float distance = std::numeric_limits<float>::max();
-    sc2::Units units = m_observation->GetUnits(sc2::Unit::Alliance::Neutral);
+    sc2::Units units = m_observation->GetUnits(sc2::Unit::Alliance::Neutral,
+        sc2::IsUnit(sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD));
 
-    for (const auto &u : units)
+    const sc2::Unit* target = nullptr;
+    for (const auto& i : units)
     {
-        if (u->unit_type != sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD)
-            continue;
-
-        float d = sc2::DistanceSquared2D(u->pos, start);
+        float d = sc2::DistanceSquared2D(i->pos, start);
         if (d < distance)
         {
             distance = d;
-            target = u;
+            target = i;
         }
     }
 
