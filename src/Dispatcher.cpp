@@ -28,14 +28,14 @@ void Dispatcher::OnGameStart()
     auto& data = Observation()->GetUnitTypeData();
 
     // Initial build order
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_orders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_)
@@ -50,8 +50,8 @@ void Dispatcher::OnStep()
     int32_t minerals = Observation()->GetMinerals();
     int32_t vespene = Observation()->GetVespene();
 
-    while (!m_orders.empty()) {
-        Order order = m_orders.front();
+    while (!m_constructionOrders.empty()) {
+        Order order = m_constructionOrders.front();
 
         if (!m_overseer.techRequirementMet(order.m_techRequirement))
             break;
@@ -59,15 +59,38 @@ void Dispatcher::OnStep()
         if (minerals < order.m_mineralCost || vespene < order.m_vespeneCost)
             break;
 
-        // FIXME: check that we have enough supply to build a unit.
-
-        if (!m_builder.execute(m_startLocation, order))
+        if (!m_builder.buildStructure(m_startLocation, order))
             break;
 
         minerals -= order.m_mineralCost;
         vespene -= order.m_vespeneCost;
 
-        m_orders.pop();
+        m_constructionOrders.pop();
+    }
+
+    auto it = m_trainingOrders.begin();
+    while (it != m_trainingOrders.end()) {
+        if (!m_overseer.techRequirementMet(it->m_techRequirement)) {
+            ++it;
+            continue;
+        }
+
+        if (minerals < it->m_mineralCost || vespene < it->m_vespeneCost) {
+            ++it;
+            continue;
+        }
+
+        // FIXME: check that we have enough supply to build a unit.
+
+        if (!m_builder.trainUnit(*it)) {
+            ++it;
+            continue;
+        }
+
+        minerals -= it->m_mineralCost;
+        vespene -= it->m_vespeneCost;
+
+        it = m_trainingOrders.erase(it);
     }
 
     // FIXME: skip this if we've planned additional supply already.
@@ -76,7 +99,7 @@ void Dispatcher::OnStep()
     //if (m_overseer.hasSupply())
     //    return;
 
-    //m_orders.emplace(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    //m_constructionOrders.emplace(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_)
@@ -94,7 +117,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_)
         {
             // If we can add more SCVs do it.
             if (unit_->assigned_harvesters == 0 || unit_->assigned_harvesters < unit_->ideal_harvesters)
-                m_orders.emplace(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SCV)], unit_);
+                m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SCV)], unit_);
 
             break;
         }
@@ -111,7 +134,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_)
 
         case sc2::UNIT_TYPEID::TERRAN_BARRACKS:
         {
-            m_orders.emplace(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_MARINE)], unit_);
+            m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_MARINE)], unit_);
             break;
         }
 

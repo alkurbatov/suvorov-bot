@@ -10,13 +10,8 @@ Builder::Builder(sc2::ActionInterface* action_,
     m_action(action_), m_observation(observation_), m_query(query_)
 {}
 
-bool Builder::execute(const sc2::Point2D& starting_point_, const Order& order_)
+bool Builder::buildStructure(const sc2::Point2D& starting_point_, const Order& order_)
 {
-    if (order_.m_assignee) {
-        m_action->UnitCommand(order_.m_assignee, order_.m_id);
-        return true;
-    }
-
     auto workers = m_observation->GetUnits(sc2::Unit::Alliance::Self, isFreeWorker());
     if (workers.empty())
         return false;
@@ -30,5 +25,15 @@ bool Builder::execute(const sc2::Point2D& starting_point_, const Order& order_)
 
     m_action->UnitCommand(workers.front(), order_.m_id, point);
 
+    return true;
+}
+
+bool Builder::trainUnit(const Order& order_)
+{
+    // FIXME: implement assignment of proper producing structure
+    if (!order_.m_assignee)
+        return false;
+
+    m_action->UnitCommand(order_.m_assignee, order_.m_id);
     return true;
 }

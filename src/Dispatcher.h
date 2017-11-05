@@ -1,10 +1,13 @@
 #ifndef DISPATCHER_H
 #define DISPATCHER_H
 
+#include <list>
 #include <queue>
-#include <sc2api/sc2_agent.h>
+
 #include <boost/log/trivial.hpp>
 #include <boost/log/sources/severity_logger.hpp>
+
+#include <sc2api/sc2_agent.h>
 
 #include "Builder.h"
 #include "Order.h"
@@ -33,7 +36,9 @@ private:
     Overseer m_overseer;
 
     sc2::Point3D m_startLocation;
-    std::queue<Order> m_orders;
+
+    std::queue<Order> m_constructionOrders;
+    std::list<Order> m_trainingOrders;
 
     boost::log::sources::severity_logger<severity_level> m_logger;
 };
