@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
     Dispatcher bot;
     coordinator.SetParticipants({
         CreateParticipant(sc2::Race::Terran, &bot),
-        CreateComputer(sc2::Race::Zerg)
+        CreateComputer(sc2::Race::Zerg, sc2::Difficulty::VeryHard)
     });
 
     coordinator.LaunchStarcraft();
