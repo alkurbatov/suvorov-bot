@@ -3,17 +3,8 @@
 #include <sc2api/sc2_typeenums.h>
 #include <sc2api/sc2_interfaces.h>
 
+#include "Converter.h"
 #include "Dispatcher.h"
-
-namespace
-{
-
-sc2::UnitTypeID toUnitTypeID(sc2::UNIT_TYPEID id_)
-{
-    return static_cast<sc2::UnitTypeID>(id_);
-}
-
-} // namespace
 
 Dispatcher::Dispatcher(): m_builder(Actions(), Observation(), Query()),
     m_overseer(Observation()) {
@@ -28,14 +19,14 @@ void Dispatcher::OnGameStart()
     auto& data = Observation()->GetUnitTypeData();
 
     // Initial build order
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_constructionOrders.emplace(data[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    m_constructionOrders.emplace(data[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_)
@@ -117,7 +108,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_)
         {
             // If we can add more SCVs do it.
             if (unit_->assigned_harvesters == 0 || unit_->assigned_harvesters < unit_->ideal_harvesters)
-                m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SCV)], unit_);
+                m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SCV)], unit_);
 
             break;
         }
@@ -134,7 +125,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_)
 
         case sc2::UNIT_TYPEID::TERRAN_BARRACKS:
         {
-            m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_MARINE)], unit_);
+            m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_MARINE)], unit_);
             break;
         }
 

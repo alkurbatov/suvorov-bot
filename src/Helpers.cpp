@@ -3,6 +3,7 @@
 #include <sc2api/sc2_unit.h>
 
 #include "Helpers.h"
+#include "Converter.h"
 
 isUnit::isUnit(sc2::UNIT_TYPEID type_): m_type(type_)
 {}
@@ -24,7 +25,7 @@ bool isFreeWorker::operator()(const sc2::Unit& unit_)
 
 bool isBuildingOrder::operator()(const sc2::UnitOrder& order_)
 {
-    switch(static_cast<sc2::ABILITY_ID>(order_.ability_id)) {
+    switch(Convert::toAbilityID(order_.ability_id)) {
         case sc2::ABILITY_ID:: BUILD_COMMANDCENTER:
         case sc2::ABILITY_ID:: BUILD_SUPPLYDEPOT:
         case sc2::ABILITY_ID:: BUILD_REFINERY:
