@@ -40,6 +40,8 @@ void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_)
 
 void Dispatcher::OnStep()
 {
+    m_builder.onStep();
+
     int32_t minerals = Observation()->GetMinerals();
     int32_t vespene = Observation()->GetVespene();
 

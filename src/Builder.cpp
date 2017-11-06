@@ -3,13 +3,18 @@
 #include "Order.h"
 #include "Helpers.h"
 
+void Builder::onStep()
+{
+    m_freeWorkers = gAPI->observer().getOwnUnits(isFreeWorker());
+}
+
 bool Builder::buildStructure(const sc2::Point2D& starting_point_, Order& order_)
 {
-    auto workers = gAPI->observer().getOwnUnits(isFreeWorker());
-    if (workers.empty())
+    if (m_freeWorkers.empty())
         return false;
 
-    order_.m_assignee = workers.front();
+    order_.m_assignee = m_freeWorkers.back();
+    m_freeWorkers.pop_back();
 
     // Find place to build the structure
     sc2::Point2D point;
