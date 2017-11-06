@@ -1,5 +1,6 @@
 #include "API.h"
 #include "Order.h"
+#include "Helpers.h"
 
 namespace API
 {
@@ -23,9 +24,25 @@ Observer::Observer(const sc2::ObservationInterface* observer_):
 {
 }
 
-sc2::Units Observer::getOwnUnits(const sc2::Filter& filter_)
+sc2::Units Observer::getUnits(const sc2::Filter& filter_,
+    sc2::Unit::Alliance alliance_) const
 {
-    return m_observer->GetUnits(sc2::Unit::Alliance::Self, filter_);
+    return m_observer->GetUnits(alliance_, filter_);
+}
+
+size_t Observer::countUnitType(sc2::UNIT_TYPEID type_) const
+{
+    return getUnits(isUnit(type_)).size();
+}
+
+const sc2::GameInfo& Observer::gameInfo() const
+{
+    return m_observer->GetGameInfo();
+}
+
+sc2::Point3D Observer::startingLocation() const
+{
+    return m_observer->GetStartLocation();
 }
 
 Query::Query(sc2::QueryInterface* query_): m_query(query_)

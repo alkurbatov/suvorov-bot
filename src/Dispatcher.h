@@ -11,7 +11,6 @@
 
 #include "Builder.h"
 #include "Order.h"
-#include "Overseer.h"
 
 using namespace boost::log::trivial;
 
@@ -33,9 +32,6 @@ private:
     virtual void OnUnitIdle(const sc2::Unit* unit_) final;
 
     Builder m_builder;
-    Overseer m_overseer;
-
-    sc2::Point3D m_startLocation;
 
     std::queue<Order> m_constructionOrders;
     std::list<Order> m_trainingOrders;

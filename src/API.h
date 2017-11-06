@@ -24,7 +24,14 @@ struct Observer
 {
     explicit Observer(const sc2::ObservationInterface* observer_);
 
-    sc2::Units getOwnUnits(const sc2::Filter& filter_);
+    sc2::Units getUnits(const sc2::Filter& filter_,
+        sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
+
+    size_t countUnitType(sc2::UNIT_TYPEID type_) const;
+
+    const sc2::GameInfo& gameInfo() const;
+
+    sc2::Point3D startingLocation() const;
 
 private:
     const sc2::ObservationInterface* m_observer;

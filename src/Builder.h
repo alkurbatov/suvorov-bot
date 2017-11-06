@@ -9,11 +9,13 @@ struct Builder
 {
     void onStep();
 
-    bool buildStructure(const sc2::Point2D &starting_point_, Order& order_);
+    bool buildStructure(Order& order_);
 
     bool trainUnit(const Order& order_);
 
 private:
+    bool techRequirementMet(const Order& order_) const;
+
     sc2::Units m_freeWorkers;
 };
 
