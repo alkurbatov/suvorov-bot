@@ -1,5 +1,3 @@
-#include <cmath>
-
 #include <sc2api/sc2_unit.h>
 
 #include "Helpers.h"
