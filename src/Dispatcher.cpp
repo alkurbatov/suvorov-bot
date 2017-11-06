@@ -3,11 +3,13 @@
 #include <sc2api/sc2_typeenums.h>
 #include <sc2api/sc2_interfaces.h>
 
+#include "API.h"
 #include "Converter.h"
 #include "Dispatcher.h"
 
-Dispatcher::Dispatcher(): m_builder(Actions(), Observation(), Query()),
-    m_overseer(Observation()) {
+Dispatcher::Dispatcher(): m_overseer(Observation())
+{
+    gAPI.reset(new API::Interface(Actions(), Observation(), Query()));
 }
 
 void Dispatcher::OnGameStart()

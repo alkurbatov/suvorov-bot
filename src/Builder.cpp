@@ -1,29 +1,24 @@
-#include <sc2api/sc2_interfaces.h>
-
+#include "API.h"
 #include "Builder.h"
 #include "Order.h"
 #include "Helpers.h"
 
-Builder::Builder(sc2::ActionInterface* action_,
-    const sc2::ObservationInterface* observation_,
-    sc2::QueryInterface* query_):
-    m_action(action_), m_observation(observation_), m_query(query_)
-{}
-
-bool Builder::buildStructure(const sc2::Point2D& starting_point_, const Order& order_)
+bool Builder::buildStructure(const sc2::Point2D& starting_point_, Order& order_)
 {
-    auto workers = m_observation->GetUnits(sc2::Unit::Alliance::Self, isFreeWorker());
+    auto workers = gAPI->observer().getOwnUnits(isFreeWorker());
     if (workers.empty())
         return false;
+
+    order_.m_assignee = workers.front();
 
     // Find place to build the structure
     sc2::Point2D point;
     do {
         point.x = starting_point_.x + sc2::GetRandomScalar() * 15.0f;
         point.y = starting_point_.y + sc2::GetRandomScalar() * 15.0f;
-    } while (!m_query->Placement(order_.m_id, point));
+    } while (!gAPI->query().canBePlaced(order_, point));
 
-    m_action->UnitCommand(workers.front(), order_.m_id, point);
+    gAPI->action().command(order_, point);
 
     return true;
 }
@@ -34,6 +29,7 @@ bool Builder::trainUnit(const Order& order_)
     if (!order_.m_assignee)
         return false;
 
-    m_action->UnitCommand(order_.m_assignee, order_.m_id);
+    gAPI->action().command(order_);
+
     return true;
 }
