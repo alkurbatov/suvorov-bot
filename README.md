@@ -40,9 +40,12 @@ $ sudo cp build/bin/libsc2utils.a /opt/local/lib/sc2api
 ```bash
 $ https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
 
+# Create build directory
+mkdir build && cd build
+
 # Generate a Makefile.
-# Use 'cmake -DCMAKE_BUILD_TYPE=Debug .' if debuginfo is needed.
-$ cmake .
+# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
+$ cmake ../
 
 # Build.
 $ make
