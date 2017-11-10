@@ -11,9 +11,10 @@
                 "/usr/include/c++/4.2.1",
                 "/usr/include/c++/4.2.1/ext",
                 "/usr/include/c++/4.2.1/tr1",
-                "/opt/local/include",
-                "/opt/local/include/sc2api",
-                "${workspaceRoot}/src"
+                "${workspaceRoot}/src",
+                "${workspaceRoot}/s2client-api/include",
+                "${workspaceRoot}/s2client-api/contrib/protobuf/src",
+                "${workspaceRoot}/s2client-api/generated"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
@@ -26,9 +27,10 @@
                     "/usr/include",
                     "/usr/include/c++/4.2.1/ext",
                     "/usr/include/c++/4.2.1/tr1",
-                    "/opt/local/include",
-                    "/opt/local/include/sc2api",
-                    "${workspaceRoot}/src"
+                    "${workspaceRoot}/src",
+                    "${workspaceRoot}/s2client-api/include",
+                    "${workspaceRoot}/s2client-api/contrib/protobuf/src",
+                    "${workspaceRoot}/s2client-api/generated"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
