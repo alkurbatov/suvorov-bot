@@ -10,7 +10,7 @@ include_directories(SYSTEM
 
 link_directories(${PROJECT_BINARY_DIR}/s2client-api/bin)
 
-set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic -Weffc++ -Woverloaded-virtual \
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -pedantic -Woverloaded-virtual \
 -Wctor-dtor-privacy -Wnon-virtual-dtor -Wold-style-cast -Wconversion \
 -Wsign-conversion -Winit-self -Wunreachable-code \
 ")
