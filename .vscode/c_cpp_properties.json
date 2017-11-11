@@ -14,7 +14,7 @@
                 "${workspaceRoot}/src",
                 "${workspaceRoot}/s2client-api/include",
                 "${workspaceRoot}/s2client-api/contrib/protobuf/src",
-                "${workspaceRoot}/s2client-api/generated"
+                "${workspaceRoot}/build/s2client-api/generated"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
@@ -30,7 +30,7 @@
                     "${workspaceRoot}/src",
                     "${workspaceRoot}/s2client-api/include",
                     "${workspaceRoot}/s2client-api/contrib/protobuf/src",
-                    "${workspaceRoot}/s2client-api/generated"
+                    "${workspaceRoot}/build/s2client-api/generated"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
