@@ -39,7 +39,7 @@ struct Observer
 
     int32_t getVespene() const;
 
-    int32_t getAvailableFood() const;
+    float getAvailableFood() const;
 
 private:
     const sc2::ObservationInterface* m_observer;

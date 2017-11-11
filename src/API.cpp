@@ -60,9 +60,10 @@ int32_t Observer::getVespene() const
     return m_observer->GetVespene();
 }
 
-int32_t Observer::getAvailableFood() const
+float Observer::getAvailableFood() const
 {
-    return m_observer->GetFoodCap() - m_observer->GetFoodUsed();
+    return static_cast<float>(
+        m_observer->GetFoodCap() - m_observer->GetFoodUsed());
 }
 
 Query::Query(sc2::QueryInterface* query_): m_query(query_)
