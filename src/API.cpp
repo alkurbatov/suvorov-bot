@@ -19,6 +19,11 @@ void Action::command(const Order& order_, const sc2::Point2D& point_)
     m_action->UnitCommand(order_.m_assignee, order_.m_data.ability_id, point_);
 }
 
+void Action::attack(const sc2::Units& units_, const sc2::Point2D& point_)
+{
+    m_action->UnitCommand(units_, sc2::ABILITY_ID::ATTACK_ATTACK, point_);
+}
+
 Observer::Observer(const sc2::ObservationInterface* observer_):
     m_observer(observer_)
 {

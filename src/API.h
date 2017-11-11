@@ -16,6 +16,8 @@ struct Action
 
     void command(const Order& order_, const sc2::Point2D& point_);
 
+    void attack(const sc2::Units& units_, const sc2::Point2D& point_);
+
 private:
     sc2::ActionInterface* m_action;
 };

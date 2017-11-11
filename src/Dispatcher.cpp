@@ -39,6 +39,7 @@ void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_)
 void Dispatcher::OnStep()
 {
     m_builder.onStep();
+    m_forceCommander.onStep();
 
     while (!m_constructionOrders.empty()) {
         Order order = m_constructionOrders.front();
@@ -74,6 +75,8 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_)
     BOOST_LOG_SEV(m_logger, info) <<
         "Loop Step #" << Observation()->GetGameLoop() <<
         ": Unit was created, tag: " << unit_->tag;
+
+    m_forceCommander.OnUnitCreated(unit_);
 }
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_)
@@ -104,16 +107,6 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_)
         case sc2::UNIT_TYPEID::TERRAN_BARRACKS:
         {
             m_trainingOrders.emplace_back(Observation()->GetUnitTypeData()[Convert::toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_MARINE)], unit_);
-            break;
-        }
-
-        case sc2::UNIT_TYPEID::TERRAN_MARINE:
-        {
-            if (gAPI->observer().countUnitType(sc2::UNIT_TYPEID::TERRAN_MARINE) < 13)
-                break;
-
-            Actions()->UnitCommand(unit_,
-                sc2::ABILITY_ID::ATTACK_ATTACK, Pathfinder::getEnemyBaseLocation());
             break;
         }
 

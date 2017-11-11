@@ -9,8 +9,9 @@
 
 #include <sc2api/sc2_agent.h>
 
-#include "Builder.h"
 #include "Order.h"
+#include "Builder.h"
+#include "ForceCommander.h"
 
 using namespace boost::log::trivial;
 
@@ -32,6 +33,7 @@ private:
     virtual void OnUnitIdle(const sc2::Unit* unit_) final;
 
     Builder m_builder;
+    ForceCommander m_forceCommander;
 
     std::queue<Order> m_constructionOrders;
     std::list<Order> m_trainingOrders;
