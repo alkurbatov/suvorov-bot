@@ -3,7 +3,7 @@
 #include "Order.h"
 #include "Helpers.h"
 
-Builder::Builder(): m_minerals(0), m_vespene(0)
+Builder::Builder(): m_minerals(0), m_vespene(0), m_availableFood(0)
 {}
 
 void Builder::onStep()
@@ -12,6 +12,8 @@ void Builder::onStep()
 
     m_minerals = gAPI->observer().getMinerals();
     m_vespene = gAPI->observer().getVespene();
+
+    m_availableFood = gAPI->observer().getAvailableFood();
 }
 
 bool Builder::buildStructure(Order& order_)
@@ -36,8 +38,8 @@ bool Builder::buildStructure(Order& order_)
 
     gAPI->action().command(order_, point);
 
-    m_minerals -= order_.m_mineralCost;
-    m_vespene -= order_.m_vespeneCost;
+    m_minerals -= order_.m_data.mineral_cost;
+    m_vespene -= order_.m_data.vespene_cost;
 
     return true;
 }
@@ -51,20 +53,25 @@ bool Builder::trainUnit(const Order& order_)
     if (!canBuild(order_))
         return false;
 
+    if (m_availableFood < order_.m_data.food_required)
+        return false;
+
     gAPI->action().command(order_);
 
-    m_minerals -= order_.m_mineralCost;
-    m_vespene -= order_.m_vespeneCost;
+    m_minerals -= order_.m_data.mineral_cost;
+    m_vespene -= order_.m_data.vespene_cost;
+
+    m_availableFood -= order_.m_data.food_required;
 
     return true;
 }
 
 bool Builder::canBuild(const Order& order_) const
 {
-    if (m_minerals < order_.m_mineralCost || m_vespene < order_.m_vespeneCost)
+    if (m_minerals < order_.m_data.mineral_cost || m_vespene < order_.m_data.vespene_cost)
         return false;
 
     // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
-    return order_.m_techRequirement == sc2::UNIT_TYPEID::INVALID ||
-        gAPI->observer().countUnitType(order_.m_techRequirement) > 0;
+    return order_.m_data.tech_requirement == sc2::UNIT_TYPEID::INVALID ||
+        gAPI->observer().countUnitType(order_.m_data.tech_requirement) > 0;
 }

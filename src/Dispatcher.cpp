@@ -51,8 +51,6 @@ void Dispatcher::OnStep()
 
     auto it = m_trainingOrders.begin();
     while (it != m_trainingOrders.end()) {
-        // FIXME: check that we have enough supply to build a unit.
-
         if (!m_builder.trainUnit(*it)) {
             ++it;
             continue;

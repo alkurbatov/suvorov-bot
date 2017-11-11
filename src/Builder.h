@@ -22,6 +22,8 @@ private:
 
     int32_t m_minerals;
     int32_t m_vespene;
+
+    int32_t m_availableFood;
 };
 
 #endif
