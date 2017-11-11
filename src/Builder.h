@@ -7,6 +7,8 @@ struct Order;
 
 struct Builder
 {
+    Builder();
+
     void onStep();
 
     bool buildStructure(Order& order_);
@@ -14,9 +16,12 @@ struct Builder
     bool trainUnit(const Order& order_);
 
 private:
-    bool techRequirementMet(const Order& order_) const;
+    bool canBuild(const Order& order_) const;
 
     sc2::Units m_freeWorkers;
+
+    int32_t m_minerals;
+    int32_t m_vespene;
 };
 
 #endif

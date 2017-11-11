@@ -45,6 +45,16 @@ sc2::Point3D Observer::startingLocation() const
     return m_observer->GetStartLocation();
 }
 
+int32_t Observer::getMinerals() const
+{
+    return m_observer->GetMinerals();
+}
+
+int32_t Observer::getVespene() const
+{
+    return m_observer->GetVespene();
+}
+
 Query::Query(sc2::QueryInterface* query_): m_query(query_)
 {
 }

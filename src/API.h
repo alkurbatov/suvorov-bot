@@ -33,6 +33,10 @@ struct Observer
 
     sc2::Point3D startingLocation() const;
 
+    int32_t getMinerals() const;
+
+    int32_t getVespene() const;
+
 private:
     const sc2::ObservationInterface* m_observer;
 };

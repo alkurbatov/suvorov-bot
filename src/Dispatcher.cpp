@@ -40,40 +40,23 @@ void Dispatcher::OnStep()
 {
     m_builder.onStep();
 
-    int32_t minerals = Observation()->GetMinerals();
-    int32_t vespene = Observation()->GetVespene();
-
     while (!m_constructionOrders.empty()) {
         Order order = m_constructionOrders.front();
 
-        if (minerals < order.m_mineralCost || vespene < order.m_vespeneCost)
-            break;
-
         if (!m_builder.buildStructure(order))
             break;
-
-        minerals -= order.m_mineralCost;
-        vespene -= order.m_vespeneCost;
 
         m_constructionOrders.pop();
     }
 
     auto it = m_trainingOrders.begin();
     while (it != m_trainingOrders.end()) {
-        if (minerals < it->m_mineralCost || vespene < it->m_vespeneCost) {
-            ++it;
-            continue;
-        }
-
         // FIXME: check that we have enough supply to build a unit.
 
         if (!m_builder.trainUnit(*it)) {
             ++it;
             continue;
         }
-
-        minerals -= it->m_mineralCost;
-        vespene -= it->m_vespeneCost;
 
         it = m_trainingOrders.erase(it);
     }

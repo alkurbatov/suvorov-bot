@@ -3,9 +3,15 @@
 #include "Order.h"
 #include "Helpers.h"
 
+Builder::Builder(): m_minerals(0), m_vespene(0)
+{}
+
 void Builder::onStep()
 {
     m_freeWorkers = gAPI->observer().getUnits(isFreeWorker());
+
+    m_minerals = gAPI->observer().getMinerals();
+    m_vespene = gAPI->observer().getVespene();
 }
 
 bool Builder::buildStructure(Order& order_)
@@ -13,7 +19,7 @@ bool Builder::buildStructure(Order& order_)
     if (m_freeWorkers.empty())
         return false;
 
-    if (!techRequirementMet(order_))
+    if (!canBuild(order_))
         return false;
 
     order_.m_assignee = m_freeWorkers.back();
@@ -30,6 +36,9 @@ bool Builder::buildStructure(Order& order_)
 
     gAPI->action().command(order_, point);
 
+    m_minerals -= order_.m_mineralCost;
+    m_vespene -= order_.m_vespeneCost;
+
     return true;
 }
 
@@ -39,16 +48,22 @@ bool Builder::trainUnit(const Order& order_)
     if (!order_.m_assignee)
         return false;
 
-    if (!techRequirementMet(order_))
+    if (!canBuild(order_))
         return false;
 
     gAPI->action().command(order_);
 
+    m_minerals -= order_.m_mineralCost;
+    m_vespene -= order_.m_vespeneCost;
+
     return true;
 }
 
-bool Builder::techRequirementMet(const Order& order_) const
+bool Builder::canBuild(const Order& order_) const
 {
+    if (m_minerals < order_.m_mineralCost || m_vespene < order_.m_vespeneCost)
+        return false;
+
     // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
     return order_.m_techRequirement == sc2::UNIT_TYPEID::INVALID ||
         gAPI->observer().countUnitType(order_.m_techRequirement) > 0;
