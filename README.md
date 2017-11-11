@@ -1,4 +1,7 @@
 # suvorov-bot
+
+[![Build Status](https://travis-ci.org/alkurbatov/suvorov-bot.png?branch=master)](https://travis-ci.org/alkurbatov/suvorov-bot)
+
 Starcraft 2 Terran bot.
 
 ## Build instructions
