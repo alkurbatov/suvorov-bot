@@ -11,10 +11,10 @@ find_package(Boost 1.54 REQUIRED log log_setup system thread)
 set(CMAKE_CXX_STANDARD 14)
 
 # Disable building of examples in the sc2api submodule.
-set(BUILD_API_EXAMPLES OFF)
+set(BUILD_API_EXAMPLES OFF CACHE INTERNAL "" FORCE)
 
 # Disable building of tests in the sc2api submodule.
-set(BUILD_API_TESTS OFF)
+set(BUILD_API_TESTS OFF CACHE INTERNAL "" FORCE)
 
 add_subdirectory("s2client-api")
 add_subdirectory("src")
