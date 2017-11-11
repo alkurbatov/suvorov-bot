@@ -10,5 +10,11 @@ find_package(Boost 1.58 REQUIRED log log_setup system thread)
 # Build with c++14 support, required by sc2api.
 set(CMAKE_CXX_STANDARD 14)
 
+# Disable building of examples in the sc2api submodule.
+set(BUILD_API_EXAMPLES OFF)
+
+# Disable building of tests in the sc2api submodule.
+set(BUILD_API_TESTS OFF)
+
 add_subdirectory("s2client-api")
 add_subdirectory("src")
