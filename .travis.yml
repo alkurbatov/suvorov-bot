@@ -9,7 +9,6 @@ before_install:
 
 install:
   - sudo apt-get install -y g++-5
-  - sudo apt-get install -y libboost-{all-dev,log-dev,system-dev,thread-dev}
   - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90
   - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
 

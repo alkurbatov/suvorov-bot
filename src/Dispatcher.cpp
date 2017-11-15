@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <sc2api/sc2_unit.h>
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_typeenums.h>
@@ -14,7 +16,7 @@ Dispatcher::Dispatcher()
 
 void Dispatcher::OnGameStart()
 {
-    BOOST_LOG_SEV(m_logger, info) << "New Game started!";
+    std::cout << "New Game started!" << std::endl;
 
     auto& data = Observation()->GetUnitTypeData();
 
@@ -31,9 +33,8 @@ void Dispatcher::OnGameStart()
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_)
 {
-    BOOST_LOG_SEV(m_logger, info) <<
-        "Loop Step #" << Observation()->GetGameLoop() <<
-        ": Building was created, tag: " << building_->tag;
+    std::cout << "Loop Step #" << Observation()->GetGameLoop() <<
+        ": Building was created, tag: " << building_->tag << std::endl;
 }
 
 void Dispatcher::OnStep()
@@ -72,9 +73,8 @@ void Dispatcher::OnStep()
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_)
 {
-    BOOST_LOG_SEV(m_logger, info) <<
-        "Loop Step #" << Observation()->GetGameLoop() <<
-        ": Unit was created, tag: " << unit_->tag;
+    std::cout << "Loop Step #" << Observation()->GetGameLoop() <<
+        ": Unit was created, tag: " << unit_->tag << std::endl;
 
     m_forceCommander.OnUnitCreated(unit_);
 }

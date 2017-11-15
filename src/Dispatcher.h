@@ -4,16 +4,11 @@
 #include <list>
 #include <queue>
 
-#include <boost/log/trivial.hpp>
-#include <boost/log/sources/severity_logger.hpp>
-
 #include <sc2api/sc2_agent.h>
 
 #include "Order.h"
 #include "Builder.h"
 #include "ForceCommander.h"
-
-using namespace boost::log::trivial;
 
 // The main bot class.
 class Dispatcher: public sc2::Agent
@@ -37,8 +32,6 @@ private:
 
     std::queue<Order> m_constructionOrders;
     std::list<Order> m_trainingOrders;
-
-    boost::log::sources::severity_logger<severity_level> m_logger;
 };
 
 #endif
