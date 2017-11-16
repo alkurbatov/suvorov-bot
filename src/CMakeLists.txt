@@ -24,7 +24,7 @@ ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
 # Create the executable.
 add_executable(Suvorov ${BOT_SOURCES})
 target_link_libraries(Suvorov
-    sc2api sc2lib sc2utils sc2protocol civetweb protobuf
+    sc2api sc2lib sc2utils sc2protocol civetweb libprotobuf
 )
 
 if (APPLE)
