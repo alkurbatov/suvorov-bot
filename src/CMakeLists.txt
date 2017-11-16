@@ -18,9 +18,6 @@ else ()
     ")
 endif ()
 
-# Request dynamic linking for Boost_LOG_LIBRARY.
-ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
-
 # Create the executable.
 add_executable(Suvorov ${BOT_SOURCES})
 target_link_libraries(Suvorov
