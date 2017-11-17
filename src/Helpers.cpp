@@ -23,7 +23,7 @@ bool isFreeWorker::operator()(const sc2::Unit& unit_)
 
 bool isBuildingOrder::operator()(const sc2::UnitOrder& order_)
 {
-    switch(Convert::toAbilityID(order_.ability_id)) {
+    switch(convert::toAbilityID(order_.ability_id)) {
         case sc2::ABILITY_ID:: BUILD_COMMANDCENTER:
         case sc2::ABILITY_ID:: BUILD_SUPPLYDEPOT:
         case sc2::ABILITY_ID:: BUILD_REFINERY:

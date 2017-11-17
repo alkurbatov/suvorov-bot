@@ -3,20 +3,20 @@
 
 #include <sc2api/sc2_typeenums.h>
 
-// The Collection of type conversion utilities
-struct Convert
+// The collection of type conversion utilities
+namespace convert
 {
 
-static sc2::UnitTypeID toUnitTypeID(sc2::UNIT_TYPEID id_)
+inline sc2::UnitTypeID toUnitTypeID(sc2::UNIT_TYPEID id_)
 {
     return static_cast<sc2::UnitTypeID>(id_);
 }
 
-static sc2::ABILITY_ID toAbilityID(sc2::AbilityID id_)
+inline sc2::ABILITY_ID toAbilityID(sc2::AbilityID id_)
 {
     return static_cast<sc2::ABILITY_ID>(id_);
 }
 
-};
+} // namespace convert
 
 #endif
