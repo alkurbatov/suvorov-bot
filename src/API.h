@@ -1,9 +1,9 @@
 #ifndef API_H
 #define API_H
 
-#include <sc2api/sc2_interfaces.h>
+#include "Order.h"
 
-struct Order;
+#include <sc2api/sc2_interfaces.h>
 
 namespace API
 {

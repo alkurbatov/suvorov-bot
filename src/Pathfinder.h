@@ -1,11 +1,7 @@
 #ifndef PATHFINDER_H
 #define PATHFINDER_H
 
-namespace sc2
-{
-class Unit;
-struct Point2D;
-} // namespace sc2
+#include <sc2api/sc2_unit.h>
 
 struct Pathfinder
 {

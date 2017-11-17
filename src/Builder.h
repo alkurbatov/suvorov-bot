@@ -1,9 +1,9 @@
 #ifndef BUILDER_H
 #define BUILDER_H
 
-#include <sc2api/sc2_unit.h>
+#include "Order.h"
 
-struct Order;
+#include <sc2api/sc2_unit.h>
 
 struct Builder
 {

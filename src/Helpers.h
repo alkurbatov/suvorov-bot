@@ -2,11 +2,7 @@
 #define HELPERS_H
 
 #include <sc2api/sc2_common.h>
-
-namespace sc2
-{
-class Unit;
-} // namespace sc2
+#include <sc2api/sc2_unit.h>
 
 struct isUnit
 {
