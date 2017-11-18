@@ -1,7 +1,5 @@
-#include <sc2api/sc2_unit.h>
-
-#include "Helpers.h"
 #include "Converter.h"
+#include "Helpers.h"
 
 isUnit::isUnit(sc2::UNIT_TYPEID type_): m_type(type_)
 {}

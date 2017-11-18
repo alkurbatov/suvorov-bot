@@ -1,6 +1,5 @@
 #include "API.h"
 #include "Builder.h"
-#include "Order.h"
 #include "Helpers.h"
 
 Builder::Builder(): m_minerals(0), m_vespene(0), m_availableFood(0.0f)

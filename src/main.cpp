@@ -1,10 +1,10 @@
+#include "Dispatcher.h"
+
 #include <iostream>
 
-#include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_coordinator.h>
+#include <sc2api/sc2_gametypes.h>
 #include <sc2utils/sc2_manage_process.h>
-
-#include "Dispatcher.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {

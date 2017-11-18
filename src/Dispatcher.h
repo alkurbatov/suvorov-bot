@@ -1,13 +1,13 @@
 #pragma once
 
+#include "Order.h"
+#include "Builder.h"
+#include "ForceCommander.h"
+
 #include <list>
 #include <queue>
 
 #include <sc2api/sc2_agent.h>
-
-#include "Order.h"
-#include "Builder.h"
-#include "ForceCommander.h"
 
 // The main bot class.
 class Dispatcher: public sc2::Agent

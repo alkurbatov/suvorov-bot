@@ -1,6 +1,6 @@
 #include "API.h"
-#include "Pathfinder.h"
 #include "ForceCommander.h"
+#include "Pathfinder.h"
 
 ForceCommander::ForceCommander(): m_attackStarted(false)
 {}

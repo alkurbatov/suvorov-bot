@@ -1,8 +1,8 @@
+#include "API.h"
+#include "Pathfinder.h"
+
 #include <sc2api/sc2_map_info.h>
 #include <sc2api/sc2_typeenums.h>
-
-#include "Pathfinder.h"
-#include "API.h"
 
 const sc2::Unit* Pathfinder::findNearestMineralPatch(const sc2::Point2D& start_)
 {

@@ -1,13 +1,13 @@
-#include <iostream>
-
-#include <sc2api/sc2_unit.h>
-#include <sc2api/sc2_common.h>
-#include <sc2api/sc2_typeenums.h>
-
 #include "API.h"
 #include "Converter.h"
-#include "Pathfinder.h"
 #include "Dispatcher.h"
+#include "Pathfinder.h"
+
+#include <iostream>
+
+#include <sc2api/sc2_common.h>
+#include <sc2api/sc2_typeenums.h>
+#include <sc2api/sc2_unit.h>
 
 Dispatcher::Dispatcher()
 {
