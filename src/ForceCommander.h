@@ -1,5 +1,4 @@
-#ifndef FORCECOMMANDER_H
-#define FORCECOMMANDER_H
+#pragma once
 
 #include <sc2api/sc2_unit.h>
 
@@ -15,5 +14,3 @@ private:
     sc2::Units m_units;
     bool m_attackStarted;
 };
-
-#endif

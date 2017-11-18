@@ -1,5 +1,4 @@
-#ifndef DISPATCHER_H
-#define DISPATCHER_H
+#pragma once
 
 #include <list>
 #include <queue>
@@ -33,5 +32,3 @@ private:
     std::queue<Order> m_constructionOrders;
     std::list<Order> m_trainingOrders;
 };
-
-#endif

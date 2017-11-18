@@ -1,5 +1,4 @@
-#ifndef ORDER_H
-#define ORDER_H
+#pragma once
 
 #include <sc2api/sc2_data.h>
 #include <sc2api/sc2_unit.h>
@@ -13,5 +12,3 @@ struct Order
     sc2::UnitTypeData m_data; 
     const sc2::Unit* m_assignee;
 };
-
-#endif

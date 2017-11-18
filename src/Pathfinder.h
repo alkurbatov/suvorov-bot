@@ -1,5 +1,4 @@
-#ifndef PATHFINDER_H
-#define PATHFINDER_H
+#pragma once
 
 #include <sc2api/sc2_unit.h>
 
@@ -9,5 +8,3 @@ struct Pathfinder
 
     static sc2::Point2D getEnemyBaseLocation();
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef HELPERS_H
-#define HELPERS_H
+#pragma once
 
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
@@ -23,5 +22,3 @@ struct isBuildingOrder
 {
     bool operator()(const sc2::UnitOrder& order_);
 };
-
-#endif

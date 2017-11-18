@@ -1,5 +1,4 @@
-#ifndef API_H
-#define API_H
+#pragma once
 
 #include "Order.h"
 
@@ -76,5 +75,3 @@ private:
 } // namespace API
 
 extern std::unique_ptr<API::Interface> gAPI;
-
-#endif

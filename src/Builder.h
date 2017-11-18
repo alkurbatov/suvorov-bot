@@ -1,5 +1,4 @@
-#ifndef BUILDER_H
-#define BUILDER_H
+#pragma once
 
 #include "Order.h"
 
@@ -25,5 +24,3 @@ private:
 
     float m_availableFood;
 };
-
-#endif

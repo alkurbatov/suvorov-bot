@@ -1,5 +1,4 @@
-#ifndef CONVERTER_H
-#define CONVERTER_H
+#pragma once
 
 #include <sc2api/sc2_typeenums.h>
 
@@ -18,5 +17,3 @@ inline sc2::ABILITY_ID toAbilityID(sc2::AbilityID id_)
 }
 
 } // namespace convert
-
-#endif
