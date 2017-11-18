@@ -11,13 +11,16 @@
     - [Build instructions](#build-instructions)
         - [Windows](#windows)
         - [Linux and OS X](#linux-and-os-x)
+    - [Coding Standard](#coding-standard)
     - [License](#license)
 
-## About
+About
+-----
 
 Starcraft 2 Terran bot.
 
-## Build requirements
+Build requirements
+------------------
 
 * Download and install [Ladder 2017 Season 3 map pack](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season3.zip)
 * Download and install [CMake](https://cmake.org/download/).
@@ -31,7 +34,8 @@ Starcraft 2 Terran bot.
 ### OS X
 * Install XCode commandline tools.
 
-## Build instructions
+Build instructions
+------------------
 
 ### Windows
 
@@ -74,7 +78,13 @@ $ make
 $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
 ```
 
-## License
+Coding Standard
+---------------
+
+We follow [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+
+License
+-------
 
 Copyright (c) 2017
 
