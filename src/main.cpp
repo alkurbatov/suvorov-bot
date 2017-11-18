@@ -1,4 +1,5 @@
 #include "Dispatcher.h"
+#include "Historican.h"
 
 #include <iostream>
 
@@ -11,6 +12,8 @@ int main(int argc, char* argv[]) {
         std::cerr << "Please specify absolute path to the map file!" << std::endl;
         return -1;
     }
+
+    gHistory.init("bin/history.log");
 
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(1, argv);

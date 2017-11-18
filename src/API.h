@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Historican.h"
 #include "Order.h"
 
 #include <sc2api/sc2_interfaces.h>

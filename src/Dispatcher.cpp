@@ -1,9 +1,8 @@
 #include "API.h"
 #include "Converter.h"
 #include "Dispatcher.h"
+#include "Historican.h"
 #include "Pathfinder.h"
-
-#include <iostream>
 
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_typeenums.h>
@@ -16,7 +15,7 @@ Dispatcher::Dispatcher()
 
 void Dispatcher::OnGameStart()
 {
-    std::cout << "New Game started!" << std::endl;
+    gHistory << "New Game started!" << std::endl;
 
     auto& data = Observation()->GetUnitTypeData();
 
@@ -33,7 +32,7 @@ void Dispatcher::OnGameStart()
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_)
 {
-    std::cout << "Loop Step #" << Observation()->GetGameLoop() <<
+    gHistory << "Loop Step #" << Observation()->GetGameLoop() <<
         ": Building was created, tag: " << building_->tag << std::endl;
 }
 
@@ -73,7 +72,7 @@ void Dispatcher::OnStep()
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_)
 {
-    std::cout << "Loop Step #" << Observation()->GetGameLoop() <<
+    gHistory << "Loop Step #" << Observation()->GetGameLoop() <<
         ": Unit was created, tag: " << unit_->tag << std::endl;
 
     m_forceCommander.OnUnitCreated(unit_);
