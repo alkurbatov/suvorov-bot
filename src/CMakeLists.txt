@@ -1,3 +1,7 @@
+# The MIT License (MIT)
+#
+# Copyright (c) 2017-2018 Alexander Kurbatov
+
 # All the source files for the bot.
 file(GLOB BOT_SOURCES "*.cpp" "*.h")
 

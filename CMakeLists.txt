@@ -1,3 +1,7 @@
+# The MIT License (MIT)
+#
+# Copyright (c) 2017-2018 Alexander Kurbatov
+
 cmake_minimum_required(VERSION 3.1)
 
 project(Suvorov)

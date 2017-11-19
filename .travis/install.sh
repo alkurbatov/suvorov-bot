@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# The MIT License (MIT)
+#
+# Copyright (c) 2017-2018 Alexander Kurbatov
 
 if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     sudo apt-get install -y g++-5
