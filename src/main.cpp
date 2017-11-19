@@ -1,19 +1,19 @@
 #include "Dispatcher.h"
 #include "Historican.h"
 
-#include <iostream>
-
 #include <sc2api/sc2_coordinator.h>
 #include <sc2api/sc2_gametypes.h>
 #include <sc2utils/sc2_manage_process.h>
 
+#include <iostream>
+
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Please specify absolute path to the map file!" << std::endl;
+        std::cerr << "Provide absolute path to the map file!" << std::endl;
         return -1;
     }
 
-    gHistory.init("bin/history.log");
+    gHistory.Init("bin/history.log");
 
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(1, argv);

@@ -1,27 +1,25 @@
 #include "Converter.h"
 #include "Helpers.h"
 
-isUnit::isUnit(sc2::UNIT_TYPEID type_): m_type(type_)
-{}
+IsUnit::IsUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
+}
 
-bool isUnit::operator()(const sc2::Unit& unit_)
-{
+bool IsUnit::operator()(const sc2::Unit& unit_) {
     // Don't report the units under construction.
     return unit_.unit_type == m_type && unit_.build_progress == 1.0f;
 }
 
-bool isFreeWorker::operator()(const sc2::Unit& unit_)
-{
+bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
     if (unit_.unit_type != sc2::UNIT_TYPEID::TERRAN_SCV)
         return false;
 
-    auto it = std::find_if(unit_.orders.begin(), unit_.orders.end(), isBuildingOrder());
+    auto it = std::find_if(unit_.orders.begin(), unit_.orders.end(),
+        IsBuildingOrder());
     return it == unit_.orders.end();
 }
 
-bool isBuildingOrder::operator()(const sc2::UnitOrder& order_)
-{
-    switch(convert::toAbilityID(order_.ability_id)) {
+bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {
+    switch (convert::ToAbilityID(order_.ability_id)) {
         case sc2::ABILITY_ID:: BUILD_COMMANDCENTER:
         case sc2::ABILITY_ID:: BUILD_SUPPLYDEPOT:
         case sc2::ABILITY_ID:: BUILD_REFINERY:

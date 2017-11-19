@@ -4,23 +4,22 @@
 
 #include <sc2api/sc2_unit.h>
 
-struct Builder
-{
+struct Builder {
     Builder();
 
-    void onStep();
+    void OnStep();
 
-    bool buildStructure(Order& order_);
+    bool BuildStructure(Order* order_);
 
-    bool trainUnit(const Order& order_);
+    bool TrainUnit(const Order& order_);
 
 private:
-    bool canBuild(const Order& order_) const;
+    bool CanBuild(const Order& order_) const;
 
-    sc2::Units m_freeWorkers;
+    sc2::Units m_free_workers;
 
     int32_t m_minerals;
     int32_t m_vespene;
 
-    float m_availableFood;
+    float m_available_food;
 };

@@ -5,58 +5,55 @@
 
 #include <sc2api/sc2_interfaces.h>
 
-namespace API
-{
+#include <memory>
 
-struct Action
-{
+namespace API {
+
+struct Action {
     explicit Action(sc2::ActionInterface* action_);
 
-    void command(const Order& order_);
+    void Command(const Order& order_);
 
-    void command(const Order& order_, const sc2::Point2D& point_);
+    void Command(const Order& order_, const sc2::Point2D& point_);
 
-    void attack(const sc2::Units& units_, const sc2::Point2D& point_);
+    void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
 
 private:
     sc2::ActionInterface* m_action;
 };
 
-struct Observer
-{
+struct Observer {
     explicit Observer(const sc2::ObservationInterface* observer_);
 
-    sc2::Units getUnits(const sc2::Filter& filter_,
+    sc2::Units GetUnits(const sc2::Filter& filter_,
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
 
-    size_t countUnitType(sc2::UNIT_TYPEID type_) const;
+    size_t CountUnitType(sc2::UNIT_TYPEID type_) const;
 
-    const sc2::GameInfo& gameInfo() const;
+    const sc2::GameInfo& GameInfo() const;
 
-    sc2::Point3D startingLocation() const;
+    sc2::Point3D StartingLocation() const;
 
-    int32_t getMinerals() const;
+    int32_t GetMinerals() const;
 
-    int32_t getVespene() const;
+    int32_t GetVespene() const;
 
-    float getAvailableFood() const;
+    float GetAvailableFood() const;
 
 private:
     const sc2::ObservationInterface* m_observer;
 };
 
-struct Query
-{
+struct Query {
     explicit Query(sc2::QueryInterface* query_);
 
-    bool canBePlaced(const Order& order_, const sc2::Point2D& point_);
+    bool CanBePlaced(const Order& order_, const sc2::Point2D& point_);
 
 private:
     sc2::QueryInterface* m_query;
 };
 
-struct Interface
-{
+struct Interface {
     Interface(sc2::ActionInterface* action_,
         const sc2::ObservationInterface* observer_,
         sc2::QueryInterface* query_);
@@ -73,6 +70,6 @@ private:
     sc2::QueryInterface* m_query;
 };
 
-} // namespace API
+}  // namespace API
 
 extern std::unique_ptr<API::Interface> gAPI;

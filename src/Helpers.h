@@ -3,9 +3,8 @@
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
 
-struct isUnit
-{
-    explicit isUnit(sc2::UNIT_TYPEID type_);
+struct IsUnit {
+    explicit IsUnit(sc2::UNIT_TYPEID type_);
 
     bool operator()(const sc2::Unit& unit_);
 
@@ -13,12 +12,10 @@ private:
     sc2::UNIT_TYPEID m_type;
 };
 
-struct isFreeWorker
-{
+struct IsFreeWorker {
     bool operator()(const sc2::Unit& unit_);
 };
 
-struct isBuildingOrder
-{
+struct IsBuildingOrder {
     bool operator()(const sc2::UnitOrder& order_);
 };

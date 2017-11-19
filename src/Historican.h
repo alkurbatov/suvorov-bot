@@ -3,15 +3,13 @@
 #include <fstream>
 #include <iostream>
 
-struct Historican
-{
+struct Historican {
     ~Historican();
 
-    void init(const std::string &filename_);
+    void Init(const std::string &filename_);
 
     template <class T>
-    Historican& operator<<(const T& data_)
-    {
+    Historican& operator<<(const T& data_) {
         m_file << data_;
         std::cout << data_;
 
