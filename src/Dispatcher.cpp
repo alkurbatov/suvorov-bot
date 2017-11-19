@@ -90,8 +90,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     switch (unit_->unit_type.ToType()) {
         case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER: {
             // If we can add more SCVs do it.
-            if (unit_->assigned_harvesters == 0 ||
-                unit_->assigned_harvesters < unit_->ideal_harvesters) {
+            if (unit_->assigned_harvesters < unit_->ideal_harvesters) {
                 m_training_orders.emplace_back(Observation()->GetUnitTypeData()[
                     convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SCV)], unit_);
             }
