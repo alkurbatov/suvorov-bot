@@ -23,7 +23,7 @@ bool Builder::buildStructure(Order& order_)
     if (!canBuild(order_))
         return false;
 
-    order_.m_assignee = m_freeWorkers.back();
+    order_.assignee = m_freeWorkers.back();
     m_freeWorkers.pop_back();
 
     // Find place to build the structure
@@ -37,8 +37,8 @@ bool Builder::buildStructure(Order& order_)
 
     gAPI->action().command(order_, point);
 
-    m_minerals -= order_.m_data.mineral_cost;
-    m_vespene -= order_.m_data.vespene_cost;
+    m_minerals -= order_.data.mineral_cost;
+    m_vespene -= order_.data.vespene_cost;
 
     return true;
 }
@@ -46,31 +46,31 @@ bool Builder::buildStructure(Order& order_)
 bool Builder::trainUnit(const Order& order_)
 {
     // FIXME: implement assignment of proper producing structure
-    if (!order_.m_assignee)
+    if (!order_.assignee)
         return false;
 
     if (!canBuild(order_))
         return false;
 
-    if (m_availableFood < order_.m_data.food_required)
+    if (m_availableFood < order_.data.food_required)
         return false;
 
     gAPI->action().command(order_);
 
-    m_minerals -= order_.m_data.mineral_cost;
-    m_vespene -= order_.m_data.vespene_cost;
+    m_minerals -= order_.data.mineral_cost;
+    m_vespene -= order_.data.vespene_cost;
 
-    m_availableFood -= order_.m_data.food_required;
+    m_availableFood -= order_.data.food_required;
 
     return true;
 }
 
 bool Builder::canBuild(const Order& order_) const
 {
-    if (m_minerals < order_.m_data.mineral_cost || m_vespene < order_.m_data.vespene_cost)
+    if (m_minerals < order_.data.mineral_cost || m_vespene < order_.data.vespene_cost)
         return false;
 
     // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
-    return order_.m_data.tech_requirement == sc2::UNIT_TYPEID::INVALID ||
-        gAPI->observer().countUnitType(order_.m_data.tech_requirement) > 0;
+    return order_.data.tech_requirement == sc2::UNIT_TYPEID::INVALID ||
+        gAPI->observer().countUnitType(order_.data.tech_requirement) > 0;
 }

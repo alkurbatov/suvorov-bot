@@ -6,9 +6,9 @@
 struct Order
 {
     explicit Order(const sc2::UnitTypeData& data_, const sc2::Unit* assignee_ = nullptr):
-        m_data(data_), m_assignee(assignee_)
+        data(data_), assignee(assignee_)
     {}
 
-    sc2::UnitTypeData m_data; 
-    const sc2::Unit* m_assignee;
+    sc2::UnitTypeData data; 
+    const sc2::Unit* assignee;
 };
