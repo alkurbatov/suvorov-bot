@@ -5,3 +5,6 @@ build
 .vscode/*
 !.vscode/launch.json
 !.vscode/tasks.json
+
+# Google linter
+cpplint.py

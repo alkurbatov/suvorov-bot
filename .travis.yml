@@ -16,6 +16,7 @@ install:
   - . .travis/install.sh
 
 script:
+  - . .travis/lint.sh
   - mkdir build
   - cd build
   - cmake ../
