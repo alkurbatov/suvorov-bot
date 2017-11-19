@@ -6,8 +6,7 @@
 #include <sc2api/sc2_typeenums.h>
 
 const sc2::Unit* Pathfinder::FindMineralPatch(const sc2::Point2D& point_) {
-    return gAPI->observer().GetClosestUnit(point_,
-        sc2::IsUnit(sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD),
+    return gAPI->observer().GetClosestUnit(point_, IsMineralPatch(),
         sc2::Unit::Alliance::Neutral);
 }
 

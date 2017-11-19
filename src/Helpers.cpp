@@ -9,6 +9,10 @@ bool IsUnit::operator()(const sc2::Unit& unit_) {
     return unit_.unit_type == m_type && unit_.build_progress == 1.0f;
 }
 
+bool IsMineralPatch::operator()(const sc2::Unit& unit_) {
+    return unit_.mineral_contents > 0;
+}
+
 bool IsGeiser::operator()(const sc2::Unit& unit_) {
     return unit_.vespene_contents > 0;
 }
