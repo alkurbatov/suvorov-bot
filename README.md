@@ -81,7 +81,8 @@ $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Ma
 Coding Standard
 ---------------
 
-We follow [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
+We follow slightly modified [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
+See [.travis/lint.sh](.travis/lint.sh) for details.
 
 License
 -------
