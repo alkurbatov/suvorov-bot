@@ -11,6 +11,8 @@ struct Builder {
 
     bool BuildStructure(Order* order_);
 
+    bool BuildRefinery(Order* order_);
+
     bool TrainUnit(const Order& order_);
 
 private:

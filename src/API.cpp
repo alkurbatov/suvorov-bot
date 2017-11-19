@@ -1,6 +1,8 @@
 #include "API.h"
 #include "Helpers.h"
 
+#include <limits>
+
 namespace API {
 
 Action::Action(sc2::ActionInterface* action_): m_action(action_) {
@@ -8,6 +10,10 @@ Action::Action(sc2::ActionInterface* action_): m_action(action_) {
 
 void Action::Command(const Order& order_) {
     m_action->UnitCommand(order_.assignee, order_.data.ability_id);
+}
+
+void Action::Command(const Order& order_, const sc2::Unit* unit_) {
+    m_action->UnitCommand(order_.assignee, order_.data.ability_id, unit_);
 }
 
 void Action::Command(const Order& order_, const sc2::Point2D& point_) {
@@ -25,6 +31,24 @@ Observer::Observer(const sc2::ObservationInterface* observer_):
 sc2::Units Observer::GetUnits(const sc2::Filter& filter_,
     sc2::Unit::Alliance alliance_) const {
     return m_observer->GetUnits(alliance_, filter_);
+}
+
+const sc2::Unit* Observer::GetClosestUnit(const sc2::Point2D& point_,
+    const sc2::Filter& filter_, sc2::Unit::Alliance alliance_) const {
+    float distance = std::numeric_limits<float>::max();
+
+    sc2::Units units = GetUnits(filter_, alliance_);
+
+    const sc2::Unit* target = nullptr;
+    for (const auto& i : units) {
+        float d = sc2::DistanceSquared2D(i->pos, point_);
+        if (d < distance) {
+            distance = d;
+            target = i;
+        }
+    }
+
+    return target;
 }
 
 size_t Observer::CountUnitType(sc2::UNIT_TYPEID type_) const {

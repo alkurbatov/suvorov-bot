@@ -14,6 +14,8 @@ struct Action {
 
     void Command(const Order& order_);
 
+    void Command(const Order& order_, const sc2::Unit* unit_);
+
     void Command(const Order& order_, const sc2::Point2D& point_);
 
     void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
@@ -27,6 +29,9 @@ struct Observer {
 
     sc2::Units GetUnits(const sc2::Filter& filter_,
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
+
+    const sc2::Unit* GetClosestUnit(const sc2::Point2D& point_,
+        const sc2::Filter& filter_, sc2::Unit::Alliance alliance_) const;
 
     size_t CountUnitType(sc2::UNIT_TYPEID type_) const;
 

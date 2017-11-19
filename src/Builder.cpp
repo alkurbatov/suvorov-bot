@@ -1,6 +1,7 @@
 #include "API.h"
 #include "Builder.h"
 #include "Helpers.h"
+#include "Pathfinder.h"
 
 Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
 }
@@ -15,14 +16,14 @@ void Builder::OnStep() {
 }
 
 bool Builder::BuildStructure(Order* order_) {
+    if (order_->data.ability_id == sc2::ABILITY_ID::BUILD_REFINERY)
+        return BuildRefinery(order_);
+
     if (m_free_workers.empty())
         return false;
 
     if (!CanBuild(*order_))
         return false;
-
-    order_->assignee = m_free_workers.back();
-    m_free_workers.pop_back();
 
     // Find place to build the structure
     sc2::Point3D base = gAPI->observer().StartingLocation();
@@ -33,7 +34,34 @@ bool Builder::BuildStructure(Order* order_) {
         point.y = base.y + sc2::GetRandomScalar() * 15.0f;
     } while (!gAPI->query().CanBePlaced(*order_, point));
 
+    order_->assignee = m_free_workers.back();
+    m_free_workers.pop_back();
+
     gAPI->action().Command(*order_, point);
+
+    m_minerals -= order_->data.mineral_cost;
+    m_vespene -= order_->data.vespene_cost;
+
+    return true;
+}
+
+bool Builder::BuildRefinery(Order* order_) {
+    if (m_free_workers.empty())
+        return false;
+
+    if (!CanBuild(*order_))
+        return false;
+
+    sc2::Point3D base = gAPI->observer().StartingLocation();
+
+    const sc2::Unit* geiser = Pathfinder::FindVespeneGeyser(base);
+    if (!geiser)
+        return false;
+
+    order_->assignee = m_free_workers.back();
+    m_free_workers.pop_back();
+
+    gAPI->action().Command(*order_, geiser);
 
     m_minerals -= order_->data.mineral_cost;
     m_vespene -= order_->data.vespene_cost;

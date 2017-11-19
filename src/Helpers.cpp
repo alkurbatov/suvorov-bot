@@ -9,6 +9,10 @@ bool IsUnit::operator()(const sc2::Unit& unit_) {
     return unit_.unit_type == m_type && unit_.build_progress == 1.0f;
 }
 
+bool IsGeiser::operator()(const sc2::Unit& unit_) {
+    return unit_.vespene_contents > 0;
+}
+
 bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
     if (unit_.unit_type != sc2::UNIT_TYPEID::TERRAN_SCV)
         return false;

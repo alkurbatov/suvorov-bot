@@ -1,27 +1,19 @@
 #include "API.h"
+#include "Helpers.h"
 #include "Pathfinder.h"
 
 #include <sc2api/sc2_map_info.h>
 #include <sc2api/sc2_typeenums.h>
 
-#include <limits>
-
-const sc2::Unit* Pathfinder::FindMineralPatch(const sc2::Point2D& start_) {
-    float distance = std::numeric_limits<float>::max();
-    sc2::Units units = gAPI->observer().GetUnits(
+const sc2::Unit* Pathfinder::FindMineralPatch(const sc2::Point2D& point_) {
+    return gAPI->observer().GetClosestUnit(point_,
         sc2::IsUnit(sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD),
         sc2::Unit::Alliance::Neutral);
+}
 
-    const sc2::Unit* target = nullptr;
-    for (const auto& i : units) {
-        float d = sc2::DistanceSquared2D(i->pos, start_);
-        if (d < distance) {
-            distance = d;
-            target = i;
-        }
-    }
-
-    return target;
+const sc2::Unit* Pathfinder::FindVespeneGeyser(const sc2::Point2D& point_) {
+    return gAPI->observer().GetClosestUnit(point_, IsGeiser(),
+        sc2::Unit::Alliance::Neutral);
 }
 
 sc2::Point2D Pathfinder::GetEnemyBaseLocation() {

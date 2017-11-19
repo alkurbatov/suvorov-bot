@@ -12,6 +12,11 @@ private:
     sc2::UNIT_TYPEID m_type;
 };
 
+// Check that the provided unit is not depleted geyser
+struct IsGeiser {
+    bool operator()(const sc2::Unit& unit_);
+};
+
 struct IsFreeWorker {
     bool operator()(const sc2::Unit& unit_);
 };

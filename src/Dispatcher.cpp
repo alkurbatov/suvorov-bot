@@ -23,6 +23,8 @@ void Dispatcher::OnGameStart() {
     m_construction_orders.emplace(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
     m_construction_orders.emplace(data[
+        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_REFINERY)]);
+    m_construction_orders.emplace(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
     m_construction_orders.emplace(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
