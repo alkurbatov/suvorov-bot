@@ -6,6 +6,7 @@
 #include "Helpers.h"
 
 #include <limits>
+#include <memory>
 
 namespace API {
 
