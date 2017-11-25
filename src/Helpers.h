@@ -12,7 +12,7 @@ struct IsUnit {
 
     bool operator()(const sc2::Unit& unit_);
 
-private:
+ private:
     sc2::UNIT_TYPEID m_type;
 };
 

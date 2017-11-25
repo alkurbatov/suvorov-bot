@@ -24,7 +24,7 @@ struct Action {
 
     void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
 
-private:
+ private:
     sc2::ActionInterface* m_action;
 };
 
@@ -49,7 +49,7 @@ struct Observer {
 
     float GetAvailableFood() const;
 
-private:
+ private:
     const sc2::ObservationInterface* m_observer;
 };
 
@@ -58,7 +58,7 @@ struct Query {
 
     bool CanBePlaced(const Order& order_, const sc2::Point2D& point_);
 
-private:
+ private:
     sc2::QueryInterface* m_query;
 };
 
@@ -73,7 +73,7 @@ struct Interface {
 
     Query query() const;
 
-private:
+ private:
     sc2::ActionInterface* m_action;
     const sc2::ObservationInterface* m_observer;
     sc2::QueryInterface* m_query;

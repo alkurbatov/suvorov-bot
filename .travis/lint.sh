@@ -6,5 +6,5 @@
 
 python cpplint.py \
     --linelength=90 \
-    --filter=-build/header_guard,-build/include,-whitespace/indent \
+    --filter=-build/header_guard,-build/include \
     src/*

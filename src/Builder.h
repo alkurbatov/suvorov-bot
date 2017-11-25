@@ -19,7 +19,7 @@ struct Builder {
 
     bool TrainUnit(const Order& order_);
 
-private:
+ private:
     bool CanBuild(const Order& order_) const;
 
     sc2::Units m_free_workers;

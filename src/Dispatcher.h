@@ -17,7 +17,7 @@
 struct Dispatcher: sc2::Agent {
     Dispatcher();
 
-private:
+ private:
     void OnGameStart() final;
 
     void OnStep() final;

@@ -22,7 +22,7 @@ struct Historican {
 
     Historican& operator<<(std::ostream& (*manipulator_)(std::ostream&));
 
-private:
+ private:
     std::ofstream m_file;
 };
 

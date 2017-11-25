@@ -13,7 +13,7 @@ struct ForceCommander {
 
     void OnUnitCreated(const sc2::Unit* unit_);
 
-private:
+ private:
     sc2::Units m_units;
     bool m_attack_started;
 };
