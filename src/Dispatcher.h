@@ -6,6 +6,7 @@
 
 #include "Order.h"
 #include "Builder.h"
+#include "ChatterBox.h"
 #include "ForceCommander.h"
 
 #include <list>
@@ -29,6 +30,7 @@ struct Dispatcher: sc2::Agent {
     void OnUnitIdle(const sc2::Unit* unit_) final;
 
     Builder m_builder;
+    ChatterBox m_chatterbox;
     ForceCommander m_force_commander;
 
     std::queue<Order> m_construction_orders;

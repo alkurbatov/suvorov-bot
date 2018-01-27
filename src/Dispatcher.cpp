@@ -13,7 +13,7 @@
 #include <sc2api/sc2_unit.h>
 
 Dispatcher::Dispatcher() {
-    gAPI.reset(new API::Interface(Actions(), Observation(), Query()));
+    gAPI.reset(new API::Interface(Actions(), Debug(), Observation(), Query()));
 }
 
 void Dispatcher::OnGameStart() {
@@ -81,6 +81,8 @@ void Dispatcher::OnStep() {
 
     // m_constructionOrders.emplace(Observation()->GetUnitTypeData()[
     //     toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+
+    m_chatterbox.OnStep();
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {

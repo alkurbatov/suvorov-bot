@@ -7,6 +7,7 @@
 #include "Historican.h"
 #include "Order.h"
 
+#include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_interfaces.h>
 
 #include <memory>
@@ -26,6 +27,15 @@ struct Action {
 
  private:
     sc2::ActionInterface* m_action;
+};
+
+struct Debug {
+    explicit Debug(sc2::DebugInterface* debug_);
+
+    void EndGame();
+
+ private:
+    sc2::DebugInterface* m_debug;
 };
 
 struct Observer {
@@ -49,6 +59,9 @@ struct Observer {
 
     float GetAvailableFood() const;
 
+
+    const std::vector<sc2::ChatMessage>& GetChatMessages() const;
+
  private:
     const sc2::ObservationInterface* m_observer;
 };
@@ -64,10 +77,13 @@ struct Query {
 
 struct Interface {
     Interface(sc2::ActionInterface* action_,
+        sc2::DebugInterface* debug_,
         const sc2::ObservationInterface* observer_,
         sc2::QueryInterface* query_);
 
     Action action() const;
+
+    Debug debug() const;
 
     Observer observer() const;
 
@@ -75,6 +91,7 @@ struct Interface {
 
  private:
     sc2::ActionInterface* m_action;
+    sc2::DebugInterface* m_debug;
     const sc2::ObservationInterface* m_observer;
     sc2::QueryInterface* m_query;
 };

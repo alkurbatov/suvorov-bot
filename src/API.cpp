@@ -29,6 +29,14 @@ void Action::Attack(const sc2::Units& units_, const sc2::Point2D& point_) {
     m_action->UnitCommand(units_, sc2::ABILITY_ID::ATTACK_ATTACK, point_);
 }
 
+Debug::Debug(sc2::DebugInterface* debug_): m_debug(debug_) {
+}
+
+void Debug::EndGame() {
+    m_debug->DebugEndGame(true);
+    m_debug->SendDebug();
+}
+
 Observer::Observer(const sc2::ObservationInterface* observer_):
     m_observer(observer_) {
 }
@@ -81,6 +89,10 @@ float Observer::GetAvailableFood() const {
         m_observer->GetFoodCap() - m_observer->GetFoodUsed());
 }
 
+const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {
+    return m_observer->GetChatMessages();
+}
+
 Query::Query(sc2::QueryInterface* query_): m_query(query_) {
 }
 
@@ -88,13 +100,17 @@ bool Query::CanBePlaced(const Order& order_, const sc2::Point2D& point_) {
     return m_query->Placement(order_.data.ability_id, point_);
 }
 
-Interface::Interface(sc2::ActionInterface* action_,
+Interface::Interface(sc2::ActionInterface* action_, sc2::DebugInterface* debug_,
     const sc2::ObservationInterface* observer_, sc2::QueryInterface* query_):
-    m_action(action_), m_observer(observer_), m_query(query_) {
+    m_action(action_), m_debug(debug_), m_observer(observer_), m_query(query_) {
 }
 
 Action Interface::action() const {
     return Action(m_action);
+}
+
+Debug Interface::debug() const {
+    return Debug(m_debug);
 }
 
 Observer Interface::observer() const {
