@@ -5,5 +5,7 @@
 #pragma once
 
 struct ChatterBox {
+    void OnGameStart() const;
+
     void OnStep() const;
 };

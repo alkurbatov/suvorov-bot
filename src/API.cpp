@@ -29,6 +29,10 @@ void Action::Attack(const sc2::Units& units_, const sc2::Point2D& point_) {
     m_action->UnitCommand(units_, sc2::ABILITY_ID::ATTACK_ATTACK, point_);
 }
 
+void Action::SendMessage(const std::string& text_) {
+    m_action->SendChat(text_);
+}
+
 Debug::Debug(sc2::DebugInterface* debug_): m_debug(debug_) {
 }
 

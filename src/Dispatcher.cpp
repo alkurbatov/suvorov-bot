@@ -40,6 +40,8 @@ void Dispatcher::OnGameStart() {
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
     m_construction_orders.emplace(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+
+    m_chatterbox.OnGameStart();
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {

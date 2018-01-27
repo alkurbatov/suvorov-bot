@@ -6,6 +6,10 @@
 #include "ChatterBox.h"
 #include "Historican.h"
 
+void ChatterBox::OnGameStart() const {
+    gAPI->action().SendMessage("gl hf");
+}
+
 void ChatterBox::OnStep() const {
     auto messages = gAPI->observer().GetChatMessages();
 

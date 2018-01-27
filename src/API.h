@@ -25,6 +25,8 @@ struct Action {
 
     void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
 
+    void SendMessage(const std::string& text_);
+
  private:
     sc2::ActionInterface* m_action;
 };
