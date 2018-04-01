@@ -34,7 +34,11 @@ struct Action {
 struct Debug {
     explicit Debug(sc2::DebugInterface* debug_);
 
-    void EndGame();
+    void DrawText(const std::string& message_) const;
+
+    void EndGame() const;
+
+    void SendDebug() const;
 
  private:
     sc2::DebugInterface* m_debug;

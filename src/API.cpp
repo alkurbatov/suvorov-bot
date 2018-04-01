@@ -36,8 +36,16 @@ void Action::SendMessage(const std::string& text_) {
 Debug::Debug(sc2::DebugInterface* debug_): m_debug(debug_) {
 }
 
-void Debug::EndGame() {
+void Debug::DrawText(const std::string& message_) const {
+    m_debug->DebugTextOut(message_);
+}
+
+void Debug::EndGame() const {
     m_debug->DebugEndGame(true);
+    SendDebug();
+}
+
+void Debug::SendDebug() const {
     m_debug->SendDebug();
 }
 

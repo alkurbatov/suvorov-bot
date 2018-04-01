@@ -7,10 +7,10 @@
 #include "Order.h"
 #include "Builder.h"
 #include "ChatterBox.h"
+#include "Diagnosis.h"
 #include "ForceCommander.h"
 
 #include <list>
-#include <queue>
 
 #include <sc2api/sc2_agent.h>
 
@@ -31,8 +31,9 @@ struct Dispatcher: sc2::Agent {
 
     Builder m_builder;
     ChatterBox m_chatterbox;
+    Diagnosis m_diagnosis;
     ForceCommander m_force_commander;
 
-    std::queue<Order> m_construction_orders;
+    std::list<Order> m_construction_orders;
     std::list<Order> m_training_orders;
 };

@@ -22,23 +22,23 @@ void Dispatcher::OnGameStart() {
     auto& data = Observation()->GetUnitTypeData();
 
     // Initial build order
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_REFINERY)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_construction_orders.emplace(data[
+    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
 
     m_chatterbox.OnGameStart();
@@ -51,18 +51,18 @@ void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
 
 void Dispatcher::OnStep() {
     m_builder.OnStep();
+    m_chatterbox.OnStep();
     m_force_commander.OnStep();
 
-    while (!m_construction_orders.empty()) {
-        Order order = m_construction_orders.front();
-
-        if (!m_builder.BuildStructure(&order))
+    auto it = m_construction_orders.begin();
+    while (it != m_construction_orders.end()) {
+        if (!m_builder.BuildStructure(&(*it)))
             break;
 
-        m_construction_orders.pop();
+        m_construction_orders.erase(it);
     }
 
-    auto it = m_training_orders.begin();
+    it = m_training_orders.begin();
     while (it != m_training_orders.end()) {
         if (!m_builder.TrainUnit(*it)) {
             ++it;
@@ -84,7 +84,8 @@ void Dispatcher::OnStep() {
     // m_constructionOrders.emplace(Observation()->GetUnitTypeData()[
     //     toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
 
-    m_chatterbox.OnStep();
+    m_diagnosis.ShowBuildOrder(m_construction_orders);
+    m_diagnosis.OnStep();
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
