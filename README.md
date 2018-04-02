@@ -27,12 +27,16 @@ Build requirements
 
 ### Windows
 * Download and install [Visual Studio 2017](https://www.visualstudio.com/downloads/)
+* Install the 'cmake' utility.
 
 ### Linux
+* Install the 'cmake' utility.
+* Install 'gcc-c++'.
 * Install the 'make' utility.
 
 ### OS X
 * Install XCode commandline tools.
+* Install the 'cmake' utility.
 
 Build instructions
 ------------------
