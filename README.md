@@ -22,21 +22,21 @@ Starcraft 2 Terran bot.
 Build requirements
 ------------------
 
-* Download and install [Ladder 2017 Season 3 map pack](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season3.zip)
+* Download and install (the password is iagreetotheeula) at least one of the following map packs:
+  * [Ladder 2017 Season 3](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season3_Updated.zip)
+  * [Ladder 2017 Season 4](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season4.zip)
+  * [Ladder 2018 Season 1](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2018Season1.zip)
 * Download and install [CMake](https://cmake.org/download/).
 
 ### Windows
 * Download and install [Visual Studio 2017](https://www.visualstudio.com/downloads/)
-* Install the 'cmake' utility.
 
 ### Linux
-* Install the 'cmake' utility.
 * Install 'gcc-c++'.
 * Install the 'make' utility.
 
 ### OS X
 * Install XCode commandline tools.
-* Install the 'cmake' utility.
 
 Build instructions
 ------------------
