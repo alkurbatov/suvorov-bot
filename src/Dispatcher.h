@@ -21,6 +21,8 @@ struct Dispatcher: sc2::Agent {
  private:
     void OnGameStart() final;
 
+    void OnGameEnd() final;
+
     void OnStep() final;
 
     void OnBuildingConstructionComplete(const sc2::Unit* building_) final;

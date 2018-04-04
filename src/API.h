@@ -9,6 +9,7 @@
 
 #include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_interfaces.h>
+#include <sc2api/sc2_control_interfaces.h>
 
 #include <memory>
 
@@ -29,6 +30,15 @@ struct Action {
 
  private:
     sc2::ActionInterface* m_action;
+};
+
+struct Control {
+    explicit Control(sc2::ControlInterface* control_);
+
+    void SaveReplay();
+
+ private:
+    sc2::ControlInterface* m_control;
 };
 
 struct Debug {
@@ -82,12 +92,16 @@ struct Query {
 };
 
 struct Interface {
-    Interface(sc2::ActionInterface* action_,
+    Interface(
+        sc2::ActionInterface* action_,
+        sc2::ControlInterface* control_,
         sc2::DebugInterface* debug_,
         const sc2::ObservationInterface* observer_,
         sc2::QueryInterface* query_);
 
     Action action() const;
+
+    Control control() const;
 
     Debug debug() const;
 
@@ -97,6 +111,7 @@ struct Interface {
 
  private:
     sc2::ActionInterface* m_action;
+    sc2::ControlInterface* m_control;
     sc2::DebugInterface* m_debug;
     const sc2::ObservationInterface* m_observer;
     sc2::QueryInterface* m_query;

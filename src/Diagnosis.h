@@ -12,4 +12,6 @@ struct Diagnosis {
     void OnStep() const;
 
     void ShowBuildOrder(const std::list<Order>& orders_) const;
+
+    void OnGameEnd() const;
 };

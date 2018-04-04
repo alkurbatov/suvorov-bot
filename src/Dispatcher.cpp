@@ -13,7 +13,7 @@
 #include <sc2api/sc2_unit.h>
 
 Dispatcher::Dispatcher() {
-    gAPI.reset(new API::Interface(Actions(), Debug(), Observation(), Query()));
+    gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
 }
 
 void Dispatcher::OnGameStart() {
@@ -42,6 +42,12 @@ void Dispatcher::OnGameStart() {
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
 
     m_chatterbox.OnGameStart();
+}
+
+void Dispatcher::OnGameEnd() {
+    gHistory << "Game over!" <<std::endl;
+
+    m_diagnosis.OnGameEnd();
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {

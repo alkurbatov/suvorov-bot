@@ -4,6 +4,7 @@
 
 #include "API.h"
 #include "Diagnosis.h"
+#include "Historican.h"
 
 void Diagnosis::OnStep() const {
     gAPI->debug().SendDebug();
@@ -19,4 +20,9 @@ void Diagnosis::ShowBuildOrder(const std::list<Order>& orders_) const {
 
     for (const auto& i : orders_)
         gAPI->debug().DrawText(i.data.name);
+}
+
+void Diagnosis::OnGameEnd() const {
+    gAPI->control().SaveReplay();
+    gHistory << "Replay saved" << std::endl;
 }

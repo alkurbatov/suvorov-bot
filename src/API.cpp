@@ -33,6 +33,13 @@ void Action::SendMessage(const std::string& text_) {
     m_action->SendChat(text_);
 }
 
+Control::Control(sc2::ControlInterface* control_): m_control(control_) {
+}
+
+void Control::SaveReplay() {
+    m_control->SaveReplay("LastReplay.SC2Replay");
+}
+
 Debug::Debug(sc2::DebugInterface* debug_): m_debug(debug_) {
 }
 
@@ -112,13 +119,19 @@ bool Query::CanBePlaced(const Order& order_, const sc2::Point2D& point_) {
     return m_query->Placement(order_.data.ability_id, point_);
 }
 
-Interface::Interface(sc2::ActionInterface* action_, sc2::DebugInterface* debug_,
+Interface::Interface(sc2::ActionInterface* action_,
+    sc2::ControlInterface* control_, sc2::DebugInterface* debug_,
     const sc2::ObservationInterface* observer_, sc2::QueryInterface* query_):
-    m_action(action_), m_debug(debug_), m_observer(observer_), m_query(query_) {
+    m_action(action_), m_control(control_), m_debug(debug_),
+    m_observer(observer_), m_query(query_) {
 }
 
 Action Interface::action() const {
     return Action(m_action);
+}
+
+Control Interface::control() const {
+    return Control(m_control);
 }
 
 Debug Interface::debug() const {
