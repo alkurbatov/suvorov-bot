@@ -5,6 +5,7 @@
 #include "API.h"
 #include "Builder.h"
 #include "Helpers.h"
+#include "Historican.h"
 #include "Pathfinder.h"
 
 Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
@@ -46,6 +47,7 @@ bool Builder::BuildStructure(Order* order_) {
     m_minerals -= order_->data.mineral_cost;
     m_vespene -= order_->data.vespene_cost;
 
+    gHistory << "Started building a " << order_->data.name << std::endl;
     return true;
 }
 
@@ -70,6 +72,7 @@ bool Builder::BuildRefinery(Order* order_) {
     m_minerals -= order_->data.mineral_cost;
     m_vespene -= order_->data.vespene_cost;
 
+    gHistory << "Started building a " << order_->data.name << std::endl;
     return true;
 }
 
@@ -91,6 +94,7 @@ bool Builder::TrainUnit(const Order& order_) {
 
     m_available_food -= order_.data.food_required;
 
+    gHistory << "Started traning a " << order_.data.name << std::endl;
     return true;
 }
 

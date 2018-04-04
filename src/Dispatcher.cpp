@@ -59,7 +59,7 @@ void Dispatcher::OnStep() {
         if (!m_builder.BuildStructure(&(*it)))
             break;
 
-        m_construction_orders.erase(it);
+        it = m_construction_orders.erase(it);
     }
 
     it = m_training_orders.begin();
