@@ -51,3 +51,8 @@ bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {
             return false;
     }
 }
+
+bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) {
+    return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER &&
+        unit_.orders.empty();
+}

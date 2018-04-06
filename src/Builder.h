@@ -17,6 +17,8 @@ struct Builder {
 
     bool BuildRefinery(Order* order_);
 
+    bool MorfOrbital(Order* order_);
+
     bool TrainUnit(const Order& order_);
 
  private:

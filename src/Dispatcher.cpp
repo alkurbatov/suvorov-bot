@@ -27,11 +27,13 @@ void Dispatcher::OnGameStart() {
     m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
     m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_REFINERY)]);
-    m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
     m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
+    m_construction_orders.emplace_back(data[
+        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_REFINERY)]);
+    m_construction_orders.emplace_back(data[
+        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND)]);
     m_construction_orders.emplace_back(data[
         convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
     m_construction_orders.emplace_back(data[
@@ -103,7 +105,8 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     switch (unit_->unit_type.ToType()) {
-        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER: {
+        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
+        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND: {
             // If we can add more SCVs do it.
             if (unit_->assigned_harvesters < unit_->ideal_harvesters) {
                 m_training_orders.emplace_back(Observation()->GetUnitTypeData()[

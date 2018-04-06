@@ -33,3 +33,7 @@ struct IsFreeWorker {
 struct IsBuildingOrder {
     bool operator()(const sc2::UnitOrder& order_);
 };
+
+struct IsFreeCommandCenter {
+    bool operator()(const sc2::Unit& unit_);
+};
