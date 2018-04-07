@@ -27,6 +27,9 @@ bool Builder::BuildStructure(Order* order_) {
     if (order_->data.ability_id == sc2::ABILITY_ID::MORPH_ORBITALCOMMAND)
         return MorfOrbital(order_);
 
+    if (order_->data.ability_id == sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS)
+        return MorfFortress(order_);
+
     if (m_free_workers.empty())
         return false;
 
@@ -80,10 +83,9 @@ bool Builder::BuildRefinery(Order* order_) {
 }
 
 bool Builder::MorfOrbital(Order* order_) {
-    // Unfortunally SC2 API returns wrong mineral cost for an orbital command
-    // and wrong tech_requirement. This method is a workaround and contains
-    // a lot of hardcode and code duplication.
-    // For additional info see https://github.com/Blizzard/s2client-api/issues/191
+    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
+    // and wrong tech_reuirement for an orbital command so we use a workaround
+    // See https://github.com/Blizzard/s2client-api/issues/191
 
     if (m_minerals < 150)
         return false;
@@ -100,6 +102,32 @@ bool Builder::MorfOrbital(Order* order_) {
     gAPI->action().Command(*order_);
 
     m_minerals -= 150;
+
+    gHistory << "Started building a " << order_->data.name << std::endl;
+    return true;
+}
+
+bool Builder::MorfFortress(Order* order_) {
+    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
+    // and wrong tech_reuirement for a planetary fortress so we use a workaround
+    // See https://github.com/Blizzard/s2client-api/issues/191
+
+    if (m_minerals < 150 || m_vespene < order_->data.vespene_cost)
+        return false;
+
+    if (gAPI->observer().CountUnitType(sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY) == 0)
+            return false;
+
+    sc2::Units command_centers = gAPI->observer().GetUnits(IsFreeCommandCenter());
+    if (command_centers.empty())
+        return false;
+
+    order_->assignee = command_centers.front();
+
+    gAPI->action().Command(*order_);
+
+    m_minerals -= 150;
+    m_vespene -= order_->data.vespene_cost;
 
     gHistory << "Started building a " << order_->data.name << std::endl;
     return true;

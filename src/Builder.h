@@ -19,6 +19,8 @@ struct Builder {
 
     bool MorfOrbital(Order* order_);
 
+    bool MorfFortress(Order* order_);
+
     bool TrainUnit(const Order& order_);
 
  private:
