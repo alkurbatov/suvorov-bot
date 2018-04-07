@@ -7,6 +7,7 @@
 #include "Dispatcher.h"
 #include "Historican.h"
 #include "Pathfinder.h"
+#include "Timer.h"
 
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_typeenums.h>
@@ -58,6 +59,9 @@ void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
 }
 
 void Dispatcher::OnStep() {
+    Timer clock;
+    clock.Start();
+
     m_builder.OnStep();
     m_chatterbox.OnStep();
     m_force_commander.OnStep();
@@ -94,6 +98,8 @@ void Dispatcher::OnStep() {
 
     m_diagnosis.ShowBuildOrder(m_construction_orders);
     m_diagnosis.OnStep();
+
+    clock.Finish();
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
