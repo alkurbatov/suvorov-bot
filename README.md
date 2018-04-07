@@ -22,10 +22,14 @@ Starcraft 2 Terran bot.
 Build requirements
 ------------------
 
-* Download and install (the password is iagreetotheeula) at least one of the following map packs:
+* Download (the password is iagreetotheeula) at least one of the following map packs:
   * [Ladder 2017 Season 3](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season3_Updated.zip)
   * [Ladder 2017 Season 4](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season4.zip)
   * [Ladder 2018 Season 1](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2018Season1.zip)
+* Put the downloaded maps into the Maps folder (create it if the folder doesn't exist):
+  * Windows: C:\Program Files\StarCraft II\Maps
+  * OS X: /Applications/StarCraft II/Maps
+  * Linux: anywhere.
 * Download and install [CMake](https://cmake.org/download/).
 
 ### Windows
@@ -58,8 +62,8 @@ $ cmake ../ -G "Visual Studio 15 2017 Win64"
 :: Build the project using Visual Studio.
 $ start Suvorov.sln
 
-:: Launch the bot with the specified absolute path to a SC2 map, e.g.
-$ bin\Debug\Suvorov.exe C:\Users\alkurbatov\Ladder2017Season3\InterloperLE.SC2Map
+:: Launch the bot with the specified path to a SC2 map, e.g.
+$ bin\Debug\Suvorov.exe Ladder2017Season3\InterloperLE.SC2Map
 ```
 
 ### Linux and OS X
@@ -78,7 +82,10 @@ $ cmake ../
 # Build.
 $ make
 
-# Launch the bot with the specified absolute path to a SC2 map, e.g.
+# OS X: Launch the bot with the specified path to a SC2 map, e.g.
+$ ./bin/Suvorov "Ladder2017Season3/InterloperLE.SC2Map"
+
+# Linux: Launch the bot with the specified absolute path to a SC2 map, e.g.
 $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
 ```
 
