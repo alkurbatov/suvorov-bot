@@ -8,7 +8,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/build/bin/Suvorov",
-            "args": ["/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"],
+            "args": ["Ladder2017Season3/InterloperLE.SC2Map"],
             "stopAtEntry": false,
             "cwd": "${workspaceRoot}/build/bin",
             "MIMode": "lldb",
