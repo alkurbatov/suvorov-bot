@@ -3,10 +3,13 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "API.h"
+#include "blueprints/Blueprint.h"
 #include "Builder.h"
 #include "Helpers.h"
 #include "Historican.h"
 #include "Pathfinder.h"
+
+#include <memory>
 
 Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
 }
@@ -20,146 +23,33 @@ void Builder::OnStep() {
     m_available_food = gAPI->observer().GetAvailableFood();
 }
 
-bool Builder::BuildStructure(Order* order_) {
-    if (order_->data.ability_id == sc2::ABILITY_ID::BUILD_REFINERY)
-        return BuildRefinery(order_);
-
-    if (order_->data.ability_id == sc2::ABILITY_ID::MORPH_ORBITALCOMMAND)
-        return MorfOrbital(order_);
-
-    if (order_->data.ability_id == sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS)
-        return MorfFortress(order_);
-
-    if (m_free_workers.empty())
+bool Builder::Build(Order* order_) {
+    if (m_minerals < order_->data.mineral_cost || m_vespene < order_->data.vespene_cost)
         return false;
 
-    if (!CanBuild(*order_))
+    std::shared_ptr<Blueprint> blueprint = Blueprint::Plot(order_->data.ability_id);
+
+    if (!blueprint->TechRequirementsMet(*order_))
         return false;
 
-    // Find place to build the structure
-    sc2::Point3D base = gAPI->observer().StartingLocation();
-    sc2::Point2D point;
+    if (m_available_food < order_->data.food_required)
+        return false;
 
-    do {
-        point.x = base.x + sc2::GetRandomScalar() * 15.0f;
-        point.y = base.y + sc2::GetRandomScalar() * 15.0f;
-    } while (!gAPI->query().CanBePlaced(*order_, point));
+    if (blueprint->NeedsWorker()) {
+        if (m_free_workers.empty())
+            return false;
 
-    order_->assignee = m_free_workers.back();
-    m_free_workers.pop_back();
+        order_->assignee = m_free_workers.back();
+        m_free_workers.pop_back();
+    }
 
-    gAPI->action().Command(*order_, point);
+    if (!blueprint->Build(order_))
+        return false;
 
     m_minerals -= order_->data.mineral_cost;
     m_vespene -= order_->data.vespene_cost;
+    m_available_food -= order_->data.food_required;
 
     gHistory << "Started building a " << order_->data.name << std::endl;
     return true;
-}
-
-bool Builder::BuildRefinery(Order* order_) {
-    if (m_free_workers.empty())
-        return false;
-
-    if (!CanBuild(*order_))
-        return false;
-
-    sc2::Point3D base = gAPI->observer().StartingLocation();
-
-    const sc2::Unit* geiser = Pathfinder::FindVespeneGeyser(base);
-    if (!geiser)
-        return false;
-
-    order_->assignee = m_free_workers.back();
-    m_free_workers.pop_back();
-
-    gAPI->action().Command(*order_, geiser);
-
-    m_minerals -= order_->data.mineral_cost;
-    m_vespene -= order_->data.vespene_cost;
-
-    gHistory << "Started building a " << order_->data.name << std::endl;
-    return true;
-}
-
-bool Builder::MorfOrbital(Order* order_) {
-    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
-    // and wrong tech_reuirement for an orbital command so we use a workaround
-    // See https://github.com/Blizzard/s2client-api/issues/191
-
-    if (m_minerals < 150)
-        return false;
-
-    if (gAPI->observer().CountUnitType(sc2::UNIT_TYPEID::TERRAN_BARRACKS) == 0)
-            return false;
-
-    sc2::Units command_centers = gAPI->observer().GetUnits(IsFreeCommandCenter());
-    if (command_centers.empty())
-        return false;
-
-    order_->assignee = command_centers.front();
-
-    gAPI->action().Command(*order_);
-
-    m_minerals -= 150;
-
-    gHistory << "Started building a " << order_->data.name << std::endl;
-    return true;
-}
-
-bool Builder::MorfFortress(Order* order_) {
-    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
-    // and wrong tech_reuirement for a planetary fortress so we use a workaround
-    // See https://github.com/Blizzard/s2client-api/issues/191
-
-    if (m_minerals < 150 || m_vespene < order_->data.vespene_cost)
-        return false;
-
-    if (gAPI->observer().CountUnitType(sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY) == 0)
-            return false;
-
-    sc2::Units command_centers = gAPI->observer().GetUnits(IsFreeCommandCenter());
-    if (command_centers.empty())
-        return false;
-
-    order_->assignee = command_centers.front();
-
-    gAPI->action().Command(*order_);
-
-    m_minerals -= 150;
-    m_vespene -= order_->data.vespene_cost;
-
-    gHistory << "Started building a " << order_->data.name << std::endl;
-    return true;
-}
-
-bool Builder::TrainUnit(const Order& order_) {
-    // FIXME: implement assignment of proper producing structure
-    if (!order_.assignee)
-        return false;
-
-    if (!CanBuild(order_))
-        return false;
-
-    if (m_available_food < order_.data.food_required)
-        return false;
-
-    gAPI->action().Command(order_);
-
-    m_minerals -= order_.data.mineral_cost;
-    m_vespene -= order_.data.vespene_cost;
-
-    m_available_food -= order_.data.food_required;
-
-    gHistory << "Started traning a " << order_.data.name << std::endl;
-    return true;
-}
-
-bool Builder::CanBuild(const Order& order_) const {
-    if (m_minerals < order_.data.mineral_cost || m_vespene < order_.data.vespene_cost)
-        return false;
-
-    // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
-    return order_.data.tech_requirement == sc2::UNIT_TYPEID::INVALID ||
-        gAPI->observer().CountUnitType(order_.data.tech_requirement) > 0;
 }

@@ -3,7 +3,7 @@
 # Copyright (c) 2017-2018 Alexander Kurbatov
 
 # All the source files for the bot.
-file(GLOB BOT_SOURCES "*.cpp" "*.h")
+file(GLOB_RECURSE BOT_SOURCES "*.cpp" "*.h")
 
 include_directories(SYSTEM
     ${PROJECT_SOURCE_DIR}/s2client-api/include

@@ -10,7 +10,6 @@
 #include "Timer.h"
 
 #include <sc2api/sc2_common.h>
-#include <sc2api/sc2_typeenums.h>
 #include <sc2api/sc2_unit.h>
 
 Dispatcher::Dispatcher() {
@@ -20,29 +19,18 @@ Dispatcher::Dispatcher() {
 void Dispatcher::OnGameStart() {
     gHistory << "New Game started!" << std::endl;
 
-    auto& data = Observation()->GetUnitTypeData();
-
     // Initial build order
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_REFINERY)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_BARRACKS)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
-    m_construction_orders.emplace_back(data[
-        convert::ToUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_REFINERY);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
 
     m_chatterbox.OnGameStart();
 }
@@ -68,7 +56,7 @@ void Dispatcher::OnStep() {
 
     auto it = m_construction_orders.begin();
     while (it != m_construction_orders.end()) {
-        if (!m_builder.BuildStructure(&(*it)))
+        if (!m_builder.Build(&(*it)))
             break;
 
         it = m_construction_orders.erase(it);
@@ -76,7 +64,7 @@ void Dispatcher::OnStep() {
 
     it = m_training_orders.begin();
     while (it != m_training_orders.end()) {
-        if (!m_builder.TrainUnit(*it)) {
+        if (!m_builder.Build(&(*it))) {
             ++it;
             continue;
         }
@@ -143,4 +131,20 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
             break;
         }
     }
+}
+
+void Dispatcher::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
+    auto& data = Observation()->GetUnitTypeData();
+
+    sc2::UnitTypeData structure = data[convert::ToUnitTypeID(id_)];
+
+    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
+    // for orbital command and planetary fortress so we use a workaround.
+    // See https://github.com/Blizzard/s2client-api/issues/191
+    if (id_ == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
+        id_ == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS) {
+            structure.mineral_cost = 150;
+    }
+
+    m_construction_orders.emplace_back(structure);
 }

@@ -13,19 +13,9 @@ struct Builder {
 
     void OnStep();
 
-    bool BuildStructure(Order* order_);
-
-    bool BuildRefinery(Order* order_);
-
-    bool MorfOrbital(Order* order_);
-
-    bool MorfFortress(Order* order_);
-
-    bool TrainUnit(const Order& order_);
+    bool Build(Order* order_);
 
  private:
-    bool CanBuild(const Order& order_) const;
-
     sc2::Units m_free_workers;
 
     int32_t m_minerals;

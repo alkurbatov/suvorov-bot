@@ -13,6 +13,7 @@
 #include <list>
 
 #include <sc2api/sc2_agent.h>
+#include <sc2api/sc2_typeenums.h>
 
 // The main bot class.
 struct Dispatcher: sc2::Agent {
@@ -30,6 +31,8 @@ struct Dispatcher: sc2::Agent {
     void OnUnitCreated(const sc2::Unit* unit_) final;
 
     void OnUnitIdle(const sc2::Unit* unit_) final;
+
+    void ScheduleConstruction(sc2::UNIT_TYPEID id_);
 
     Builder m_builder;
     ChatterBox m_chatterbox;
