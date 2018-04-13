@@ -13,7 +13,7 @@
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Provide absolute path to the map file!" << std::endl;
+        std::cerr << "Provide either name of the map file or path to it!" << std::endl;
         return -1;
     }
 
