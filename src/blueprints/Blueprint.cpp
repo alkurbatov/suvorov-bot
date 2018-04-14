@@ -39,6 +39,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
 
         case sc2::ABILITY_ID::TRAIN_SCV:
         case sc2::ABILITY_ID::TRAIN_MARINE:
+        case sc2::ABILITY_ID::TRAIN_REAPER:
             return std::shared_ptr<Blueprint>(new Unit());
 
         default:
