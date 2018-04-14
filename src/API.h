@@ -75,6 +75,7 @@ struct Observer {
 
     float GetAvailableFood() const;
 
+    const sc2::UnitTypes& GetUnitTypeData() const;
 
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;
 

@@ -108,6 +108,10 @@ float Observer::GetAvailableFood() const {
         m_observer->GetFoodCap() - m_observer->GetFoodUsed());
 }
 
+const sc2::UnitTypes& Observer::GetUnitTypeData() const {
+    return m_observer->GetUnitTypeData();
+}
+
 const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {
     return m_observer->GetChatMessages();
 }

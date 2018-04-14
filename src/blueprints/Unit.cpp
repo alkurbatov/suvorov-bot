@@ -8,7 +8,6 @@
 Unit::Unit(): Blueprint(false) {
 }
 
-
 bool Unit::Build(Order* order_) {
     if (!order_->assignee)
         return false;
