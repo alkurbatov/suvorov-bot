@@ -10,6 +10,7 @@
 #include "Historican.h"
 #include "Pathfinder.h"
 
+#include <algorithm>
 #include <memory>
 
 Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
@@ -59,6 +60,13 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
         structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
     }
 
+    // Prevent deadlock.
+    if (structure.tech_requirement != sc2::UNIT_TYPEID::INVALID &&
+        gAPI->observer().CountUnitType(structure.tech_requirement) == 0 &&
+        CountScheduledStructures(structure.tech_requirement) == 0) {
+            ScheduleConstruction(structure.tech_requirement);
+    }
+
     m_construction_orders.emplace_back(structure);
 }
 
@@ -71,6 +79,13 @@ void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_) {
 
 const std::list<Order>& Builder::GetConstructionOrders() const {
     return m_construction_orders;
+}
+
+int64_t Builder::CountScheduledStructures(sc2::UNIT_TYPEID id_) const {
+    return std::count_if(
+        m_construction_orders.begin(),
+        m_construction_orders.end(),
+        IsOrdered(id_));
 }
 
 bool Builder::Build(Order* order_) {

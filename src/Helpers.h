@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "Order.h"
+
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
 
@@ -36,4 +38,13 @@ struct IsBuildingOrder {
 
 struct IsFreeCommandCenter {
     bool operator()(const sc2::Unit& unit_);
+};
+
+struct IsOrdered {
+    explicit IsOrdered(sc2::UNIT_TYPEID type_);
+
+    bool operator()(const Order& order_);
+
+ private:
+    sc2::UNIT_TYPEID m_type;
 };

@@ -22,6 +22,8 @@ struct Builder {
 
     const std::list<Order>& GetConstructionOrders() const;
 
+    int64_t CountScheduledStructures(sc2::UNIT_TYPEID id_) const;
+
  private:
     bool Build(Order* order_);
 

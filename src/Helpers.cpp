@@ -56,3 +56,10 @@ bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER &&
         unit_.orders.empty();
 }
+
+IsOrdered::IsOrdered(sc2::UNIT_TYPEID type_): m_type(type_) {
+}
+
+bool IsOrdered::operator()(const Order& order_) {
+    return order_.data.unit_type_id == m_type;
+}
