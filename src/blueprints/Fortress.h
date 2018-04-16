@@ -10,6 +10,4 @@ struct Fortress: Blueprint {
     Fortress();
 
     virtual bool Build(Order* order_);
-
-    virtual bool TechRequirementsMet(const Order& order_);
 };

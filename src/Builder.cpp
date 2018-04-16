@@ -48,11 +48,15 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
     sc2::UnitTypeData structure = data[convert::ToUnitTypeID(id_)];
 
     // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
-    // for orbital command and planetary fortress so we use a workaround.
+    // and tech_requirement for orbital command and planetary fortress
+    // so we use a workaround.
     // See https://github.com/Blizzard/s2client-api/issues/191
-    if (id_ == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
-        id_ == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS) {
-            structure.mineral_cost = 150;
+    if (id_ == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND) {
+        structure.mineral_cost = 150;
+        structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
+    } else if (id_ == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS) {
+        structure.mineral_cost = 150;
+        structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
     }
 
     m_construction_orders.emplace_back(structure);
@@ -75,8 +79,11 @@ bool Builder::Build(Order* order_) {
 
     std::shared_ptr<Blueprint> blueprint = Blueprint::Plot(order_->data.ability_id);
 
-    if (!blueprint->TechRequirementsMet(*order_))
-        return false;
+    // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
+    if (order_->data.tech_requirement != sc2::UNIT_TYPEID::INVALID &&
+        gAPI->observer().CountUnitType(order_->data.tech_requirement) == 0) {
+            return false;
+    }
 
     if (m_available_food < order_->data.food_required)
         return false;

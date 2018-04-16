@@ -20,12 +20,6 @@ bool Blueprint::NeedsWorker() const {
     return m_needs_worker;
 }
 
-bool Blueprint::TechRequirementsMet(const Order& order_) {
-    // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
-    return order_.data.tech_requirement == sc2::UNIT_TYPEID::INVALID ||
-        gAPI->observer().CountUnitType(order_.data.tech_requirement) > 0;
-}
-
 std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
     switch (ability_) {
         case sc2::ABILITY_ID::BUILD_REFINERY:

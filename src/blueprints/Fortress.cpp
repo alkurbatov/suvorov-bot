@@ -20,11 +20,3 @@ bool Fortress::Build(Order* order_) {
 
     return true;
 }
-
-bool Fortress::TechRequirementsMet(const Order&) {
-    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong
-    // tech_requirement for a planetary fortress so we use a workaround.
-    // See https://github.com/Blizzard/s2client-api/issues/191
-
-    return gAPI->observer().CountUnitType(sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY) > 0;
-}

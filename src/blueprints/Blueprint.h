@@ -19,8 +19,6 @@ struct Blueprint {
 
     bool NeedsWorker() const;
 
-    virtual bool TechRequirementsMet(const Order& order_);
-
     static std::shared_ptr<Blueprint> Plot(sc2::ABILITY_ID ability_);
 
  private:

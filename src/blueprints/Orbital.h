@@ -10,6 +10,4 @@ struct Orbital: Blueprint {
     Orbital();
 
     virtual bool Build(Order* order_);
-
-    virtual bool TechRequirementsMet(const Order& order_);
 };
