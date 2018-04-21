@@ -5,7 +5,6 @@
 #include "API.h"
 #include "blueprints/Blueprint.h"
 #include "Builder.h"
-#include "Converter.h"
 #include "Helpers.h"
 #include "Historican.h"
 #include "Pathfinder.h"
@@ -44,9 +43,7 @@ void Builder::OnStep() {
 }
 
 void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
-    auto& data = gAPI->observer().GetUnitTypeData();
-
-    sc2::UnitTypeData structure = data[convert::ToUnitTypeID(id_)];
+    sc2::UnitTypeData structure = gAPI->observer().GetUnitTypeData(id_);
 
     // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
     // and tech_requirement for orbital command and planetary fortress
@@ -71,10 +68,7 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
 }
 
 void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_) {
-    auto& data = gAPI->observer().GetUnitTypeData();
-
-    m_training_orders.emplace_back(data[
-        convert::ToUnitTypeID(id_)], unit_);
+    m_training_orders.emplace_back(gAPI->observer().GetUnitTypeData(id_), unit_);
 }
 
 const std::list<Order>& Builder::GetConstructionOrders() const {

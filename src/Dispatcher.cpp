@@ -52,6 +52,7 @@ void Dispatcher::OnStep() {
     m_builder.OnStep();
     m_chatterbox.OnStep();
     m_force_commander.OnStep();
+    m_miner.OnStep();
 
     // FIXME: skip this if we've planned additional supply already.
     // FIXME: skip this if we have 200 cap limit.
@@ -62,8 +63,8 @@ void Dispatcher::OnStep() {
     //     Observation()->GetFoodCap() - static_cast<int32_t>(prediction))
     //     return;
 
-    // m_constructionOrders.emplace(Observation()->GetUnitTypeData()[
-    //     toUnitTypeID(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)]);
+    // m_constructionOrders.emplace(
+    //    gAPI->observer().GetUnitTypeData(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT));
 
     m_diagnosis.ShowBuildOrder(m_builder.GetConstructionOrders());
     m_diagnosis.OnStep();

@@ -26,6 +26,9 @@ struct Action {
 
     void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
 
+    void Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
+        const sc2::Unit& target_);
+
     void SendMessage(const std::string& text_);
 
  private:
@@ -76,6 +79,8 @@ struct Observer {
     float GetAvailableFood() const;
 
     const sc2::UnitTypes& GetUnitTypeData() const;
+
+    const sc2::UnitTypeData& GetUnitTypeData(sc2::UNIT_TYPEID id_) const;
 
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;
 

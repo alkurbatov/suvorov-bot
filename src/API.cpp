@@ -3,6 +3,7 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "API.h"
+#include "Converter.h"
 #include "Helpers.h"
 
 #include <limits>
@@ -27,6 +28,11 @@ void Action::Command(const Order& order_, const sc2::Point2D& point_) {
 
 void Action::Attack(const sc2::Units& units_, const sc2::Point2D& point_) {
     m_action->UnitCommand(units_, sc2::ABILITY_ID::ATTACK_ATTACK, point_);
+}
+
+void Action::Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
+    const sc2::Unit& target_) {
+    m_action->UnitCommand(&assignee_, convert::ToAbilityID(ability_), &target_);
 }
 
 void Action::SendMessage(const std::string& text_) {
@@ -110,6 +116,10 @@ float Observer::GetAvailableFood() const {
 
 const sc2::UnitTypes& Observer::GetUnitTypeData() const {
     return m_observer->GetUnitTypeData();
+}
+
+const sc2::UnitTypeData& Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
+    return m_observer->GetUnitTypeData()[convert::ToUnitTypeID(id_)];
 }
 
 const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {

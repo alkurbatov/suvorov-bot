@@ -8,6 +8,7 @@
 #include "ChatterBox.h"
 #include "Diagnosis.h"
 #include "ForceCommander.h"
+#include "Miner.h"
 
 #include <sc2api/sc2_agent.h>
 
@@ -32,4 +33,5 @@ struct Dispatcher: sc2::Agent {
     ChatterBox m_chatterbox;
     Diagnosis m_diagnosis;
     ForceCommander m_force_commander;
+    Miner m_miner;
 };
