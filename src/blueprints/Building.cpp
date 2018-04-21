@@ -18,7 +18,7 @@ bool Building::Build(Order* order_) {
         point.y = base.y + sc2::GetRandomScalar() * 15.0f;
     } while (!gAPI->query().CanBePlaced(*order_, point));
 
-    gAPI->action().Command(*order_, point);
+    gAPI->action().Build(*order_, point);
 
     return true;
 }

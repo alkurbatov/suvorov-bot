@@ -14,15 +14,15 @@ namespace API {
 Action::Action(sc2::ActionInterface* action_): m_action(action_) {
 }
 
-void Action::Command(const Order& order_) {
+void Action::Build(const Order& order_) {
     m_action->UnitCommand(order_.assignee, order_.data.ability_id);
 }
 
-void Action::Command(const Order& order_, const sc2::Unit* unit_) {
+void Action::Build(const Order& order_, const sc2::Unit* unit_) {
     m_action->UnitCommand(order_.assignee, order_.data.ability_id, unit_);
 }
 
-void Action::Command(const Order& order_, const sc2::Point2D& point_) {
+void Action::Build(const Order& order_, const sc2::Point2D& point_) {
     m_action->UnitCommand(order_.assignee, order_.data.ability_id, point_);
 }
 

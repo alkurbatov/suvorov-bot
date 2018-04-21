@@ -16,7 +16,7 @@ bool Orbital::Build(Order* order_) {
 
     order_->assignee = command_centers.front();
 
-    gAPI->action().Command(*order_);
+    gAPI->action().Build(*order_);
 
     return true;
 }

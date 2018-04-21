@@ -16,7 +16,7 @@ bool Refinery::Build(Order* order_) {
     if (!geiser)
         return false;
 
-    gAPI->action().Command(*order_, geiser);
+    gAPI->action().Build(*order_, geiser);
 
     return true;
 }

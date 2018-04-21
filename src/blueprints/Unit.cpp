@@ -12,7 +12,7 @@ bool Unit::Build(Order* order_) {
     if (!order_->assignee)
         return false;
 
-    gAPI->action().Command(*order_);
+    gAPI->action().Build(*order_);
 
     return true;
 }

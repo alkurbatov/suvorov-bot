@@ -18,11 +18,11 @@ namespace API {
 struct Action {
     explicit Action(sc2::ActionInterface* action_);
 
-    void Command(const Order& order_);
+    void Build(const Order& order_);
 
-    void Command(const Order& order_, const sc2::Unit* unit_);
+    void Build(const Order& order_, const sc2::Unit* unit_);
 
-    void Command(const Order& order_, const sc2::Point2D& point_);
+    void Build(const Order& order_, const sc2::Point2D& point_);
 
     void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
 
