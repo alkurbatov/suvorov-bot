@@ -5,7 +5,6 @@
 #include "API.h"
 #include "Dispatcher.h"
 #include "Historican.h"
-#include "Pathfinder.h"
 #include "Timer.h"
 
 #include <sc2api/sc2_common.h>
@@ -80,31 +79,11 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
-    switch (unit_->unit_type.ToType()) {
-        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
-        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
-        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
-            // If we can add more SCVs do it.
-            if (unit_->assigned_harvesters < unit_->ideal_harvesters)
-                m_builder.ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_SCV, unit_);
+    auto orders = m_miner.OnUnitIdle(*unit_);
 
-            break;
+    for ( const auto& i : orders )
+        m_builder.ScheduleOrder(i);
 
-        case sc2::UNIT_TYPEID::TERRAN_SCV: {
-            const sc2::Unit* mineral_target = Pathfinder::FindMineralPatch(
-                gAPI->observer().StartingLocation());
-            if (!mineral_target)
-                break;
-
-            Actions()->UnitCommand(unit_, sc2::ABILITY_ID::SMART, mineral_target);
-            break;
-        }
-
-        case sc2::UNIT_TYPEID::TERRAN_BARRACKS:
-            m_builder.ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
-            break;
-
-        default:
-            break;
-    }
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::TERRAN_BARRACKS)
+        m_builder.ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
 }

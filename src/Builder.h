@@ -20,6 +20,8 @@ struct Builder {
 
     void ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_);
 
+    void ScheduleOrder(const Order& order_);
+
     const std::list<Order>& GetConstructionOrders() const;
 
     int64_t CountScheduledStructures(sc2::UNIT_TYPEID id_) const;

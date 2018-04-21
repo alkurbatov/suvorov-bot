@@ -71,6 +71,12 @@ void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_) {
     m_training_orders.emplace_back(gAPI->observer().GetUnitTypeData(id_), unit_);
 }
 
+void Builder::ScheduleOrder(const Order& order_) {
+    // FIXME (alkurbatov): this call must be more intellectual
+    // and able to select a proper queue.
+    m_training_orders.emplace_back(order_);
+}
+
 const std::list<Order>& Builder::GetConstructionOrders() const {
     return m_construction_orders;
 }

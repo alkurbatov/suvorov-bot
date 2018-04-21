@@ -24,10 +24,42 @@ void Miner::OnStep() const {
     int energy_cost = gAPI->observer().GetUnitTypeData(
         sc2::UNIT_TYPEID::TERRAN_MULE).mineral_cost;
 
-    for ( auto i : orbitals ) {
+    for ( const auto& i : orbitals ) {
         if (i->energy < energy_cost)
             continue;
 
         gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CALLDOWNMULE, *mineral_target);
     }
+}
+
+std::vector<Order> Miner::OnUnitIdle(const sc2::Unit& unit_) {
+    std::vector<Order> orders;
+
+    switch (unit_.unit_type.ToType()) {
+        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
+        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
+        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
+            // If we can add more SCVs do it.
+            if (unit_.assigned_harvesters < unit_.ideal_harvesters) {
+                orders.emplace_back(gAPI->observer().GetUnitTypeData(
+                    sc2::UNIT_TYPEID::TERRAN_SCV), &unit_);
+            }
+
+            break;
+
+        case sc2::UNIT_TYPEID::TERRAN_SCV: {
+            const sc2::Unit* mineral_target = Pathfinder::FindMineralPatch(
+                gAPI->observer().StartingLocation());
+            if (!mineral_target)
+                break;
+
+            gAPI->action().Cast(unit_, sc2::ABILITY_ID::SMART, *mineral_target);
+            break;
+        }
+
+        default:
+            break;
+    }
+
+    return orders;
 }
