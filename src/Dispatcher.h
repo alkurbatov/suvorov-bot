@@ -5,12 +5,11 @@
 #pragma once
 
 #include "Builder.h"
-#include "ChatterBox.h"
-#include "Diagnosis.h"
-#include "ForceCommander.h"
-#include "Miner.h"
+#include "plugins/Plugin.h"
 
 #include <sc2api/sc2_agent.h>
+
+#include <memory>
 
 // The main bot class.
 struct Dispatcher: sc2::Agent {
@@ -29,9 +28,7 @@ struct Dispatcher: sc2::Agent {
 
     void OnUnitIdle(const sc2::Unit* unit_) final;
 
-    Builder m_builder;
-    ChatterBox m_chatterbox;
-    Diagnosis m_diagnosis;
-    ForceCommander m_force_commander;
-    Miner m_miner;
+    std::shared_ptr<Builder> m_builder;
+
+    std::vector<std::shared_ptr<Plugin>> m_plugins;
 };

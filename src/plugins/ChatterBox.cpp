@@ -2,15 +2,15 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "API.h"
+#include "../API.h"
+#include "../Historican.h"
 #include "ChatterBox.h"
-#include "Historican.h"
 
-void ChatterBox::OnGameStart() const {
+void ChatterBox::OnGameStart() {
     gAPI->action().SendMessage("gl hf");
 }
 
-void ChatterBox::OnStep() const {
+void ChatterBox::OnStep() {
     auto messages = gAPI->observer().GetChatMessages();
 
     auto it = std::find_if(messages.begin(), messages.end(),

@@ -2,14 +2,20 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "API.h"
-#include "Helpers.h"
+#include "../API.h"
+#include "../Helpers.h"
+#include "../Order.h"
+#include "../Pathfinder.h"
 #include "Miner.h"
-#include "Pathfinder.h"
 
 #include <sc2api/sc2_typeenums.h>
 
-void Miner::OnStep() const {
+#include <vector>
+
+Miner::Miner(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
+}
+
+void Miner::OnStep() {
     auto orbitals = gAPI->observer().GetUnits(
         IsUnit(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND));
 
@@ -32,17 +38,17 @@ void Miner::OnStep() const {
     }
 }
 
-std::vector<Order> Miner::OnUnitIdle(const sc2::Unit& unit_) {
+void Miner::OnUnitIdle(const sc2::Unit* unit_) {
     std::vector<Order> orders;
 
-    switch (unit_.unit_type.ToType()) {
+    switch (unit_->unit_type.ToType()) {
         case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
         case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
             // If we can add more SCVs do it.
-            if (unit_.assigned_harvesters < unit_.ideal_harvesters) {
+            if (unit_->assigned_harvesters < unit_->ideal_harvesters) {
                 orders.emplace_back(gAPI->observer().GetUnitTypeData(
-                    sc2::UNIT_TYPEID::TERRAN_SCV), &unit_);
+                    sc2::UNIT_TYPEID::TERRAN_SCV), unit_);
             }
 
             break;
@@ -53,7 +59,7 @@ std::vector<Order> Miner::OnUnitIdle(const sc2::Unit& unit_) {
             if (!mineral_target)
                 break;
 
-            gAPI->action().Cast(unit_, sc2::ABILITY_ID::SMART, *mineral_target);
+            gAPI->action().Cast(*unit_, sc2::ABILITY_ID::SMART, *mineral_target);
             break;
         }
 
@@ -61,5 +67,9 @@ std::vector<Order> Miner::OnUnitIdle(const sc2::Unit& unit_) {
             break;
     }
 
-    return orders;
+    auto builder = m_builder.lock();
+    if (!builder)
+        return;
+
+    builder->ScheduleOrders(orders);
 }

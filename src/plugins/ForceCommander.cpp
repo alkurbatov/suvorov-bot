@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "API.h"
+#include "../API.h"
+#include "../Pathfinder.h"
 #include "ForceCommander.h"
-#include "Pathfinder.h"
 
 void ForceCommander::OnStep() {
     // Clean up dead bodies.
