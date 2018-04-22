@@ -9,5 +9,5 @@
 struct Orbital: Blueprint {
     Orbital();
 
-    virtual bool Build(Order* order_);
+    bool Build(Order* order_) final;
 };

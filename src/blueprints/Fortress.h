@@ -9,5 +9,5 @@
 struct Fortress: Blueprint {
     Fortress();
 
-    virtual bool Build(Order* order_);
+    bool Build(Order* order_) final;
 };

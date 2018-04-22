@@ -9,5 +9,5 @@
 struct Refinery: Blueprint {
     Refinery();
 
-    virtual bool Build(Order* order_);
+    bool Build(Order* order_) final;
 };

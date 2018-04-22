@@ -9,5 +9,5 @@
 struct Unit: Blueprint {
     Unit();
 
-    virtual bool Build(Order* order_);
+    bool Build(Order* order_) final;
 };
