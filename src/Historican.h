@@ -14,6 +14,9 @@ struct Historican {
 
     template <class T>
     Historican& operator<<(const T& data_) {
+        if (!m_file.is_open())
+            return *this;
+
         m_file << data_;
         std::cout << data_;
 

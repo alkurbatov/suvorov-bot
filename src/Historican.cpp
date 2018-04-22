@@ -17,6 +17,9 @@ void Historican::Init(const std::string& filename_) {
 }
 
 Historican& Historican::operator<<(std::ostream& (*manipulator_)(std::ostream&)) {
+    if (!m_file.is_open())
+        return *this;
+
     m_file << manipulator_;
     std::cout << manipulator_;
 

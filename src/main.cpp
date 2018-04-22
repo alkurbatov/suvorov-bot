@@ -17,7 +17,9 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+#ifdef DEBUG
     gHistory.Init("bin/history.log");
+#endif
 
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(1, argv);
@@ -32,8 +34,10 @@ int main(int argc, char* argv[]) {
     coordinator.StartGame(argv[1]);
 
     while (coordinator.Update()) {
-        // Slow down game speed for better look & feel while making experiments.
-        sc2::SleepFor(15);
+        #ifdef DEBUG
+            // Slow down game speed for better look & feel while making experiments.
+            sc2::SleepFor(15);
+        #endif
     }
 
     return 0;

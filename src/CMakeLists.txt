@@ -23,6 +23,8 @@ else ()
     )
 endif ()
 
+set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
+
 # Create the executable.
 add_executable(Suvorov ${BOT_SOURCES})
 target_link_libraries(Suvorov

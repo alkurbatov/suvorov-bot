@@ -19,8 +19,11 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 
     m_plugins.emplace_back(new Miner(m_builder));
     m_plugins.emplace_back(new ForceCommander());
+
+#ifdef DEBUG
     m_plugins.emplace_back(new ChatterBox());
     m_plugins.emplace_back(new Diagnosis(m_builder));
+#endif
 }
 
 void Dispatcher::OnGameStart() {
