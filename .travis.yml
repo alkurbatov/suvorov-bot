@@ -6,9 +6,18 @@ matrix:
       dist: trusty
       group: travis_lts
       sudo: required
+      env: BUILD_CONFIGURATION=Debug
+    - os: linux
+      dist: trusty
+      group: travis_lts
+      sudo: required
+      env: BUILD_CONFIGURATION=Release
     - os: osx
       osx_image: xcode9.1
-
+      env: BUILD_CONFIGURATION=Debug
+    - os: osx
+      osx_image: xcode9.1
+      env: BUILD_CONFIGURATION=Release
 
 before_install:
   - . .travis/before-install.sh
@@ -20,5 +29,5 @@ script:
   - . .travis/lint.sh
   - mkdir build
   - cd build
-  - cmake ../
+  - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION ../
   - make
