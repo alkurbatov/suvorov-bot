@@ -13,6 +13,9 @@ void Timer::Finish() {
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(
         std::chrono::high_resolution_clock::now() - m_start).count();
 
+    if (duration < 100000)
+        return;
+
     gHistory << "Time consumed: " <<
         duration << " microseconds" << std::endl;
 }
