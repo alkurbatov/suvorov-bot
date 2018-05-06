@@ -10,6 +10,25 @@
 Governor::Governor(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
 }
 
+void Governor::OnGameStart() {
+    auto builder = m_builder.lock();
+    if (!builder)
+        return;
+
+    // Initial build order
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_REFINERY);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+}
+
 void Governor::OnStep() {
     auto builder = m_builder.lock();
     if (!builder)
@@ -33,4 +52,13 @@ void Governor::OnStep() {
         return;
 
     builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT, true);
+}
+
+void Governor::OnUnitIdle(const sc2::Unit* unit_) {
+    auto builder = m_builder.lock();
+    if (!builder)
+        return;
+
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::TERRAN_BARRACKS)
+        builder->ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
 }

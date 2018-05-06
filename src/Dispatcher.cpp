@@ -31,19 +31,6 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 void Dispatcher::OnGameStart() {
     gHistory << "New game started!" << std::endl;
 
-    // Initial build order
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_REFINERY);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    m_builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-
     for (const auto i : m_plugins)
         i->OnGameStart();
 }
@@ -83,7 +70,4 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     for (const auto i : m_plugins)
         i->OnUnitIdle(unit_);
-
-    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::TERRAN_BARRACKS)
-        m_builder->ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
 }
