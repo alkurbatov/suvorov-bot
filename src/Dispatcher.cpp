@@ -56,8 +56,8 @@ void Dispatcher::OnGameEnd() {
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
-    gHistory << "Loop Step #" << Observation()->GetGameLoop() <<
-        ": Building was created, tag: " << building_->tag << std::endl;
+    gHistory << sc2::UnitTypeToName(building_->unit_type) <<
+        " was created" << std::endl;
 }
 
 void Dispatcher::OnStep() {
@@ -73,8 +73,8 @@ void Dispatcher::OnStep() {
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
-    gHistory << "Loop Step #" << Observation()->GetGameLoop() <<
-        ": Unit was created, tag: " << unit_->tag << std::endl;
+    gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
+        " was created" << std::endl;
 
     for (const auto i : m_plugins)
         i->OnUnitCreated(unit_);
