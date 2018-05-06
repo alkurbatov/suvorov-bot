@@ -42,7 +42,7 @@ void Builder::OnStep() {
     }
 }
 
-void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
+void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
     sc2::UnitTypeData structure = gAPI->observer().GetUnitTypeData(id_);
 
     // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
@@ -64,6 +64,11 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_) {
             ScheduleConstruction(structure.tech_requirement);
     }
 
+    if (urgent) {
+        m_construction_orders.emplace_front(structure);
+        return;
+    }
+
     m_construction_orders.emplace_back(structure);
 }
 
@@ -80,6 +85,10 @@ void Builder::ScheduleOrders(const std::vector<Order> orders_) {
 
 const std::list<Order>& Builder::GetConstructionOrders() const {
     return m_construction_orders;
+}
+
+const std::list<Order>& Builder::GetTrainigOrders() const {
+    return m_training_orders;
 }
 
 int64_t Builder::CountScheduledStructures(sc2::UNIT_TYPEID id_) const {

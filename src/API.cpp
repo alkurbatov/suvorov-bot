@@ -89,8 +89,8 @@ const sc2::Unit* Observer::GetClosestUnit(const sc2::Point2D& point_,
     return target;
 }
 
-size_t Observer::CountUnitType(sc2::UNIT_TYPEID type_) const {
-    return GetUnits(IsUnit(type_)).size();
+size_t Observer::CountUnitType(sc2::UNIT_TYPEID type_, bool with_not_finished) const {
+    return GetUnits(IsUnit(type_, with_not_finished)).size();
 }
 
 const sc2::GameInfo& Observer::GameInfo() const {
@@ -99,6 +99,21 @@ const sc2::GameInfo& Observer::GameInfo() const {
 
 sc2::Point3D Observer::StartingLocation() const {
     return m_observer->GetStartLocation();
+}
+
+int32_t Observer::GetFoodCap() const {
+    return m_observer->GetFoodCap();
+}
+
+int32_t Observer::GetFoodUsed() const {
+    return m_observer->GetFoodUsed();
+}
+
+float Observer::GetExpectedFoodCap() const {
+    return GetUnits(IsCommandCenter()).size()
+        * FOOD_PROVIDED::TERRAN_COMMANDCENTER
+        + CountUnitType(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT, true)
+        * FOOD_PROVIDED::TERRAN_SUPPLY;
 }
 
 int32_t Observer::GetMinerals() const {
@@ -110,8 +125,7 @@ int32_t Observer::GetVespene() const {
 }
 
 float Observer::GetAvailableFood() const {
-    return static_cast<float>(
-        m_observer->GetFoodCap() - m_observer->GetFoodUsed());
+    return static_cast<float>(GetFoodCap() - GetFoodUsed());
 }
 
 const sc2::UnitTypes& Observer::GetUnitTypeData() const {

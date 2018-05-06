@@ -16,13 +16,15 @@ struct Builder {
 
     void OnStep();
 
-    void ScheduleConstruction(sc2::UNIT_TYPEID id_);
+    void ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent = false);
 
     void ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_);
 
     void ScheduleOrders(const std::vector<Order> orders_);
 
     const std::list<Order>& GetConstructionOrders() const;
+
+    const std::list<Order>& GetTrainigOrders() const;
 
     int64_t CountScheduledStructures(sc2::UNIT_TYPEID id_) const;
 

@@ -10,15 +10,16 @@
 #include <sc2api/sc2_unit.h>
 
 struct IsUnit {
-    explicit IsUnit(sc2::UNIT_TYPEID type_);
+    explicit IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished = false);
 
     bool operator()(const sc2::Unit& unit_);
 
  private:
     sc2::UNIT_TYPEID m_type;
+    float m_build_progress;
 };
 
-// Check that the provided unit is not depleted mineral patch
+// FIXME(alkurbatov): Check that the provided unit is not depleted mineral patch
 struct IsMineralPatch {
     bool operator()(const sc2::Unit& unit_);
 };
@@ -34,6 +35,10 @@ struct IsFreeWorker {
 
 struct IsBuildingOrder {
     bool operator()(const sc2::UnitOrder& order_);
+};
+
+struct IsCommandCenter {
+    bool operator()(const sc2::Unit& unit_);
 };
 
 struct IsFreeCommandCenter {

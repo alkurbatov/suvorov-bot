@@ -9,6 +9,7 @@
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
 #include "plugins/ForceCommander.h"
+#include "plugins/Governor.h"
 #include "plugins/Miner.h"
 
 #include <sc2api/sc2_common.h>
@@ -17,6 +18,7 @@
 Dispatcher::Dispatcher(): m_builder(new Builder()) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
 
+    m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
     m_plugins.emplace_back(new ForceCommander());
 
@@ -66,18 +68,6 @@ void Dispatcher::OnStep() {
 
     for (const auto i : m_plugins)
         i->OnStep();
-
-    // FIXME: skip this if we've planned additional supply already.
-    // FIXME: skip this if we have 200 cap limit.
-    // If we are not supply capped, don't build a supply depot.
-    // size_t prediction = gAPI->observer().countUnitType(
-    //     sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT) * 2 + 2;
-    // if (Observation()->GetFoodUsed() <=
-    //     Observation()->GetFoodCap() - static_cast<int32_t>(prediction))
-    //     return;
-
-    // m_constructionOrders.emplace(
-    //    gAPI->observer().GetUnitTypeData(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT));
 
     clock.Finish();
 }

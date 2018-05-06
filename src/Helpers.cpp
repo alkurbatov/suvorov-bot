@@ -5,12 +5,15 @@
 #include "Converter.h"
 #include "Helpers.h"
 
-IsUnit::IsUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
+IsUnit::IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished):
+    m_type(type_), m_build_progress(1.0f) {
+    if (with_not_finished)
+        m_build_progress = 0.0f;
 }
 
 bool IsUnit::operator()(const sc2::Unit& unit_) {
-    // Don't report the units under construction.
-    return unit_.unit_type == m_type && unit_.build_progress == 1.0f;
+    return unit_.unit_type == m_type &&
+        unit_.build_progress >= m_build_progress;
 }
 
 bool IsMineralPatch::operator()(const sc2::Unit& unit_) {
@@ -50,6 +53,14 @@ bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {
         default:
             return false;
     }
+}
+
+bool IsCommandCenter::operator()(const sc2::Unit& unit_) {
+    return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTERFLYING ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS;
 }
 
 bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) {
