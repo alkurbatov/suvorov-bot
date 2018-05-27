@@ -33,6 +33,22 @@ bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
     return it == unit_.orders.end();
 }
 
+bool IsGasWorker::operator()(const sc2::Unit& unit_) {
+    if (unit_.unit_type != sc2::UNIT_TYPEID::TERRAN_SCV)
+        return false;
+
+    if (unit_.orders.empty())
+        return false;
+
+    if (unit_.orders.front().ability_id != sc2::ABILITY_ID::HARVEST_RETURN)
+        return false;
+
+    if (unit_.buffs.empty())
+        return false;
+
+    return (unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGAS);
+}
+
 bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {
     switch (convert::ToAbilityID(order_.ability_id)) {
         case sc2::ABILITY_ID::BUILD_COMMANDCENTER:

@@ -4,6 +4,7 @@
 
 #include "API.h"
 #include "Dispatcher.h"
+#include "Helpers.h"
 #include "Historican.h"
 #include "Timer.h"
 #include "plugins/ChatterBox.h"
@@ -60,6 +61,10 @@ void Dispatcher::OnStep() {
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
+    // Could be just a worker exiting a refinery.
+    if (IsGasWorker()(*unit_))
+        return;
+
     gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
         " was created" << std::endl;
 
