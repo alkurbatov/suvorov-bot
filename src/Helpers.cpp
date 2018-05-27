@@ -24,8 +24,14 @@ bool IsGeiser::operator()(const sc2::Unit& unit_) {
     return unit_.vespene_contents > 0;
 }
 
+bool IsWorker::operator()(const sc2::Unit& unit_) {
+    return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_SCV ||
+        unit_.unit_type == sc2::UNIT_TYPEID::ZERG_DRONE ||
+        unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_PROBE;
+}
+
 bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
-    if (unit_.unit_type != sc2::UNIT_TYPEID::TERRAN_SCV)
+    if (!IsWorker()(unit_))
         return false;
 
     auto it = std::find_if(unit_.orders.begin(), unit_.orders.end(),
@@ -33,8 +39,15 @@ bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
     return it == unit_.orders.end();
 }
 
+bool IsFreeLarva::operator()(const sc2::Unit& unit_) {
+    if (unit_.unit_type != sc2::UNIT_TYPEID::ZERG_LARVA)
+        return false;
+
+    return unit_.orders.empty();
+}
+
 bool IsGasWorker::operator()(const sc2::Unit& unit_) {
-    if (unit_.unit_type != sc2::UNIT_TYPEID::TERRAN_SCV)
+    if (!IsWorker()(unit_))
         return false;
 
     if (unit_.orders.empty())
@@ -64,6 +77,8 @@ bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {
         case sc2::ABILITY_ID::BUILD_STARPORT:
         case sc2::ABILITY_ID::BUILD_ARMORY:
         case sc2::ABILITY_ID::BUILD_FUSIONCORE:
+        case sc2::ABILITY_ID::BUILD_SPAWNINGPOOL:
+        case sc2::ABILITY_ID::BUILD_EXTRACTOR:
             return true;
 
         default:

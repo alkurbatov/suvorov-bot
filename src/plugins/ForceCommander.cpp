@@ -3,6 +3,7 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "../API.h"
+#include "../Helpers.h"
 #include "../Pathfinder.h"
 #include "ForceCommander.h"
 
@@ -22,7 +23,8 @@ void ForceCommander::OnStep() {
 }
 
 void ForceCommander::OnUnitCreated(const sc2::Unit* unit_) {
-    if (unit_->unit_type.ToType() != sc2::UNIT_TYPEID::TERRAN_MARINE)
+    if (IsWorker()(*unit_) ||
+        unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_OVERLORD)
         return;
 
     m_units.push_back(unit_);

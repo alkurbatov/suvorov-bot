@@ -29,7 +29,15 @@ struct IsGeiser {
     bool operator()(const sc2::Unit& unit_);
 };
 
+struct IsWorker {
+    bool operator()(const sc2::Unit& unit_);
+};
+
 struct IsFreeWorker {
+    bool operator()(const sc2::Unit& unit_);
+};
+
+struct IsFreeLarva {
     bool operator()(const sc2::Unit& unit_);
 };
 

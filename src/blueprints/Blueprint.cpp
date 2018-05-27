@@ -9,6 +9,7 @@
 #include "Orbital.h"
 #include "Refinery.h"
 #include "Unit.h"
+#include "ZergUnit.h"
 
 Blueprint::Blueprint(bool needs_worker_): m_needs_worker(needs_worker_) {
 }
@@ -23,6 +24,7 @@ bool Blueprint::NeedsWorker() const {
 std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
     switch (ability_) {
         case sc2::ABILITY_ID::BUILD_REFINERY:
+        case sc2::ABILITY_ID::BUILD_EXTRACTOR:
             return std::shared_ptr<Blueprint>(new Refinery());
 
         case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:
@@ -35,6 +37,11 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_MARINE:
         case sc2::ABILITY_ID::TRAIN_REAPER:
             return std::shared_ptr<Blueprint>(new Unit());
+
+        case sc2::ABILITY_ID::TRAIN_DRONE:
+        case sc2::ABILITY_ID::TRAIN_OVERLORD:
+        case sc2::ABILITY_ID::TRAIN_ZERGLING:
+            return std::shared_ptr<Blueprint>(new ZergUnit());
 
         default:
             return std::shared_ptr<Blueprint>(new Building());

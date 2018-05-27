@@ -53,7 +53,8 @@ void Miner::OnUnitIdle(const sc2::Unit* unit_) {
 
             break;
 
-        case sc2::UNIT_TYPEID::TERRAN_SCV: {
+        case sc2::UNIT_TYPEID::TERRAN_SCV:
+        case sc2::UNIT_TYPEID::ZERG_DRONE: {
             const sc2::Unit* mineral_target = Pathfinder::FindMineralPatch(
                 gAPI->observer().StartingLocation());
             if (!mineral_target)
