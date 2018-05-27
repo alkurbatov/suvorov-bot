@@ -4,6 +4,9 @@
 
 #pragma once
 
+#include <string>
+
+#include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_typeenums.h>
 
 // The collection of type conversion utilities
@@ -16,5 +19,9 @@ inline sc2::UnitTypeID ToUnitTypeID(sc2::UNIT_TYPEID id_) {
 inline sc2::ABILITY_ID ToAbilityID(sc2::AbilityID id_) {
     return static_cast<sc2::ABILITY_ID>(id_);
 }
+
+sc2::Difficulty StringToDifficulty(const std::string& name_);
+
+sc2::Race StringToRace(const std::string& name_);
 
 }  // namespace convert
