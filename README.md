@@ -23,6 +23,8 @@ Build requirements
 ------------------
 
 * Download (the password is iagreetotheeula) at least one of the following map packs:
+  * [Ladder 2017 Season 1](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season1.zip)
+  * [Ladder 2017 Season 2](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season2.zip)
   * [Ladder 2017 Season 3](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season3_Updated.zip)
   * [Ladder 2017 Season 4](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season4.zip)
   * [Ladder 2018 Season 1](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2018Season1.zip)
@@ -40,7 +42,7 @@ Build requirements
 * Install the 'make' utility.
 
 ### OS X
-* Install XCode commandline tools.
+* Install XCode command-line tools.
 
 Build instructions
 ------------------
