@@ -4,6 +4,7 @@
 
 #include "Converter.h"
 #include "Helpers.h"
+#include "World.h"
 
 IsUnit::IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished):
     m_type(type_), m_build_progress(1.0f) {
@@ -53,13 +54,17 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) {
     if (unit_.orders.empty())
         return false;
 
-    if (unit_.orders.front().ability_id != sc2::ABILITY_ID::HARVEST_RETURN)
-        return false;
+    if (unit_.orders.front().ability_id == sc2::ABILITY_ID::HARVEST_RETURN) {
+        if (unit_.buffs.empty())
+            return false;
 
-    if (unit_.buffs.empty())
-        return false;
+        return unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGAS;
+    }
 
-    return (unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGAS);
+    if (unit_.orders.front().ability_id == sc2::ABILITY_ID::HARVEST_GATHER)
+        return gWorld->IsCapturedGeyser(unit_.orders.front().target_unit_tag);
+
+    return false;
 }
 
 bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {

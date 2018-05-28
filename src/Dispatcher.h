@@ -28,6 +28,8 @@ struct Dispatcher: sc2::Agent {
 
     void OnUnitIdle(const sc2::Unit* unit_) final;
 
+    void OnUnitDestroyed(const sc2::Unit* unit_) final;
+
     std::shared_ptr<Builder> m_builder;
 
     std::vector<std::shared_ptr<Plugin>> m_plugins;

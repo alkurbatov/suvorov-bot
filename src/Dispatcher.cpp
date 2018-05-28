@@ -7,6 +7,7 @@
 #include "Helpers.h"
 #include "Historican.h"
 #include "Timer.h"
+#include "World.h"
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
 #include "plugins/ForceCommander.h"
@@ -18,6 +19,7 @@
 
 Dispatcher::Dispatcher(): m_builder(new Builder()) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
+    gWorld.reset(new World());
 
     m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
@@ -46,6 +48,8 @@ void Dispatcher::OnGameEnd() {
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
     gHistory << sc2::UnitTypeToName(building_->unit_type) <<
         " was created" << std::endl;
+
+    gWorld->OnBuildingConstructionComplete(*building_);
 }
 
 void Dispatcher::OnStep() {
@@ -75,4 +79,9 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     for (const auto i : m_plugins)
         i->OnUnitIdle(unit_);
+}
+
+void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
+    gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
+        " was destroyed" << std::endl;
 }
