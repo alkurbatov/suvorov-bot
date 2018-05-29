@@ -21,8 +21,12 @@ bool IsMineralPatch::operator()(const sc2::Unit& unit_) {
     return unit_.mineral_contents > 0;
 }
 
-bool IsGeiser::operator()(const sc2::Unit& unit_) {
+bool IsGeyser::operator()(const sc2::Unit& unit_) {
     return unit_.vespene_contents > 0;
+}
+
+bool IsFreeGeyser::operator()(const sc2::Unit& unit_) {
+    return IsGeyser()(unit_) && !gWorld->IsOccupied(unit_);
 }
 
 bool IsWorker::operator()(const sc2::Unit& unit_) {
@@ -62,7 +66,7 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) {
     }
 
     if (unit_.orders.front().ability_id == sc2::ABILITY_ID::HARVEST_GATHER)
-        return gWorld->IsCapturedGeyser(unit_.orders.front().target_unit_tag);
+        return gWorld->IsOccupied(unit_);
 
     return false;
 }

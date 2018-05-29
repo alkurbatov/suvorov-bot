@@ -25,7 +25,12 @@ struct IsMineralPatch {
 };
 
 // Check that the provided unit is not depleted geyser
-struct IsGeiser {
+struct IsGeyser {
+    bool operator()(const sc2::Unit& unit_);
+};
+
+// Check that the provided unit is not occupied and not depleted geyser
+struct IsFreeGeyser {
     bool operator()(const sc2::Unit& unit_);
 };
 
