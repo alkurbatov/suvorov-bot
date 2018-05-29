@@ -11,7 +11,7 @@
 #include <set>
 
 struct World {
-    void OnBuildingConstructionComplete(const sc2::Unit& building_);
+    void OnUnitCreated(const sc2::Unit& unit_);
 
     bool IsCapturedGeyser(sc2::Tag tag_) const;
 

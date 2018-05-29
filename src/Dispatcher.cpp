@@ -48,8 +48,6 @@ void Dispatcher::OnGameEnd() {
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
     gHistory << sc2::UnitTypeToName(building_->unit_type) <<
         " was created" << std::endl;
-
-    gWorld->OnBuildingConstructionComplete(*building_);
 }
 
 void Dispatcher::OnStep() {
@@ -71,6 +69,8 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
     gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
         " was created" << std::endl;
+
+    gWorld->OnUnitCreated(*unit_);
 
     for (const auto i : m_plugins)
         i->OnUnitCreated(unit_);

@@ -4,12 +4,12 @@
 
 #include "World.h"
 
-void World::OnBuildingConstructionComplete(const sc2::Unit& building_) {
-    switch (building_.unit_type.ToType()) {
+void World::OnUnitCreated(const sc2::Unit& unit_) {
+    switch (unit_.unit_type.ToType()) {
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
         case sc2::UNIT_TYPEID::TERRAN_REFINERY:
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR:
-            m_captured_geysers.insert(building_.tag);
+            m_captured_geysers.insert(unit_.tag);
             return;
 
         default:
