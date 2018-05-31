@@ -85,3 +85,12 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
     gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
         " was destroyed" << std::endl;
 }
+
+void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
+        const std::vector<std::string>& protocol_errors) {
+    for (const auto i : client_errors)
+        gHistory << "Encountered client error: " << static_cast<int>(i) << std::endl;
+
+    for (const auto i : protocol_errors)
+        gHistory << "Encountered protocol error: " << i << std::endl;
+}

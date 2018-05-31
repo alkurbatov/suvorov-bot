@@ -30,6 +30,9 @@ struct Dispatcher: sc2::Agent {
 
     void OnUnitDestroyed(const sc2::Unit* unit_) final;
 
+    void OnError(const std::vector<sc2::ClientError>& client_errors,
+        const std::vector<std::string>& protocol_errors = {}) final;
+
     std::shared_ptr<Builder> m_builder;
 
     std::vector<std::shared_ptr<Plugin>> m_plugins;
