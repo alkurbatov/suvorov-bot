@@ -6,16 +6,16 @@
 #include "../Helpers.h"
 #include "../Order.h"
 #include "../Pathfinder.h"
+#include "../World.h"
 #include "Miner.h"
 
 #include <sc2api/sc2_typeenums.h>
 
 #include <vector>
 
-Miner::Miner(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
-}
+namespace {
 
-void Miner::OnStep() {
+void GatherVespene() {
     auto refineries = gAPI->observer().GetUnits(IsRefinery());
     auto free_workers = gAPI->observer().GetUnits(IsFreeWorker());
 
@@ -29,7 +29,9 @@ void Miner::OnStep() {
         gAPI->action().Cast(*free_workers.back(), sc2::ABILITY_ID::SMART, *i);
         free_workers.pop_back();
     }
+}
 
+void CallDownMULE() {
     auto orbitals = gAPI->observer().GetUnits(
         IsUnit(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND));
 
@@ -50,6 +52,18 @@ void Miner::OnStep() {
 
         gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CALLDOWNMULE, *mineral_target);
     }
+};
+
+}  // namespace
+
+Miner::Miner(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
+}
+
+void Miner::OnStep() {
+    GatherVespene();
+
+    if (gWorld->GetCurrentRace() == sc2::Race::Terran)
+        CallDownMULE();
 }
 
 void Miner::OnUnitIdle(const sc2::Unit* unit_) {
