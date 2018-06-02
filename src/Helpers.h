@@ -54,10 +54,6 @@ struct IsGasWorker {
     bool operator()(const sc2::Unit& unit_);
 };
 
-struct IsBuildingOrder {
-    bool operator()(const sc2::UnitOrder& order_);
-};
-
 struct IsCommandCenter {
     bool operator()(const sc2::Unit& unit_);
 };

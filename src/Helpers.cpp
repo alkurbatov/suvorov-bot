@@ -85,30 +85,6 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) {
     return false;
 }
 
-bool IsBuildingOrder::operator()(const sc2::UnitOrder& order_) {
-    switch (convert::ToAbilityID(order_.ability_id)) {
-        case sc2::ABILITY_ID::BUILD_COMMANDCENTER:
-        case sc2::ABILITY_ID::BUILD_SUPPLYDEPOT:
-        case sc2::ABILITY_ID::BUILD_REFINERY:
-        case sc2::ABILITY_ID::BUILD_BARRACKS:
-        case sc2::ABILITY_ID::BUILD_ENGINEERINGBAY:
-        case sc2::ABILITY_ID::BUILD_MISSILETURRET:
-        case sc2::ABILITY_ID::BUILD_BUNKER:
-        case sc2::ABILITY_ID::BUILD_SENSORTOWER:
-        case sc2::ABILITY_ID::BUILD_GHOSTACADEMY:
-        case sc2::ABILITY_ID::BUILD_FACTORY:
-        case sc2::ABILITY_ID::BUILD_STARPORT:
-        case sc2::ABILITY_ID::BUILD_ARMORY:
-        case sc2::ABILITY_ID::BUILD_FUSIONCORE:
-        case sc2::ABILITY_ID::BUILD_SPAWNINGPOOL:
-        case sc2::ABILITY_ID::BUILD_EXTRACTOR:
-            return true;
-
-        default:
-            return false;
-    }
-}
-
 bool IsCommandCenter::operator()(const sc2::Unit& unit_) {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTERFLYING ||
