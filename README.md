@@ -17,7 +17,7 @@
 About
 -----
 
-Starcraft 2 Terran bot.
+Starcraft 2 Terran & Zerg bot.
 
 Build requirements
 ------------------
