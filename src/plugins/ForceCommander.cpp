@@ -23,9 +23,11 @@ void ForceCommander::OnStep() {
 }
 
 void ForceCommander::OnUnitCreated(const sc2::Unit* unit_) {
-    if (IsWorker()(*unit_) ||
-        unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_OVERLORD)
+    if (!IsCombatUnit()(*unit_))
         return;
+
+    gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
+        " added to attack group" << std::endl;
 
     m_units.push_back(unit_);
 }

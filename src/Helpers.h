@@ -19,6 +19,10 @@ struct IsUnit {
     float m_build_progress;
 };
 
+struct IsCombatUnit {
+    bool operator()(const sc2::Unit& unit_);
+};
+
 // FIXME(alkurbatov): Check that the provided unit is not depleted mineral patch
 struct IsMineralPatch {
     bool operator()(const sc2::Unit& unit_);

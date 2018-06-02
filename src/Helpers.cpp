@@ -17,6 +17,74 @@ bool IsUnit::operator()(const sc2::Unit& unit_) {
         unit_.build_progress >= m_build_progress;
 }
 
+bool IsCombatUnit::operator()(const sc2::Unit& unit_) {
+    switch (unit_.unit_type.ToType()) {
+       case sc2::UNIT_TYPEID::TERRAN_BANSHEE:
+       case sc2::UNIT_TYPEID::TERRAN_CYCLONE:
+       case sc2::UNIT_TYPEID::TERRAN_GHOST:
+       case sc2::UNIT_TYPEID::TERRAN_HELLION:
+       case sc2::UNIT_TYPEID::TERRAN_HELLIONTANK:
+       case sc2::UNIT_TYPEID::TERRAN_LIBERATOR:
+       case sc2::UNIT_TYPEID::TERRAN_LIBERATORAG:
+       case sc2::UNIT_TYPEID::TERRAN_MARAUDER:
+       case sc2::UNIT_TYPEID::TERRAN_MARINE:
+       case sc2::UNIT_TYPEID::TERRAN_MEDIVAC:
+       case sc2::UNIT_TYPEID::TERRAN_RAVEN:
+       case sc2::UNIT_TYPEID::TERRAN_REAPER:
+       case sc2::UNIT_TYPEID::TERRAN_SIEGETANK:
+       case sc2::UNIT_TYPEID::TERRAN_SIEGETANKSIEGED:
+       case sc2::UNIT_TYPEID::TERRAN_THOR:
+       case sc2::UNIT_TYPEID::TERRAN_THORAP:
+       case sc2::UNIT_TYPEID::TERRAN_VIKINGASSAULT:
+       case sc2::UNIT_TYPEID::TERRAN_VIKINGFIGHTER:
+       case sc2::UNIT_TYPEID::TERRAN_WIDOWMINE:
+       case sc2::UNIT_TYPEID::TERRAN_WIDOWMINEBURROWED:
+
+       case sc2::UNIT_TYPEID::ZERG_BANELING:
+       case sc2::UNIT_TYPEID::ZERG_BANELINGBURROWED:
+       case sc2::UNIT_TYPEID::ZERG_BROODLORD:
+       case sc2::UNIT_TYPEID::ZERG_CORRUPTOR:
+       case sc2::UNIT_TYPEID::ZERG_HYDRALISK:
+       case sc2::UNIT_TYPEID::ZERG_HYDRALISKBURROWED:
+       case sc2::UNIT_TYPEID::ZERG_INFESTOR:
+       case sc2::UNIT_TYPEID::ZERG_INFESTORBURROWED:
+       case sc2::UNIT_TYPEID::ZERG_INFESTORTERRAN:
+       case sc2::UNIT_TYPEID::ZERG_LURKERMP:
+       case sc2::UNIT_TYPEID::ZERG_LURKERMPBURROWED:
+       case sc2::UNIT_TYPEID::ZERG_MUTALISK:
+       case sc2::UNIT_TYPEID::ZERG_RAVAGER:
+       case sc2::UNIT_TYPEID::ZERG_ROACH:
+       case sc2::UNIT_TYPEID::ZERG_ROACHBURROWED:
+       case sc2::UNIT_TYPEID::ZERG_ULTRALISK:
+       case sc2::UNIT_TYPEID::ZERG_VIPER:
+       case sc2::UNIT_TYPEID::ZERG_ZERGLING:
+       case sc2::UNIT_TYPEID::ZERG_ZERGLINGBURROWED:
+
+       case sc2::UNIT_TYPEID::PROTOSS_ADEPT:
+       case sc2::UNIT_TYPEID::PROTOSS_ADEPTPHASESHIFT:
+       case sc2::UNIT_TYPEID::PROTOSS_ARCHON:
+       case sc2::UNIT_TYPEID::PROTOSS_CARRIER:
+       case sc2::UNIT_TYPEID::PROTOSS_COLOSSUS:
+       case sc2::UNIT_TYPEID::PROTOSS_DARKTEMPLAR:
+       case sc2::UNIT_TYPEID::PROTOSS_DISRUPTOR:
+       case sc2::UNIT_TYPEID::PROTOSS_DISRUPTORPHASED:
+       case sc2::UNIT_TYPEID::PROTOSS_HIGHTEMPLAR:
+       case sc2::UNIT_TYPEID::PROTOSS_IMMORTAL:
+       case sc2::UNIT_TYPEID::PROTOSS_MOTHERSHIP:
+       case sc2::UNIT_TYPEID::PROTOSS_ORACLE:
+       case sc2::UNIT_TYPEID::PROTOSS_PHOENIX:
+       case sc2::UNIT_TYPEID::PROTOSS_SENTRY:
+       case sc2::UNIT_TYPEID::PROTOSS_STALKER:
+       case sc2::UNIT_TYPEID::PROTOSS_TEMPEST:
+       case sc2::UNIT_TYPEID::PROTOSS_VOIDRAY:
+       case sc2::UNIT_TYPEID::PROTOSS_ZEALOT:
+            return true;
+
+       default:
+            return false;
+    }
+}
+
 bool IsMineralPatch::operator()(const sc2::Unit& unit_) {
     return unit_.mineral_contents > 0;
 }
