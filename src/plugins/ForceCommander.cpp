@@ -7,6 +7,11 @@
 #include "../Pathfinder.h"
 #include "ForceCommander.h"
 
+#include <algorithm>
+
+ForceCommander::ForceCommander(): m_attack_limit(16) {
+}
+
 void ForceCommander::OnStep() {
     // Clean up dead bodies.
     auto it = std::remove_if(m_units.begin(), m_units.end(),
@@ -16,10 +21,13 @@ void ForceCommander::OnStep() {
 
     m_units.erase(it, m_units.end());
 
-    if (m_units.size() > 13) {
-        gAPI->action().Attack(m_units, Pathfinder::GetEnemyBaseLocation());
-        m_units.clear();
-    }
+    if (m_units.size() < m_attack_limit)
+        return;
+
+    gAPI->action().Attack(m_units, Pathfinder::GetEnemyBaseLocation());
+
+    m_units.clear();
+    m_attack_limit = std::min<float>(m_attack_limit * 1.5f, 170.0f);
 }
 
 void ForceCommander::OnUnitCreated(const sc2::Unit* unit_) {
