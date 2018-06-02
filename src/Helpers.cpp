@@ -29,6 +29,15 @@ bool IsFreeGeyser::operator()(const sc2::Unit& unit_) {
     return IsGeyser()(unit_) && !gWorld->IsOccupied(unit_);
 }
 
+bool IsRefinery::operator()(const sc2::Unit& unit_) {
+    if (unit_.build_progress != 1.0f)
+        return false;
+
+    return unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR ||
+        unit_.unit_type == sc2::UNIT_TYPEID::ZERG_EXTRACTOR ||
+        unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_REFINERY;
+}
+
 bool IsWorker::operator()(const sc2::Unit& unit_) {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_SCV ||
         unit_.unit_type == sc2::UNIT_TYPEID::ZERG_DRONE ||
@@ -39,9 +48,14 @@ bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
     if (!IsWorker()(unit_))
         return false;
 
-    auto it = std::find_if(unit_.orders.begin(), unit_.orders.end(),
-        IsBuildingOrder());
-    return it == unit_.orders.end();
+    if (unit_.orders.empty())
+        return true;
+
+    if (unit_.orders.front().ability_id != sc2::ABILITY_ID::HARVEST_GATHER &&
+        unit_.orders.front().ability_id != sc2::ABILITY_ID::HARVEST_RETURN)
+        return false;
+
+    return !IsGasWorker()(unit_);
 }
 
 bool IsFreeLarva::operator()(const sc2::Unit& unit_) {
@@ -66,7 +80,7 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) {
     }
 
     if (unit_.orders.front().ability_id == sc2::ABILITY_ID::HARVEST_GATHER)
-        return gWorld->IsOccupied(unit_);
+        return gWorld->IsTargetOccupied(unit_.orders.front());
 
     return false;
 }

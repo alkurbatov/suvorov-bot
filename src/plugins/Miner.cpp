@@ -16,6 +16,20 @@ Miner::Miner(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
 }
 
 void Miner::OnStep() {
+    auto refineries = gAPI->observer().GetUnits(IsRefinery());
+    auto free_workers = gAPI->observer().GetUnits(IsFreeWorker());
+
+    for ( const auto& i : refineries ) {
+        if (free_workers.empty())
+            break;
+
+        if (i->assigned_harvesters >= i->ideal_harvesters)
+            continue;
+
+        gAPI->action().Cast(*free_workers.back(), sc2::ABILITY_ID::SMART, *i);
+        free_workers.pop_back();
+    }
+
     auto orbitals = gAPI->observer().GetUnits(
         IsUnit(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND));
 

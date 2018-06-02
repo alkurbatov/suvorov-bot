@@ -20,7 +20,7 @@ bool Refinery::Build(Order* order_) {
         return false;
 
     gAPI->action().Build(*order_, geyser);
-    gWorld->CaptureObject(*geyser);
+    gWorld->ClaimObject(*geyser);
 
     return true;
 }

@@ -34,6 +34,10 @@ struct IsFreeGeyser {
     bool operator()(const sc2::Unit& unit_);
 };
 
+struct IsRefinery {
+    bool operator()(const sc2::Unit& unit_);
+};
+
 struct IsWorker {
     bool operator()(const sc2::Unit& unit_);
 };
