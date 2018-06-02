@@ -94,6 +94,8 @@ struct Observer {
 
     const sc2::UnitTypeData& GetUnitTypeData(sc2::UNIT_TYPEID id_) const;
 
+    sc2::Race GetCurrentRace() const;
+
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;
 
  private:

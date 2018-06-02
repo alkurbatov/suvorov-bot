@@ -6,6 +6,8 @@
 #include "Converter.h"
 #include "Helpers.h"
 
+#include <sc2api/sc2_map_info.h>
+
 #include <limits>
 #include <memory>
 
@@ -134,6 +136,10 @@ const sc2::UnitTypes& Observer::GetUnitTypeData() const {
 
 const sc2::UnitTypeData& Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
     return m_observer->GetUnitTypeData()[convert::ToUnitTypeID(id_)];
+}
+
+sc2::Race Observer::GetCurrentRace() const {
+    return m_observer->GetGameInfo().player_info.front().race_actual;
 }
 
 const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {
