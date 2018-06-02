@@ -36,6 +36,8 @@ struct ObjectComparator {
 };
 
 struct World {
+    explicit World(sc2::Race current_race_);
+
     void OnUnitCreated(const sc2::Unit& unit_);
 
     void OnUnitDestroyed(const sc2::Unit* unit_);
@@ -46,7 +48,10 @@ struct World {
 
     void ClaimObject(const sc2::Unit& unit_);
 
+    sc2::Race GetCurrentRace() const;
+
  private:
+    sc2::Race m_current_race;
     std::unordered_set<Object, ObjectHasher, ObjectComparator> m_captured_geysers;
 };
 

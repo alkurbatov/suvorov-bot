@@ -5,6 +5,9 @@
 #include "Helpers.h"
 #include "World.h"
 
+World::World(sc2::Race current_race_): m_current_race(current_race_) {
+}
+
 void World::OnUnitCreated(const sc2::Unit& unit_) {
     switch (unit_.unit_type.ToType()) {
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
@@ -57,6 +60,10 @@ bool World::IsTargetOccupied(const sc2::UnitOrder& order_) const {
 void World::ClaimObject(const sc2::Unit& unit_) {
     if (IsGeyser()(unit_))
         m_captured_geysers.emplace(unit_);
+}
+
+sc2::Race World::GetCurrentRace() const {
+    return m_current_race;
 }
 
 std::unique_ptr<World> gWorld;

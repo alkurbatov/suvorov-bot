@@ -19,7 +19,6 @@
 
 Dispatcher::Dispatcher(): m_builder(new Builder()) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
-    gWorld.reset(new World());
 
     m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
@@ -33,6 +32,8 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 
 void Dispatcher::OnGameStart() {
     gHistory << "New game started!" << std::endl;
+
+    gWorld.reset(new World(gAPI->observer().GetCurrentRace()));
 
     for (const auto i : m_plugins)
         i->OnGameStart();
