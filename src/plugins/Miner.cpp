@@ -17,17 +17,17 @@ namespace {
 
 void GatherVespene() {
     auto refineries = gAPI->observer().GetUnits(IsRefinery());
-    auto free_workers = gAPI->observer().GetUnits(IsFreeWorker());
 
     for ( const auto& i : refineries ) {
-        if (free_workers.empty())
-            break;
-
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
-        gAPI->action().Cast(*free_workers.back(), sc2::ABILITY_ID::SMART, *i);
-        free_workers.pop_back();
+        auto worker = gAPI->observer().GetClosestUnit(
+            i->pos, IsFreeWorker(), sc2::Unit::Alliance::Self);
+        if (!worker)
+            return;
+
+        gAPI->action().Cast(*worker, sc2::ABILITY_ID::SMART, *i);
     }
 }
 
