@@ -84,6 +84,8 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
 void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
     gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
         " was destroyed" << std::endl;
+
+    gWorld->OnUnitDestroyed(unit_);
 }
 
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,

@@ -38,6 +38,8 @@ struct ObjectComparator {
 struct World {
     void OnUnitCreated(const sc2::Unit& unit_);
 
+    void OnUnitDestroyed(const sc2::Unit* unit_);
+
     bool IsOccupied(const sc2::Unit& unit_) const;
 
     bool IsTargetOccupied(const sc2::UnitOrder& order_) const;
