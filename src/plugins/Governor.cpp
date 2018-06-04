@@ -3,6 +3,7 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "../API.h"
+#include "../World.h"
 #include "Governor.h"
 
 #include <numeric>
@@ -30,6 +31,9 @@ void Governor::OnGameStart() {
 }
 
 void Governor::OnStep() {
+    if (gWorld->GetCurrentRace() != sc2::Race::Terran)
+        return;
+
     auto builder = m_builder.lock();
     if (!builder)
         return;
