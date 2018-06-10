@@ -17,7 +17,7 @@
 About
 -----
 
-Starcraft 2 Terran & Zerg bot.
+Starcraft 2 bot capable to play for all races.
 
 Build requirements
 ------------------
