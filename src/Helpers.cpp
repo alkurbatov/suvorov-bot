@@ -153,6 +153,16 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) {
     return false;
 }
 
+bool IsTownHall::operator()(const sc2::Unit& unit_) {
+    return unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_NEXUS ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
+           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS ||
+           unit_.unit_type == sc2::UNIT_TYPEID::ZERG_HATCHERY ||
+           unit_.unit_type == sc2::UNIT_TYPEID::ZERG_HIVE ||
+           unit_.unit_type == sc2::UNIT_TYPEID::ZERG_LAIR;
+}
+
 bool IsCommandCenter::operator()(const sc2::Unit& unit_) {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTERFLYING ||
@@ -171,4 +181,10 @@ IsOrdered::IsOrdered(sc2::UNIT_TYPEID type_): m_type(type_) {
 
 bool IsOrdered::operator()(const Order& order_) {
     return order_.data.unit_type_id == m_type;
+}
+
+bool IsTrainingWorkers::operator()(const sc2::UnitOrder& order_) {
+    return order_.ability_id == sc2::ABILITY_ID::TRAIN_DRONE ||
+           order_.ability_id == sc2::ABILITY_ID::TRAIN_PROBE ||
+           order_.ability_id == sc2::ABILITY_ID::TRAIN_SCV;
 }

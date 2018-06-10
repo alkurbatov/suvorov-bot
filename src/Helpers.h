@@ -58,6 +58,10 @@ struct IsGasWorker {
     bool operator()(const sc2::Unit& unit_);
 };
 
+struct IsTownHall {
+    bool operator()(const sc2::Unit& unit_);
+};
+
 struct IsCommandCenter {
     bool operator()(const sc2::Unit& unit_);
 };
@@ -73,4 +77,8 @@ struct IsOrdered {
 
  private:
     sc2::UNIT_TYPEID m_type;
+};
+
+struct IsTrainingWorkers {
+    bool operator()(const sc2::UnitOrder& order_);
 };

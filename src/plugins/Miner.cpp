@@ -15,7 +15,29 @@
 
 namespace {
 
-void GatherVespene() {
+void SecureMineralsIncome(Builder* builder_) {
+    std::vector<Order> orders;
+    auto town_halls = gAPI->observer().GetUnits(IsTownHall());
+
+    for ( const auto& i : town_halls ) {
+        if (i->assigned_harvesters >= i->ideal_harvesters)
+            continue;
+
+        if (std::end(i->orders) != std::find_if(
+                i->orders.begin(), i->orders.end(), IsTrainingWorkers()))
+            continue;
+
+        if (builder_->CountScheduledTrainings(gWorld->GetCurrentWorkerType()) > 0)
+            continue;
+
+        orders.emplace_back(gAPI->observer().GetUnitTypeData(
+            gWorld->GetCurrentWorkerType()), i);
+    }
+
+    builder_->ScheduleOrders(orders);
+}
+
+void SecureVespeneIncome() {
     auto refineries = gAPI->observer().GetUnits(IsRefinery());
 
     for ( const auto& i : refineries ) {
@@ -52,7 +74,7 @@ void CallDownMULE() {
 
         gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CALLDOWNMULE, *mineral_target);
     }
-};
+}
 
 }  // namespace
 
@@ -60,27 +82,19 @@ Miner::Miner(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
 }
 
 void Miner::OnStep() {
-    GatherVespene();
+    auto builder = m_builder.lock();
+    if (!builder)
+        return;
+
+    SecureMineralsIncome(builder.get());
+    SecureVespeneIncome();
 
     if (gWorld->GetCurrentRace() == sc2::Race::Terran)
         CallDownMULE();
 }
 
 void Miner::OnUnitIdle(const sc2::Unit* unit_) {
-    std::vector<Order> orders;
-
     switch (unit_->unit_type.ToType()) {
-        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
-        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
-        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
-            // If we can add more SCVs do it.
-            if (unit_->assigned_harvesters < unit_->ideal_harvesters) {
-                orders.emplace_back(gAPI->observer().GetUnitTypeData(
-                    sc2::UNIT_TYPEID::TERRAN_SCV), unit_);
-            }
-
-            break;
-
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
             const sc2::Unit* mineral_target = Pathfinder::FindMineralPatch(
@@ -95,10 +109,4 @@ void Miner::OnUnitIdle(const sc2::Unit* unit_) {
         default:
             break;
     }
-
-    auto builder = m_builder.lock();
-    if (!builder)
-        return;
-
-    builder->ScheduleOrders(orders);
 }

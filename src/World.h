@@ -50,8 +50,11 @@ struct World {
 
     sc2::Race GetCurrentRace() const;
 
+    sc2::UNIT_TYPEID GetCurrentWorkerType() const;
+
  private:
     sc2::Race m_current_race;
+    sc2::UNIT_TYPEID m_current_worker_type;
     std::unordered_set<Object, ObjectHasher, ObjectComparator> m_captured_geysers;
 };
 

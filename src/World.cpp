@@ -5,7 +5,24 @@
 #include "Helpers.h"
 #include "World.h"
 
-World::World(sc2::Race current_race_): m_current_race(current_race_) {
+World::World(sc2::Race current_race_): m_current_race(current_race_),
+    m_current_worker_type(sc2::UNIT_TYPEID::INVALID) {
+    switch (m_current_race) {
+        case sc2::Race::Protoss:
+            m_current_worker_type = sc2::UNIT_TYPEID::PROTOSS_PROBE;
+            return;
+
+        case sc2::Race::Terran:
+            m_current_worker_type = sc2::UNIT_TYPEID::TERRAN_SCV;
+            return;
+
+        case sc2::Race::Zerg:
+            m_current_worker_type = sc2::UNIT_TYPEID::ZERG_DRONE;
+            return;
+
+        default:
+            return;
+    }
 }
 
 void World::OnUnitCreated(const sc2::Unit& unit_) {
@@ -64,6 +81,10 @@ void World::ClaimObject(const sc2::Unit& unit_) {
 
 sc2::Race World::GetCurrentRace() const {
     return m_current_race;
+}
+
+sc2::UNIT_TYPEID World::GetCurrentWorkerType() const {
+    return m_current_worker_type;
 }
 
 std::unique_ptr<World> gWorld;

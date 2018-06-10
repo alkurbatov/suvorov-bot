@@ -98,6 +98,13 @@ int64_t Builder::CountScheduledStructures(sc2::UNIT_TYPEID id_) const {
         IsOrdered(id_));
 }
 
+int64_t Builder::CountScheduledTrainings(sc2::UNIT_TYPEID id_) const {
+    return std::count_if(
+        m_training_orders.begin(),
+        m_training_orders.end(),
+        IsOrdered(id_));
+}
+
 bool Builder::Build(Order* order_) {
     if (m_minerals < order_->data.mineral_cost || m_vespene < order_->data.vespene_cost)
         return false;
