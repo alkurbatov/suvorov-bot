@@ -17,17 +17,31 @@ void Governor::OnGameStart() {
         return;
 
     // Initial build order
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_REFINERY);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+    switch (gWorld->GetCurrentRace()) {
+        case sc2::Race::Terran:
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_REFINERY);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
+            return;
+
+        case sc2::Race::Zerg:
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_EXTRACTOR);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
+            return;
+
+        default:
+            return;
+    }
 }
 
 void Governor::OnStep() {
@@ -65,4 +79,7 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
 
     if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::TERRAN_BARRACKS)
         builder->ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
+
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_LARVA)
+        builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING, unit_);
 }
