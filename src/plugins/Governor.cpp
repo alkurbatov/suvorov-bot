@@ -40,6 +40,12 @@ void Governor::OnGameStart() {
             return;
 
         default:
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
             return;
     }
 }
@@ -82,4 +88,7 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
 
     if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_LARVA)
         builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING, unit_);
+
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_GATEWAY)
+        builder->ScheduleTraining(sc2::UNIT_TYPEID::PROTOSS_ZEALOT, unit_);
 }

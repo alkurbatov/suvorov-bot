@@ -45,16 +45,30 @@ void Builder::OnStep() {
 void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
     sc2::UnitTypeData structure = gAPI->observer().GetUnitTypeData(id_);
 
-    // NOTE(alkurbatov): Unfortunally SC2 API returns wrong mineral cost
-    // and tech_requirement for orbital command and planetary fortress
-    // so we use a workaround.
-    // See https://github.com/Blizzard/s2client-api/issues/191
-    if (id_ == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND) {
-        structure.mineral_cost = 150;
-        structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
-    } else if (id_ == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS) {
-        structure.mineral_cost = 150;
-        structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
+    switch (id_) {
+        // NOTE (alkurbatov): Unfortunally SC2 API returns wrong mineral cost
+        // and tech_requirement for orbital command and planetary fortress
+        // so we use a workaround.
+        // See https://github.com/Blizzard/s2client-api/issues/191
+        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
+            structure.mineral_cost = 150;
+            structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
+            break;
+
+        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
+            structure.mineral_cost = 150;
+            structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
+            break;
+
+        // NOTE (alkurbatov): There is no sense in summoning protoss buildings
+        // without a pylon.
+        case sc2::UNIT_TYPEID::PROTOSS_FORGE:
+        case sc2::UNIT_TYPEID::PROTOSS_GATEWAY:
+            structure.tech_requirement = sc2::UNIT_TYPEID::PROTOSS_PYLON;
+            break;
+
+        default:
+            break;
     }
 
     // Prevent deadlock.
