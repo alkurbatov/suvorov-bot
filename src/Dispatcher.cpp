@@ -55,10 +55,10 @@ void Dispatcher::OnStep() {
     Timer clock;
     clock.Start();
 
-    m_builder->OnStep();
-
     for (const auto i : m_plugins)
         i->OnStep();
+
+    m_builder->OnStep();
 
     clock.Finish();
 }
