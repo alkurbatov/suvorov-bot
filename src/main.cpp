@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
     Dispatcher bot;
     coordinator.SetParticipants({
-        CreateParticipant(sc2::Race::Terran, &bot),
+        CreateParticipant(sc2::Race::Random, &bot),
         CreateComputer(sc2::Race::Random, sc2::Difficulty::CheatInsane)
     });
 
@@ -105,7 +105,7 @@ int main(int argc, char* argv[]) {
     if (options.ComputerOpponent) {
         num_agents = 1;
         coordinator.SetParticipants({
-            CreateParticipant(sc2::Race::Terran, &bot),
+            CreateParticipant(sc2::Race::Random, &bot),
             CreateComputer(options.ComputerRace, options.ComputerDifficulty)
             });
     } else {
