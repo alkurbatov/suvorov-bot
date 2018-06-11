@@ -10,7 +10,7 @@
 #include <memory>
 
 struct Miner : Plugin {
-    explicit Miner(std::shared_ptr<Builder> builder_);
+    explicit Miner(const std::shared_ptr<Builder>& builder_);
 
     void OnStep() final;
 

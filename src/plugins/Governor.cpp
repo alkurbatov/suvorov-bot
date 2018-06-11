@@ -8,7 +8,8 @@
 
 #include <numeric>
 
-Governor::Governor(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
+Governor::Governor(const std::shared_ptr<Builder>& builder_):
+    Plugin(), m_builder(builder_) {
 }
 
 void Governor::OnGameStart() {

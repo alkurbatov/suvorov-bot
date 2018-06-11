@@ -90,7 +90,7 @@ void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_) {
     m_training_orders.emplace_back(gAPI->observer().GetUnitTypeData(id_), unit_);
 }
 
-void Builder::ScheduleOrders(const std::vector<Order> orders_) {
+void Builder::ScheduleOrders(const std::vector<Order>& orders_) {
     // FIXME (alkurbatov): this call must be more intellectual
     // and able to select a proper queue.
     for (const auto& i : orders_)

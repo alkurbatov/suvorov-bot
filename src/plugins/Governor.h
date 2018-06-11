@@ -10,7 +10,7 @@
 #include <memory>
 
 struct Governor : Plugin {
-    explicit Governor(std::shared_ptr<Builder> builder_);
+    explicit Governor(const std::shared_ptr<Builder>& builder_);
 
     void OnGameStart() final;
 

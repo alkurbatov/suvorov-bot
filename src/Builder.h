@@ -20,7 +20,7 @@ struct Builder {
 
     void ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_);
 
-    void ScheduleOrders(const std::vector<Order> orders_);
+    void ScheduleOrders(const std::vector<Order>& orders_);
 
     const std::list<Order>& GetConstructionOrders() const;
 

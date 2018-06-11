@@ -10,7 +10,7 @@
 #include <memory>
 
 struct Diagnosis : Plugin {
-    explicit Diagnosis(std::shared_ptr<Builder> builder_);
+    explicit Diagnosis(const std::shared_ptr<Builder>& builder_);
 
     void OnStep() final;
 

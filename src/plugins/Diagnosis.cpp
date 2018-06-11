@@ -6,7 +6,8 @@
 #include "../Historican.h"
 #include "Diagnosis.h"
 
-Diagnosis::Diagnosis(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
+Diagnosis::Diagnosis(const std::shared_ptr<Builder>& builder_):
+    Plugin(), m_builder(builder_) {
 }
 
 void Diagnosis::OnStep() {

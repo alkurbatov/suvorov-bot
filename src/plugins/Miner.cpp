@@ -78,7 +78,7 @@ void CallDownMULE() {
 
 }  // namespace
 
-Miner::Miner(std::shared_ptr<Builder> builder_): Plugin(), m_builder(builder_) {
+Miner::Miner(const std::shared_ptr<Builder>& builder_): Plugin(), m_builder(builder_) {
 }
 
 void Miner::OnStep() {
