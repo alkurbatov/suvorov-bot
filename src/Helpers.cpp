@@ -12,12 +12,12 @@ IsUnit::IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished):
         m_build_progress = 0.0f;
 }
 
-bool IsUnit::operator()(const sc2::Unit& unit_) {
+bool IsUnit::operator()(const sc2::Unit& unit_) const {
     return unit_.unit_type == m_type &&
         unit_.build_progress >= m_build_progress;
 }
 
-bool IsCombatUnit::operator()(const sc2::Unit& unit_) {
+bool IsCombatUnit::operator()(const sc2::Unit& unit_) const {
     switch (unit_.unit_type.ToType()) {
        case sc2::UNIT_TYPEID::TERRAN_BANSHEE:
        case sc2::UNIT_TYPEID::TERRAN_CYCLONE:
@@ -85,19 +85,19 @@ bool IsCombatUnit::operator()(const sc2::Unit& unit_) {
     }
 }
 
-bool IsMineralPatch::operator()(const sc2::Unit& unit_) {
+bool IsMineralPatch::operator()(const sc2::Unit& unit_) const {
     return unit_.mineral_contents > 0;
 }
 
-bool IsGeyser::operator()(const sc2::Unit& unit_) {
+bool IsGeyser::operator()(const sc2::Unit& unit_) const {
     return unit_.vespene_contents > 0;
 }
 
-bool IsFreeGeyser::operator()(const sc2::Unit& unit_) {
+bool IsFreeGeyser::operator()(const sc2::Unit& unit_) const {
     return IsGeyser()(unit_) && !gWorld->IsOccupied(unit_);
 }
 
-bool IsRefinery::operator()(const sc2::Unit& unit_) {
+bool IsRefinery::operator()(const sc2::Unit& unit_) const {
     if (unit_.build_progress != 1.0f)
         return false;
 
@@ -106,13 +106,13 @@ bool IsRefinery::operator()(const sc2::Unit& unit_) {
         unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_REFINERY;
 }
 
-bool IsWorker::operator()(const sc2::Unit& unit_) {
+bool IsWorker::operator()(const sc2::Unit& unit_) const {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_SCV ||
         unit_.unit_type == sc2::UNIT_TYPEID::ZERG_DRONE ||
         unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_PROBE;
 }
 
-bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
+bool IsFreeWorker::operator()(const sc2::Unit& unit_) const {
     if (!IsWorker()(unit_))
         return false;
 
@@ -126,14 +126,14 @@ bool IsFreeWorker::operator()(const sc2::Unit& unit_) {
     return !IsGasWorker()(unit_);
 }
 
-bool IsFreeLarva::operator()(const sc2::Unit& unit_) {
+bool IsFreeLarva::operator()(const sc2::Unit& unit_) const {
     if (unit_.unit_type != sc2::UNIT_TYPEID::ZERG_LARVA)
         return false;
 
     return unit_.orders.empty();
 }
 
-bool IsGasWorker::operator()(const sc2::Unit& unit_) {
+bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
     if (!IsWorker()(unit_))
         return false;
 
@@ -153,7 +153,7 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) {
     return false;
 }
 
-bool IsTownHall::operator()(const sc2::Unit& unit_) {
+bool IsTownHall::operator()(const sc2::Unit& unit_) const {
     return unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_NEXUS ||
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
@@ -163,7 +163,7 @@ bool IsTownHall::operator()(const sc2::Unit& unit_) {
            unit_.unit_type == sc2::UNIT_TYPEID::ZERG_LAIR;
 }
 
-bool IsCommandCenter::operator()(const sc2::Unit& unit_) {
+bool IsCommandCenter::operator()(const sc2::Unit& unit_) const {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTERFLYING ||
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
@@ -171,7 +171,7 @@ bool IsCommandCenter::operator()(const sc2::Unit& unit_) {
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS;
 }
 
-bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) {
+bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) const {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER &&
         unit_.orders.empty();
 }
@@ -179,11 +179,11 @@ bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) {
 IsOrdered::IsOrdered(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
-bool IsOrdered::operator()(const Order& order_) {
+bool IsOrdered::operator()(const Order& order_) const {
     return order_.data.unit_type_id == m_type;
 }
 
-bool IsTrainingWorkers::operator()(const sc2::UnitOrder& order_) {
+bool IsTrainingWorkers::operator()(const sc2::UnitOrder& order_) const {
     return order_.ability_id == sc2::ABILITY_ID::TRAIN_DRONE ||
            order_.ability_id == sc2::ABILITY_ID::TRAIN_PROBE ||
            order_.ability_id == sc2::ABILITY_ID::TRAIN_SCV;

@@ -12,7 +12,7 @@
 struct IsUnit {
     explicit IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished = false);
 
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 
  private:
     sc2::UNIT_TYPEID m_type;
@@ -20,65 +20,65 @@ struct IsUnit {
 };
 
 struct IsCombatUnit {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 // FIXME(alkurbatov): Check that the provided unit is not depleted mineral patch
 struct IsMineralPatch {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 // Check that the provided unit is not depleted geyser
 struct IsGeyser {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 // Check that the provided unit is not occupied and not depleted geyser
 struct IsFreeGeyser {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsRefinery {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsWorker {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsFreeWorker {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsFreeLarva {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsGasWorker {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsTownHall {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsCommandCenter {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsFreeCommandCenter {
-    bool operator()(const sc2::Unit& unit_);
+    bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsOrdered {
     explicit IsOrdered(sc2::UNIT_TYPEID type_);
 
-    bool operator()(const Order& order_);
+    bool operator()(const Order& order_) const;
 
  private:
     sc2::UNIT_TYPEID m_type;
 };
 
 struct IsTrainingWorkers {
-    bool operator()(const sc2::UnitOrder& order_);
+    bool operator()(const sc2::UnitOrder& order_) const;
 };
