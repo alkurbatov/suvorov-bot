@@ -66,10 +66,6 @@ struct IsCommandCenter {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
-struct IsFreeCommandCenter {
-    bool operator()(const sc2::Unit& unit_) const;
-};
-
 struct IsOrdered {
     explicit IsOrdered(sc2::UNIT_TYPEID type_);
 

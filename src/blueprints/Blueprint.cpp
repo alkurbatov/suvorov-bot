@@ -5,12 +5,9 @@
 #include "../API.h"
 #include "Blueprint.h"
 #include "Building.h"
-#include "Fortress.h"
-#include "Hive.h"
-#include "Lair.h"
-#include "Orbital.h"
 #include "Refinery.h"
 #include "Unit.h"
+#include "Upgrade.h"
 #include "ZergUnit.h"
 
 Blueprint::Blueprint(bool needs_worker_): m_needs_worker(needs_worker_) {
@@ -30,17 +27,11 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::BUILD_ASSIMILATOR:
             return std::shared_ptr<Blueprint>(new Refinery());
 
-        case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:
-            return std::shared_ptr<Blueprint>(new Orbital());
-
-        case sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS:
-            return std::shared_ptr<Blueprint>(new Fortress());
-
-        case sc2::ABILITY_ID::MORPH_LAIR:
-            return std::shared_ptr<Blueprint>(new Lair());
-
         case sc2::ABILITY_ID::MORPH_HIVE:
-            return std::shared_ptr<Blueprint>(new Hive());
+        case sc2::ABILITY_ID::MORPH_LAIR:
+        case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:
+        case sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS:
+            return std::shared_ptr<Blueprint>(new BuildingUpgrade());
 
         case sc2::ABILITY_ID::TRAIN_ADEPT:
         case sc2::ABILITY_ID::TRAIN_CARRIER:

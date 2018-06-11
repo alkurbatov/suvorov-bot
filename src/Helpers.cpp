@@ -171,11 +171,6 @@ bool IsCommandCenter::operator()(const sc2::Unit& unit_) const {
            unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS;
 }
 
-bool IsFreeCommandCenter::operator()(const sc2::Unit& unit_) const {
-    return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER &&
-        unit_.orders.empty();
-}
-
 IsOrdered::IsOrdered(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
