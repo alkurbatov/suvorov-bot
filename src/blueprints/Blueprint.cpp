@@ -6,6 +6,7 @@
 #include "Blueprint.h"
 #include "Building.h"
 #include "Fortress.h"
+#include "Hive.h"
 #include "Lair.h"
 #include "Orbital.h"
 #include "Refinery.h"
@@ -37,6 +38,9 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
 
         case sc2::ABILITY_ID::MORPH_LAIR:
             return std::shared_ptr<Blueprint>(new Lair());
+
+        case sc2::ABILITY_ID::MORPH_HIVE:
+            return std::shared_ptr<Blueprint>(new Hive());
 
         case sc2::ABILITY_ID::TRAIN_ADEPT:
         case sc2::ABILITY_ID::TRAIN_CARRIER:

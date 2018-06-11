@@ -66,6 +66,12 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
             structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL;
             break;
 
+        case sc2::UNIT_TYPEID::ZERG_HIVE:
+            structure.mineral_cost = 200;
+            structure.vespene_cost = 150;
+            structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT;
+            break;
+
         // NOTE (alkurbatov): There is no sense in summoning protoss buildings
         // without a pylon.
         case sc2::UNIT_TYPEID::PROTOSS_FORGE:
