@@ -1,0 +1,11 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "cppcheck",
+            "type": "shell",
+            "command": "cppcheck src/ -i s2client-api/ --enable=all --language=c++ --std=c++14 --inconclusive",
+            "problemMatcher": []
+        }
+    ]
+}
