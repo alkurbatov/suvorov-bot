@@ -47,7 +47,8 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
 
     switch (id_) {
         // NOTE (alkurbatov): Unfortunally SC2 API returns wrong mineral cost
-        // and tech_requirement for orbital command and planetary fortress
+        // and tech_requirement for orbital command, planetary fortress,
+        // lair and hive.
         // so we use a workaround.
         // See https://github.com/Blizzard/s2client-api/issues/191
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
@@ -58,6 +59,11 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
         case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
             structure.mineral_cost = 150;
             structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
+            break;
+
+        case sc2::UNIT_TYPEID::ZERG_LAIR:
+            structure.mineral_cost = 150;
+            structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL;
             break;
 
         // NOTE (alkurbatov): There is no sense in summoning protoss buildings
