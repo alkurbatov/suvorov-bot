@@ -144,7 +144,9 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
         if (unit_.buffs.empty())
             return false;
 
-        return unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGAS;
+        return unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGAS ||
+            unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGASZERG ||
+            unit_.buffs.front() == sc2::BUFF_ID::CARRYHARVESTABLEVESPENEGEYSERGASPROTOSS;
     }
 
     if (unit_.orders.front().ability_id == sc2::ABILITY_ID::HARVEST_GATHER)
