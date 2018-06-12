@@ -6,6 +6,18 @@
 #include "Helpers.h"
 #include "World.h"
 
+Object::Object(const sc2::Unit& unit_): tag(unit_.tag), pos(unit_.pos) {
+}
+
+Object::Object(const sc2::UnitOrder& order_): tag(order_.target_unit_tag),
+    pos(order_.target_pos) {
+}
+
+bool Object::operator==(const Object& obj_) const {
+    return this->tag == obj_.tag ||
+        (this->pos.x == obj_.pos.x && this->pos.y == obj_.pos.y);
+}
+
 World::World(sc2::Race current_race_): m_current_race(current_race_),
     m_current_worker_type(sc2::UNIT_TYPEID::INVALID) {
     switch (m_current_race) {
@@ -26,7 +38,6 @@ World::World(sc2::Race current_race_): m_current_race(current_race_),
     }
 }
 
-
 void World::OnStep() {
     m_free_workers = gAPI->observer().GetUnits(IsFreeWorker());
 }
@@ -36,11 +47,13 @@ void World::OnUnitCreated(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
         case sc2::UNIT_TYPEID::TERRAN_REFINERY:
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
-            auto it = m_captured_geysers.find(Object(unit_));
+            Object obj(unit_);
+
+            auto it = find(m_captured_geysers.begin(), m_captured_geysers.end(), obj);
             if (m_captured_geysers.end() != it)
                 m_captured_geysers.erase(it);  // might be claimed geyser
 
-            m_captured_geysers.emplace(unit_);
+            m_captured_geysers.insert(obj);
             return;
         }
 

@@ -7,16 +7,14 @@
 #include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_unit.h>
 
-#include <memory>
 #include <unordered_set>
 
 struct Object {
-    explicit Object(const sc2::Unit& unit_): tag(unit_.tag), pos(unit_.pos) {
-    }
+    explicit Object(const sc2::Unit& unit_);
 
-    explicit Object(const sc2::UnitOrder& order_): tag(order_.target_unit_tag),
-        pos(order_.target_pos) {
-    }
+    explicit Object(const sc2::UnitOrder& order_);
+
+    bool operator==(const Object& obj_) const;
 
     sc2::Tag tag;
     sc2::Point2D pos;
@@ -25,13 +23,6 @@ struct Object {
 struct ObjectHasher {
     size_t operator()(const Object& obj_) const {
         return std::hash<sc2::Tag>()(obj_.tag);
-    }
-};
-
-struct ObjectComparator {
-    bool operator()(const Object& obj1_, const Object& obj2_) const {
-        return obj1_.tag == obj2_.tag ||
-            (obj1_.pos.x == obj2_.pos.x && obj1_.pos.y == obj2_.pos.y);
     }
 };
 
@@ -63,7 +54,7 @@ struct World {
     sc2::UNIT_TYPEID m_current_worker_type;
 
     sc2::Units m_free_workers;
-    std::unordered_set<Object, ObjectHasher, ObjectComparator> m_captured_geysers;
+    std::unordered_set<Object, ObjectHasher> m_captured_geysers;
 };
 
 extern std::unique_ptr<World> gWorld;
