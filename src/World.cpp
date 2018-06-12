@@ -81,10 +81,10 @@ void World::OnUnitDestroyed(const sc2::Unit* unit_) {
 }
 
 bool World::IsOccupied(const sc2::Unit& unit_) const {
-    if (m_captured_geysers.empty())
-        return false;
+    auto it = std::find(m_captured_geysers.begin(), m_captured_geysers.end(),
+        Object(unit_));
 
-    return m_captured_geysers.end() != m_captured_geysers.find(Object(unit_));
+    return m_captured_geysers.end() != it;
 }
 
 bool World::IsTargetOccupied(const sc2::UnitOrder& order_) const {
