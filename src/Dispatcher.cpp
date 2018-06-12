@@ -55,6 +55,8 @@ void Dispatcher::OnStep() {
     Timer clock;
     clock.Start();
 
+    gWorld->OnStep();
+
     for (const auto i : m_plugins)
         i->OnStep();
 

@@ -38,6 +38,8 @@ struct ObjectComparator {
 struct World {
     explicit World(sc2::Race current_race_);
 
+    void OnStep();
+
     void OnUnitCreated(const sc2::Unit& unit_);
 
     void OnUnitDestroyed(const sc2::Unit* unit_);
@@ -50,11 +52,17 @@ struct World {
 
     sc2::Race GetCurrentRace() const;
 
+    const sc2::Unit* GetFreeWorker();
+
+    const sc2::Unit* GetClosestFreeWorker(const sc2::Point2D& location_);
+
     sc2::UNIT_TYPEID GetCurrentWorkerType() const;
 
  private:
     sc2::Race m_current_race;
     sc2::UNIT_TYPEID m_current_worker_type;
+
+    sc2::Units m_free_workers;
     std::unordered_set<Object, ObjectHasher, ObjectComparator> m_captured_geysers;
 };
 

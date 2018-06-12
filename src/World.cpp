@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
+#include "API.h"
 #include "Helpers.h"
 #include "World.h"
 
@@ -23,6 +24,11 @@ World::World(sc2::Race current_race_): m_current_race(current_race_),
         default:
             return;
     }
+}
+
+
+void World::OnStep() {
+    m_free_workers = gAPI->observer().GetUnits(IsFreeWorker());
 }
 
 void World::OnUnitCreated(const sc2::Unit& unit_) {
@@ -81,6 +87,37 @@ void World::ClaimObject(const sc2::Unit& unit_) {
 
 sc2::Race World::GetCurrentRace() const {
     return m_current_race;
+}
+
+const sc2::Unit* World::GetFreeWorker() {
+    if (m_free_workers.empty())
+        return nullptr;
+
+    const sc2::Unit* worker =  m_free_workers.back();
+    m_free_workers.pop_back();
+    return worker;
+}
+
+const sc2::Unit* World::GetClosestFreeWorker(const sc2::Point2D& location_) {
+    auto index = m_free_workers.end();
+    float distance = std::numeric_limits<float>::max();
+
+    for (auto it = m_free_workers.begin(); it != m_free_workers.end(); ++it) {
+        float d = sc2::DistanceSquared2D((*it)->pos, location_);
+
+        if (d >= distance)
+            continue;
+
+        distance = d;
+        index = it;
+    }
+
+    if (index == m_free_workers.end())
+        return nullptr;
+
+    const sc2::Unit* worker = *index;
+    m_free_workers.erase(index);
+    return worker;
 }
 
 sc2::UNIT_TYPEID World::GetCurrentWorkerType() const {

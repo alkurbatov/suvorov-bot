@@ -8,6 +8,7 @@
 #include "Helpers.h"
 #include "Historican.h"
 #include "Pathfinder.h"
+#include "World.h"
 
 #include <algorithm>
 #include <memory>
@@ -16,8 +17,6 @@ Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
 }
 
 void Builder::OnStep() {
-    m_free_workers = gAPI->observer().GetUnits(IsFreeWorker());
-
     m_minerals = gAPI->observer().GetMinerals();
     m_vespene = gAPI->observer().GetVespene();
 
@@ -147,11 +146,11 @@ bool Builder::Build(Order* order_) {
         return false;
 
     if (blueprint->NeedsWorker()) {
-        if (m_free_workers.empty())
+        const sc2::Unit* worker = gWorld->GetFreeWorker();
+        if (!worker)
             return false;
 
-        order_->assignee = m_free_workers.back();
-        m_free_workers.pop_back();
+        order_->assignee = worker;
     }
 
     if (!blueprint->Build(order_))

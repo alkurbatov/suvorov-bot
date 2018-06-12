@@ -44,8 +44,7 @@ void SecureVespeneIncome() {
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
-        auto worker = gAPI->observer().GetClosestUnit(
-            i->pos, IsFreeWorker(), sc2::Unit::Alliance::Self);
+        const sc2::Unit* worker = gWorld->GetClosestFreeWorker(i->pos);
         if (!worker)
             return;
 

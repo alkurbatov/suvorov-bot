@@ -33,8 +33,6 @@ struct Builder {
  private:
     bool Build(Order* order_);
 
-    sc2::Units m_free_workers;
-
     int32_t m_minerals;
     int32_t m_vespene;
 
