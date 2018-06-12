@@ -49,7 +49,8 @@ void World::OnUnitCreated(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
             Object obj(unit_);
 
-            auto it = find(m_captured_geysers.begin(), m_captured_geysers.end(), obj);
+            auto it = std::find(
+                m_captured_geysers.begin(), m_captured_geysers.end(), obj);
             if (m_captured_geysers.end() != it)
                 m_captured_geysers.erase(it);  // might be claimed geyser
 
