@@ -17,7 +17,15 @@
 About
 -----
 
-Starcraft 2 bot capable to play for all races.
+Starcraft 2 bot.
+
+Suvorov currently provides the following features:
+* Supports Windows, OS X and Linux.
+* Plays all 3 races.
+* Manages resource gathering and worker allocation.
+* Supports all available buildings upgrades (e.g. Orbital, Planetary Fortress, Lair).
+* Calls down MULEs.
+* Automatically builds new supplies when needed (Terran only).
 
 Build requirements
 ------------------
