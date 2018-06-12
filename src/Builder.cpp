@@ -71,6 +71,22 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
             structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT;
             break;
 
+        // NOTE (alkurbatov): By some reason all zerg buildings
+        // include drone mineral cost.
+        case sc2::UNIT_TYPEID::ZERG_BANELINGNEST:
+        case sc2::UNIT_TYPEID::ZERG_EVOLUTIONCHAMBER:
+        case sc2::UNIT_TYPEID::ZERG_EXTRACTOR:
+        case sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT:
+        case sc2::UNIT_TYPEID::ZERG_HYDRALISKDEN:
+        case sc2::UNIT_TYPEID::ZERG_ROACHWARREN:
+        case sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL:
+        case sc2::UNIT_TYPEID::ZERG_SPINECRAWLER:
+        case sc2::UNIT_TYPEID::ZERG_SPIRE:
+        case sc2::UNIT_TYPEID::ZERG_SPORECRAWLER:
+        case sc2::UNIT_TYPEID::ZERG_ULTRALISKCAVERN:
+            structure.mineral_cost -= 50;
+            break;
+
         // NOTE (alkurbatov): There is no sense in summoning protoss buildings
         // without a pylon.
         case sc2::UNIT_TYPEID::PROTOSS_FORGE:
