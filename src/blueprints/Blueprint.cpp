@@ -27,6 +27,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::BUILD_ASSIMILATOR:
             return std::shared_ptr<Blueprint>(new Refinery());
 
+        case sc2::ABILITY_ID::MORPH_GREATERSPIRE:
         case sc2::ABILITY_ID::MORPH_HIVE:
         case sc2::ABILITY_ID::MORPH_LAIR:
         case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:

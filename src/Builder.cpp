@@ -47,12 +47,18 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
     switch (id_) {
         // NOTE (alkurbatov): Unfortunally SC2 API returns wrong mineral cost
         // and tech_requirement for orbital command, planetary fortress,
-        // lair and hive.
+        // lair, hive and greater spire.
         // so we use a workaround.
         // See https://github.com/Blizzard/s2client-api/issues/191
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
             structure.mineral_cost = 150;
             structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
+            break;
+
+        case sc2::UNIT_TYPEID::ZERG_GREATERSPIRE:
+            structure.mineral_cost = 100;
+            structure.vespene_cost = 150;
+            structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_HIVE;
             break;
 
         case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
