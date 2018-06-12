@@ -34,7 +34,7 @@ void ForceCommander::OnUnitCreated(const sc2::Unit* unit_) {
     if (!IsCombatUnit()(*unit_))
         return;
 
-    gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
+    gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
         " added to attack group" << std::endl;
 
     m_units.push_back(unit_);

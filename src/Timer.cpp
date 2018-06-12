@@ -16,6 +16,6 @@ void Timer::Finish() {
     if (duration < 100000)
         return;
 
-    gHistory << "Time consumed: " <<
+    gHistory << "[WARNING] Time consumed: " <<
         duration << " microseconds" << std::endl;
 }

@@ -29,5 +29,5 @@ void Diagnosis::OnStep() {
 
 void Diagnosis::OnGameEnd() {
     gAPI->control().SaveReplay();
-    gHistory << "Replay saved" << std::endl;
+    gHistory << "[INFO] Replay saved" << std::endl;
 }

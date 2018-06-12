@@ -31,7 +31,7 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 }
 
 void Dispatcher::OnGameStart() {
-    gHistory << "New game started!" << std::endl;
+    gHistory << "[INFO] New game started!" << std::endl;
 
     gWorld.reset(new World(gAPI->observer().GetCurrentRace()));
 
@@ -40,14 +40,14 @@ void Dispatcher::OnGameStart() {
 }
 
 void Dispatcher::OnGameEnd() {
-    gHistory << "Game over!" <<std::endl;
+    gHistory << "[INFO] Game over!" <<std::endl;
 
     for (const auto i : m_plugins)
         i->OnGameEnd();
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
-    gHistory << sc2::UnitTypeToName(building_->unit_type) <<
+    gHistory << "[INFO] " << sc2::UnitTypeToName(building_->unit_type) <<
         ": construction complete" << std::endl;
 }
 
@@ -70,7 +70,7 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
     if (IsGasWorker()(*unit_))
         return;
 
-    gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
+    gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
         " was created" << std::endl;
 
     gWorld->OnUnitCreated(*unit_);
@@ -85,7 +85,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
-    gHistory << sc2::UnitTypeToName(unit_->unit_type) <<
+    gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
         " was destroyed" << std::endl;
 
     gWorld->OnUnitDestroyed(unit_);
@@ -93,9 +93,11 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
 
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
         const std::vector<std::string>& protocol_errors) {
-    for (const auto i : client_errors)
-        gHistory << "Encountered client error: " << static_cast<int>(i) << std::endl;
+    for (const auto i : client_errors) {
+        gHistory << "[ERROR] Encountered client error: " <<
+            static_cast<int>(i) << std::endl;
+    }
 
     for (const auto i : protocol_errors)
-        gHistory << "Encountered protocol error: " << i << std::endl;
+        gHistory << "[ERROR] Encountered protocol error: " << i << std::endl;
 }
