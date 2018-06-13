@@ -4,6 +4,7 @@
 
 #include "API.h"
 #include "Helpers.h"
+#include "Historican.h"
 #include "World.h"
 
 Object::Object(const sc2::Unit& unit_): tag(unit_.tag), pos(unit_.pos) {
@@ -51,10 +52,15 @@ void World::OnUnitCreated(const sc2::Unit& unit_) {
 
             auto it = std::find(
                 m_captured_geysers.begin(), m_captured_geysers.end(), obj);
-            if (m_captured_geysers.end() != it)
+            if (m_captured_geysers.end() != it) {
                 m_captured_geysers.erase(it);  // might be claimed geyser
+                gHistory << "[INFO] " << "Release claimed geyser " <<
+                    sc2::UnitTypeToName(unit_.unit_type) << std::endl;
+            }
 
             m_captured_geysers.insert(obj);
+            gHistory << "[INFO] " << "Capture object " <<
+                sc2::UnitTypeToName(unit_.unit_type) << std::endl;
             return;
         }
 
@@ -70,8 +76,11 @@ void World::OnUnitDestroyed(const sc2::Unit* unit_) {
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
             auto it = m_captured_geysers.find(Object(*unit_));
 
-            if (m_captured_geysers.end() != it)
+            if (m_captured_geysers.end() != it) {
                 m_captured_geysers.erase(it);
+                gHistory << "[INFO] " << "Release object " <<
+                    sc2::UnitTypeToName(unit_->unit_type) << std::endl;
+            }
             return;
         }
 
@@ -95,8 +104,11 @@ bool World::IsTargetOccupied(const sc2::UnitOrder& order_) const {
 }
 
 void World::ClaimObject(const sc2::Unit& unit_) {
-    if (IsGeyser()(unit_))
+    if (IsGeyser()(unit_)) {
         m_captured_geysers.emplace(unit_);
+        gHistory << "[INFO] " << "Claim object " <<
+            sc2::UnitTypeToName(unit_.unit_type) << std::endl;
+    }
 }
 
 sc2::Race World::GetCurrentRace() const {
