@@ -15,7 +15,13 @@ link_directories(${PROJECT_BINARY_DIR}/s2client-api/bin)
 
 if (MSVC)
     # FIXME: put Windows specific options here.
-else ()
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything \
+        -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded \
+        -Wno-switch-enum -Wno-weak-vtables -Wno-exit-time-destructors \
+        -Wno-float-equal -Wno-global-constructors"
+    )
+elseif (CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic \
         -Woverloaded-virtual -Wctor-dtor-privacy -Wnon-virtual-dtor \
         -Wold-style-cast -Wconversion -Wsign-conversion -Winit-self \
