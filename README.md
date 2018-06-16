@@ -37,6 +37,7 @@ Build requirements
   * [Ladder 2017 Season 3](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season3_Updated.zip)
   * [Ladder 2017 Season 4](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season4.zip)
   * [Ladder 2018 Season 1](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2018Season1.zip)
+  * [Ladder 2018 Season 2](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2018Season2_Updated.zip)
 * Put the downloaded maps into the Maps folder (create it if the folder doesn't exist):
   * Windows: C:\Program Files\StarCraft II\Maps
   * OS X: /Applications/StarCraft II/Maps
