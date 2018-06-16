@@ -35,14 +35,14 @@ void Dispatcher::OnGameStart() {
 
     gWorld.reset(new World(gAPI->observer().GetCurrentRace()));
 
-    for (const auto i : m_plugins)
+    for (const auto& i : m_plugins)
         i->OnGameStart();
 }
 
 void Dispatcher::OnGameEnd() {
     gHistory << "[INFO] Game over!" <<std::endl;
 
-    for (const auto i : m_plugins)
+    for (const auto& i : m_plugins)
         i->OnGameEnd();
 }
 
@@ -57,7 +57,7 @@ void Dispatcher::OnStep() {
 
     gWorld->OnStep();
 
-    for (const auto i : m_plugins)
+    for (const auto& i : m_plugins)
         i->OnStep();
 
     m_builder->OnStep();
@@ -75,12 +75,12 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
     gWorld->OnUnitCreated(*unit_);
 
-    for (const auto i : m_plugins)
+    for (const auto& i : m_plugins)
         i->OnUnitCreated(unit_);
 }
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
-    for (const auto i : m_plugins)
+    for (const auto& i : m_plugins)
         i->OnUnitIdle(unit_);
 }
 
@@ -98,6 +98,6 @@ void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
             static_cast<int>(i) << std::endl;
     }
 
-    for (const auto i : protocol_errors)
+    for (const auto& i : protocol_errors)
         gHistory << "[ERROR] Encountered protocol error: " << i << std::endl;
 }
