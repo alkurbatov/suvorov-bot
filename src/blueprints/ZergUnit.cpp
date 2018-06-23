@@ -10,7 +10,7 @@ ZergUnit::ZergUnit(): Blueprint(false) {
 }
 
 bool ZergUnit::Build(Order* order_) {
-    auto larvas = gAPI->observer().GetUnits(IsFreeLarva());
+    auto larvas = gAPI->observer().GetUnits(IsIdleUnit(sc2::UNIT_TYPEID::ZERG_LARVA));
     if (larvas.empty())
         return false;
 

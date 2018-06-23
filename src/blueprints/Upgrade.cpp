@@ -8,19 +8,13 @@
 
 bool BuildingUpgrade::Build(Order* order_) {
     sc2::Units buildings = gAPI->observer().GetUnits(
-        IsUnit(order_->data.tech_alias.back()));
+        IsIdleUnit(order_->data.tech_alias.back()));
+
     if (buildings.empty())
         return false;
 
-    for (auto i : buildings) {
-        if (!i->orders.empty())
-            continue;
+    order_->assignee = buildings.front();
+    gAPI->action().Build(*order_);
 
-        order_->assignee = buildings.front();
-        gAPI->action().Build(*order_);
-
-        return true;
-    }
-
-    return false;
+    return true;
 }

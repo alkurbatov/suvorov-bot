@@ -106,6 +106,13 @@ bool IsRefinery::operator()(const sc2::Unit& unit_) const {
         unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_REFINERY;
 }
 
+IsIdleUnit::IsIdleUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
+}
+
+bool IsIdleUnit::operator()(const sc2::Unit& unit_) const {
+    return unit_.unit_type == m_type && unit_.orders.empty();
+}
+
 bool IsWorker::operator()(const sc2::Unit& unit_) const {
     return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_SCV ||
         unit_.unit_type == sc2::UNIT_TYPEID::ZERG_DRONE ||
@@ -124,13 +131,6 @@ bool IsFreeWorker::operator()(const sc2::Unit& unit_) const {
         return false;
 
     return !IsGasWorker()(unit_);
-}
-
-bool IsFreeLarva::operator()(const sc2::Unit& unit_) const {
-    if (unit_.unit_type != sc2::UNIT_TYPEID::ZERG_LARVA)
-        return false;
-
-    return unit_.orders.empty();
 }
 
 bool IsGasWorker::operator()(const sc2::Unit& unit_) const {

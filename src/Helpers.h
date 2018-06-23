@@ -42,15 +42,20 @@ struct IsRefinery {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
+struct IsIdleUnit {
+    explicit IsIdleUnit(sc2::UNIT_TYPEID type_);
+
+    bool operator()(const sc2::Unit& unit_) const;
+
+ private:
+    sc2::UNIT_TYPEID m_type;
+};
+
 struct IsWorker {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
 struct IsFreeWorker {
-    bool operator()(const sc2::Unit& unit_) const;
-};
-
-struct IsFreeLarva {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
