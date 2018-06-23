@@ -30,6 +30,14 @@ void SecureMineralsIncome(Builder* builder_) {
         if (builder_->CountScheduledTrainings(gWorld->GetCurrentWorkerType()) > 0)
             continue;
 
+        // FIXME (alkurbatov): We should set an assignee for drones
+        // and pick a larva closest to the assignee.
+        if (gWorld->GetCurrentRace() == sc2::Race::Zerg) {
+            orders.emplace_back(gAPI->observer().GetUnitTypeData(
+                sc2::UNIT_TYPEID::ZERG_DRONE));
+            continue;
+        }
+
         orders.emplace_back(gAPI->observer().GetUnitTypeData(
             gWorld->GetCurrentWorkerType()), i);
     }

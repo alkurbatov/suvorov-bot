@@ -18,7 +18,7 @@ struct Builder {
 
     void ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent = false);
 
-    void ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_);
+    void ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_ = nullptr);
 
     void ScheduleOrders(const std::vector<Order>& orders_);
 

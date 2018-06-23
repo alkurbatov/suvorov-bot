@@ -7,7 +7,10 @@
 #include "Blueprint.h"
 
 struct Unit: Blueprint {
-    Unit();
+    explicit Unit(sc2::UNIT_TYPEID who_builds_);
 
     bool Build(Order* order_) final;
+
+ private:
+    sc2::UNIT_TYPEID m_who_builds;
 };

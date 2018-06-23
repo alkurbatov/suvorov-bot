@@ -38,6 +38,7 @@ void Governor::OnGameStart() {
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_EXTRACTOR);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_QUEEN);
             return;
 
         default:
@@ -88,7 +89,7 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
         builder->ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
 
     if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_LARVA)
-        builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING, unit_);
+        builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING);
 
     if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_GATEWAY)
         builder->ScheduleTraining(sc2::UNIT_TYPEID::PROTOSS_ZEALOT, unit_);
