@@ -110,7 +110,7 @@ IsIdleUnit::IsIdleUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
 bool IsIdleUnit::operator()(const sc2::Unit& unit_) const {
-    return unit_.unit_type == m_type && unit_.orders.empty();
+    return IsUnit(m_type)(unit_) && unit_.orders.empty();
 }
 
 bool IsWorker::operator()(const sc2::Unit& unit_) const {
@@ -163,6 +163,10 @@ bool IsTownHall::operator()(const sc2::Unit& unit_) const {
            unit_.unit_type == sc2::UNIT_TYPEID::ZERG_HATCHERY ||
            unit_.unit_type == sc2::UNIT_TYPEID::ZERG_HIVE ||
            unit_.unit_type == sc2::UNIT_TYPEID::ZERG_LAIR;
+}
+
+bool IsIdleTownHall::operator()(const sc2::Unit& unit_) const {
+    return IsTownHall()(unit_) && unit_.orders.empty() && unit_.build_progress == 1.0f;
 }
 
 bool IsCommandCenter::operator()(const sc2::Unit& unit_) const {

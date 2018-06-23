@@ -8,6 +8,7 @@
 #include "Refinery.h"
 #include "Unit.h"
 #include "Upgrade.h"
+#include "Queen.h"
 #include "ZergUnit.h"
 
 Blueprint::Blueprint(bool needs_worker_): m_needs_worker(needs_worker_) {
@@ -66,6 +67,9 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_VIKINGFIGHTER:
         case sc2::ABILITY_ID::TRAIN_WIDOWMINE:
             return std::shared_ptr<Blueprint>(new Unit());
+
+        case sc2::ABILITY_ID::TRAIN_QUEEN:
+            return std::shared_ptr<Blueprint>(new Queen());
 
         case sc2::ABILITY_ID::TRAIN_DRONE:
         case sc2::ABILITY_ID::TRAIN_CORRUPTOR:
