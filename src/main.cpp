@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    gHistory.Init("bin/history.log");
+    gHistory.Init("history.log");
 
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(1, argv);
