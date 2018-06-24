@@ -3,6 +3,7 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "../API.h"
+#include "../Historican.h"
 #include "../World.h"
 #include "Governor.h"
 
@@ -20,6 +21,7 @@ void Governor::OnGameStart() {
     // Initial build order
     switch (gWorld->GetCurrentRace()) {
         case sc2::Race::Terran:
+            gHistory << "[INFO] Started game as Terran" << std::endl;
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
@@ -34,6 +36,7 @@ void Governor::OnGameStart() {
             return;
 
         case sc2::Race::Zerg:
+            gHistory << "[INFO] Started game as Zerg" << std::endl;
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_EXTRACTOR);
@@ -42,6 +45,7 @@ void Governor::OnGameStart() {
             return;
 
         default:
+            gHistory << "[INFO] Started game as Protoss" << std::endl;
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
