@@ -139,7 +139,8 @@ const sc2::UnitTypeData& Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
 }
 
 sc2::Race Observer::GetCurrentRace() const {
-    return m_observer->GetGameInfo().player_info.front().race_actual;
+    uint32_t id = m_observer->GetPlayerID();
+    return m_observer->GetGameInfo().player_info[id - 1].race_actual;
 }
 
 const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {
