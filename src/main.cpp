@@ -43,6 +43,7 @@ int main(int argc, char* argv[]) {
 }
 #else
 
+namespace {
 struct ConnectionOptions {
     int32_t GamePort;
     int32_t StartPort;
@@ -90,6 +91,8 @@ void ParseArguments(int argc, char* argv[], ConnectionOptions* options_) {
 
     options_->ComputerOpponent = false;
 }
+
+}  // namespace
 
 int main(int argc, char* argv[]) {
     ConnectionOptions options;
