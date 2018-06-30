@@ -7,7 +7,5 @@
 #include "Blueprint.h"
 
 struct Queen: Blueprint {
-    Queen();
-
     bool Build(Order* order_) final;
 };

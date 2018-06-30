@@ -6,9 +6,6 @@
 #include "../Helpers.h"
 #include "Queen.h"
 
-Queen::Queen(): Blueprint(false) {
-}
-
 bool Queen::Build(Order* order_) {
     auto town_halls = gAPI->observer().GetUnits(IsIdleTownHall());
     if (town_halls.empty())

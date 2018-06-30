@@ -16,6 +16,8 @@ struct Builder {
 
     void OnStep();
 
+    void OnUnitCreated(const sc2::Unit& unit_);
+
     void ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent = false);
 
     void ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_ = nullptr);
@@ -35,6 +37,9 @@ struct Builder {
 
     int32_t m_minerals;
     int32_t m_vespene;
+
+    int32_t m_reserved_minerals;
+    int32_t m_reserved_vespene;
 
     float m_available_food;
 

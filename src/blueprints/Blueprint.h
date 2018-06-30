@@ -11,8 +11,6 @@
 #include <memory>
 
 struct Blueprint {
-    explicit Blueprint(bool needs_worker_);
-
     virtual ~Blueprint();
 
     virtual bool Build(Order* order_) = 0;
@@ -20,7 +18,4 @@ struct Blueprint {
     bool NeedsWorker() const;
 
     static std::shared_ptr<Blueprint> Plot(sc2::ABILITY_ID ability_);
-
- private:
-    bool m_needs_worker;
 };

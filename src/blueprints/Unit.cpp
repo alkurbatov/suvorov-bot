@@ -6,8 +6,7 @@
 #include "../Helpers.h"
 #include "Unit.h"
 
-Unit::Unit(sc2::UNIT_TYPEID who_builds_):
-    Blueprint(false), m_who_builds(who_builds_) {
+Unit::Unit(sc2::UNIT_TYPEID who_builds_): m_who_builds(who_builds_) {
 }
 
 bool Unit::Build(Order* order_) {

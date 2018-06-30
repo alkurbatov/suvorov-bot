@@ -10,7 +10,7 @@
         {
             "label": "cpplint",
             "type": "shell",
-            "command": "python2 cpplint.py --linelength=90 --filter=-build/header_guard,-build/include,-build/c++11 src/* src/blueprints/* src/plugins/*",
+            "command": "python2 cpplint.py --linelength=90 --filter=-build/header_guard,-build/include,-build/c++11 src/* src/blueprints/* src/objects/* src/plugins/*",
             "problemMatcher": []
         }
     ]

@@ -4,7 +4,7 @@
 
 #include "Converter.h"
 #include "Helpers.h"
-#include "World.h"
+#include "Hub.h"
 
 IsUnit::IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished):
     m_type(type_), m_build_progress(1.0f) {
@@ -94,7 +94,7 @@ bool IsGeyser::operator()(const sc2::Unit& unit_) const {
 }
 
 bool IsFreeGeyser::operator()(const sc2::Unit& unit_) const {
-    return IsGeyser()(unit_) && !gWorld->IsOccupied(unit_);
+    return IsGeyser()(unit_) && !gHub->IsOccupied(unit_);
 }
 
 bool IsRefinery::operator()(const sc2::Unit& unit_) const {
@@ -119,20 +119,6 @@ bool IsWorker::operator()(const sc2::Unit& unit_) const {
         unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_PROBE;
 }
 
-bool IsFreeWorker::operator()(const sc2::Unit& unit_) const {
-    if (!IsWorker()(unit_))
-        return false;
-
-    if (unit_.orders.empty())
-        return true;
-
-    if (unit_.orders.front().ability_id != sc2::ABILITY_ID::HARVEST_GATHER &&
-        unit_.orders.front().ability_id != sc2::ABILITY_ID::HARVEST_RETURN)
-        return false;
-
-    return !IsGasWorker()(unit_);
-}
-
 bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
     if (!IsWorker()(unit_))
         return false;
@@ -150,7 +136,7 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
     }
 
     if (unit_.orders.front().ability_id == sc2::ABILITY_ID::HARVEST_GATHER)
-        return gWorld->IsTargetOccupied(unit_.orders.front());
+        return gHub->IsTargetOccupied(unit_.orders.front());
 
     return false;
 }

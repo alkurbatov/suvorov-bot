@@ -55,10 +55,6 @@ struct IsWorker {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
-struct IsFreeWorker {
-    bool operator()(const sc2::Unit& unit_) const;
-};
-
 struct IsGasWorker {
     bool operator()(const sc2::Unit& unit_) const;
 };

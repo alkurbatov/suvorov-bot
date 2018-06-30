@@ -10,14 +10,7 @@
 #include "Upgrade.h"
 #include "Queen.h"
 
-Blueprint::Blueprint(bool needs_worker_): m_needs_worker(needs_worker_) {
-}
-
 Blueprint::~Blueprint() {
-}
-
-bool Blueprint::NeedsWorker() const {
-    return m_needs_worker;
 }
 
 std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {

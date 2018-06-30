@@ -3,10 +3,8 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "../API.h"
+#include "../Hub.h"
 #include "Building.h"
-
-Building::Building(): Blueprint(true) {
-}
 
 bool Building::Build(Order* order_) {
     // Find place to build the structure
@@ -18,7 +16,5 @@ bool Building::Build(Order* order_) {
         point.y = base.y + sc2::GetRandomScalar() * 15.0f;
     } while (!gAPI->query().CanBePlaced(*order_, point));
 
-    gAPI->action().Build(*order_, point);
-
-    return true;
+    return gHub->AssignBuildTask(order_, point);
 }

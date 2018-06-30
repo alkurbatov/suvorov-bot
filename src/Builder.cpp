@@ -4,21 +4,23 @@
 
 #include "API.h"
 #include "blueprints/Blueprint.h"
+#include "objects/Worker.h"
 #include "Builder.h"
 #include "Helpers.h"
 #include "Historican.h"
 #include "Pathfinder.h"
-#include "World.h"
+#include "Hub.h"
 
 #include <algorithm>
 #include <memory>
 
-Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
+Builder::Builder(): m_minerals(0), m_vespene(0),
+    m_reserved_minerals(0), m_reserved_vespene(0), m_available_food(0.0f) {
 }
 
 void Builder::OnStep() {
-    m_minerals = gAPI->observer().GetMinerals();
-    m_vespene = gAPI->observer().GetVespene();
+    m_minerals = gAPI->observer().GetMinerals() - m_reserved_minerals;
+    m_vespene = gAPI->observer().GetVespene() - m_reserved_vespene;
 
     m_available_food = gAPI->observer().GetAvailableFood();
 
@@ -26,6 +28,11 @@ void Builder::OnStep() {
     while (it != m_construction_orders.end()) {
         if (!Build(&(*it)))
             break;
+
+        if (it->data.tech_alias.empty()) {  // Skip building upgrades.
+            m_reserved_minerals += it->data.mineral_cost;
+            m_reserved_vespene += it->data.vespene_cost;
+        }
 
         it = m_construction_orders.erase(it);
     }
@@ -41,68 +48,25 @@ void Builder::OnStep() {
     }
 }
 
+void Builder::OnUnitCreated(const sc2::Unit& unit_) {
+    if (unit_.build_progress > 0.0f)
+        return;
+
+    sc2::UnitTypeData data = gAPI->observer().GetUnitTypeData(unit_.unit_type);
+
+    gHistory << "[INFO] Decreasing reserved resources: -" <<
+        data.mineral_cost << " minerals, -" <<
+        data.vespene_cost << " vespene" << std::endl;
+
+    m_reserved_minerals -= data.mineral_cost;
+    m_reserved_vespene -= data.vespene_cost;
+
+    gHistory << "[INFO] Reserved minerals left: " << m_reserved_minerals << std::endl;
+    gHistory << "[INFO] Reserved vespene left: " << m_reserved_vespene << std::endl;
+}
+
 void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
     sc2::UnitTypeData structure = gAPI->observer().GetUnitTypeData(id_);
-
-    switch (id_) {
-        // NOTE (alkurbatov): Unfortunally SC2 API returns wrong mineral cost
-        // and tech_requirement for orbital command, planetary fortress,
-        // lair, hive and greater spire.
-        // so we use a workaround.
-        // See https://github.com/Blizzard/s2client-api/issues/191
-        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
-            structure.mineral_cost = 150;
-            structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
-            break;
-
-        case sc2::UNIT_TYPEID::ZERG_GREATERSPIRE:
-            structure.mineral_cost = 100;
-            structure.vespene_cost = 150;
-            structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_HIVE;
-            break;
-
-        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
-            structure.mineral_cost = 150;
-            structure.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
-            break;
-
-        case sc2::UNIT_TYPEID::ZERG_LAIR:
-            structure.mineral_cost = 150;
-            structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL;
-            break;
-
-        case sc2::UNIT_TYPEID::ZERG_HIVE:
-            structure.mineral_cost = 200;
-            structure.vespene_cost = 150;
-            structure.tech_requirement = sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT;
-            break;
-
-        // NOTE (alkurbatov): By some reason all zerg buildings
-        // include drone mineral cost.
-        case sc2::UNIT_TYPEID::ZERG_BANELINGNEST:
-        case sc2::UNIT_TYPEID::ZERG_EVOLUTIONCHAMBER:
-        case sc2::UNIT_TYPEID::ZERG_EXTRACTOR:
-        case sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT:
-        case sc2::UNIT_TYPEID::ZERG_HYDRALISKDEN:
-        case sc2::UNIT_TYPEID::ZERG_ROACHWARREN:
-        case sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL:
-        case sc2::UNIT_TYPEID::ZERG_SPINECRAWLER:
-        case sc2::UNIT_TYPEID::ZERG_SPIRE:
-        case sc2::UNIT_TYPEID::ZERG_SPORECRAWLER:
-        case sc2::UNIT_TYPEID::ZERG_ULTRALISKCAVERN:
-            structure.mineral_cost -= 50;
-            break;
-
-        // NOTE (alkurbatov): There is no sense in summoning protoss buildings
-        // without a pylon.
-        case sc2::UNIT_TYPEID::PROTOSS_FORGE:
-        case sc2::UNIT_TYPEID::PROTOSS_GATEWAY:
-            structure.tech_requirement = sc2::UNIT_TYPEID::PROTOSS_PYLON;
-            break;
-
-        default:
-            break;
-    }
 
     // Prevent deadlock.
     if (structure.tech_requirement != sc2::UNIT_TYPEID::INVALID &&
@@ -166,14 +130,6 @@ bool Builder::Build(Order* order_) {
 
     if (m_available_food < order_->data.food_required)
         return false;
-
-    if (blueprint->NeedsWorker()) {
-        const sc2::Unit* worker = gWorld->GetFreeWorker();
-        if (!worker)
-            return false;
-
-        order_->assignee = worker;
-    }
 
     if (!blueprint->Build(order_))
         return false;

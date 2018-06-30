@@ -7,9 +7,6 @@
 #include "Blueprint.h"
 
 struct Upgrade: Blueprint {
-    Upgrade(): Blueprint(false) {
-    }
-
     virtual bool Build(Order* order_) = 0;
 };
 

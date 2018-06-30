@@ -130,12 +130,70 @@ float Observer::GetAvailableFood() const {
     return static_cast<float>(GetFoodCap() - GetFoodUsed());
 }
 
-const sc2::UnitTypes& Observer::GetUnitTypeData() const {
-    return m_observer->GetUnitTypeData();
-}
+sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
+    sc2::UnitTypeData data = m_observer->GetUnitTypeData()[convert::ToUnitTypeID(id_)];
 
-const sc2::UnitTypeData& Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
-    return m_observer->GetUnitTypeData()[convert::ToUnitTypeID(id_)];
+    switch (id_) {
+        // NOTE (alkurbatov): Unfortunally SC2 API returns wrong mineral cost
+        // and tech_requirement for orbital command, planetary fortress,
+        // lair, hive and greater spire.
+        // so we use a workaround.
+        // See https://github.com/Blizzard/s2client-api/issues/191
+        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
+            data.mineral_cost = 150;
+            data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
+            break;
+
+        case sc2::UNIT_TYPEID::ZERG_GREATERSPIRE:
+            data.mineral_cost = 100;
+            data.vespene_cost = 150;
+            data.tech_requirement = sc2::UNIT_TYPEID::ZERG_HIVE;
+            break;
+
+        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
+            data.mineral_cost = 150;
+            data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY;
+            break;
+
+        case sc2::UNIT_TYPEID::ZERG_LAIR:
+            data.mineral_cost = 150;
+            data.tech_requirement = sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL;
+            break;
+
+        case sc2::UNIT_TYPEID::ZERG_HIVE:
+            data.mineral_cost = 200;
+            data.vespene_cost = 150;
+            data.tech_requirement = sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT;
+            break;
+
+        // NOTE (alkurbatov): By some reason all zerg buildings
+        // include drone mineral cost.
+        case sc2::UNIT_TYPEID::ZERG_BANELINGNEST:
+        case sc2::UNIT_TYPEID::ZERG_EVOLUTIONCHAMBER:
+        case sc2::UNIT_TYPEID::ZERG_EXTRACTOR:
+        case sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT:
+        case sc2::UNIT_TYPEID::ZERG_HYDRALISKDEN:
+        case sc2::UNIT_TYPEID::ZERG_ROACHWARREN:
+        case sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL:
+        case sc2::UNIT_TYPEID::ZERG_SPINECRAWLER:
+        case sc2::UNIT_TYPEID::ZERG_SPIRE:
+        case sc2::UNIT_TYPEID::ZERG_SPORECRAWLER:
+        case sc2::UNIT_TYPEID::ZERG_ULTRALISKCAVERN:
+            data.mineral_cost -= 50;
+            break;
+
+        // NOTE (alkurbatov): There is no sense in summoning protoss buildings
+        // without a pylon.
+        case sc2::UNIT_TYPEID::PROTOSS_FORGE:
+        case sc2::UNIT_TYPEID::PROTOSS_GATEWAY:
+            data.tech_requirement = sc2::UNIT_TYPEID::PROTOSS_PYLON;
+            break;
+
+        default:
+            break;
+    }
+
+    return data;
 }
 
 sc2::Race Observer::GetCurrentRace() const {

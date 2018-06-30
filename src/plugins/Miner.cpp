@@ -6,7 +6,7 @@
 #include "../Helpers.h"
 #include "../Order.h"
 #include "../Pathfinder.h"
-#include "../World.h"
+#include "../Hub.h"
 #include "Miner.h"
 
 #include <sc2api/sc2_typeenums.h>
@@ -19,7 +19,7 @@ void SecureMineralsIncome(Builder* builder_) {
     std::vector<Order> orders;
     auto town_halls = gAPI->observer().GetUnits(IsTownHall());
 
-    for ( const auto& i : town_halls ) {
+    for (const auto& i : town_halls) {
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
@@ -27,19 +27,19 @@ void SecureMineralsIncome(Builder* builder_) {
                 i->orders.begin(), i->orders.end(), IsTrainingWorkers()))
             continue;
 
-        if (builder_->CountScheduledTrainings(gWorld->GetCurrentWorkerType()) > 0)
+        if (builder_->CountScheduledTrainings(gHub->GetCurrentWorkerType()) > 0)
             continue;
 
         // FIXME (alkurbatov): We should set an assignee for drones
         // and pick a larva closest to the assignee.
-        if (gWorld->GetCurrentRace() == sc2::Race::Zerg) {
+        if (gHub->GetCurrentRace() == sc2::Race::Zerg) {
             orders.emplace_back(gAPI->observer().GetUnitTypeData(
                 sc2::UNIT_TYPEID::ZERG_DRONE));
             continue;
         }
 
         orders.emplace_back(gAPI->observer().GetUnitTypeData(
-            gWorld->GetCurrentWorkerType()), i);
+            gHub->GetCurrentWorkerType()), i);
     }
 
     builder_->ScheduleOrders(orders);
@@ -48,15 +48,11 @@ void SecureMineralsIncome(Builder* builder_) {
 void SecureVespeneIncome() {
     auto refineries = gAPI->observer().GetUnits(IsRefinery());
 
-    for ( const auto& i : refineries ) {
+    for (const auto& i : refineries) {
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
-        const sc2::Unit* worker = gWorld->GetClosestFreeWorker(i->pos);
-        if (!worker)
-            return;
-
-        gAPI->action().Cast(*worker, sc2::ABILITY_ID::SMART, *i);
+        gHub->AssignVespeneHarvester(*i);
     }
 }
 
@@ -96,7 +92,7 @@ void Miner::OnStep() {
     SecureMineralsIncome(builder.get());
     SecureVespeneIncome();
 
-    if (gWorld->GetCurrentRace() == sc2::Race::Terran)
+    if (gHub->GetCurrentRace() == sc2::Race::Terran)
         CallDownMULE();
 }
 

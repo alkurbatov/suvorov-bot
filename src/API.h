@@ -90,9 +90,7 @@ struct Observer {
 
     float GetAvailableFood() const;
 
-    const sc2::UnitTypes& GetUnitTypeData() const;
-
-    const sc2::UnitTypeData& GetUnitTypeData(sc2::UNIT_TYPEID id_) const;
+    sc2::UnitTypeData GetUnitTypeData(sc2::UNIT_TYPEID id_) const;
 
     sc2::Race GetCurrentRace() const;
 

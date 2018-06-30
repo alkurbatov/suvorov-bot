@@ -7,7 +7,5 @@
 #include "Blueprint.h"
 
 struct Refinery: Blueprint {
-    Refinery();
-
     bool Build(Order* order_) final;
 };

@@ -4,7 +4,7 @@
 
 #include "../API.h"
 #include "../Historican.h"
-#include "../World.h"
+#include "../Hub.h"
 #include "Governor.h"
 
 #include <numeric>
@@ -19,7 +19,7 @@ void Governor::OnGameStart() {
         return;
 
     // Initial build order
-    switch (gWorld->GetCurrentRace()) {
+    switch (gHub->GetCurrentRace()) {
         case sc2::Race::Terran:
             gHistory << "[INFO] Started game as Terran" << std::endl;
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
@@ -57,7 +57,7 @@ void Governor::OnGameStart() {
 }
 
 void Governor::OnStep() {
-    if (gWorld->GetCurrentRace() != sc2::Race::Terran)
+    if (gHub->GetCurrentRace() != sc2::Race::Terran)
         return;
 
     auto builder = m_builder.lock();

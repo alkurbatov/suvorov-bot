@@ -7,7 +7,7 @@
 #include "Helpers.h"
 #include "Historican.h"
 #include "Timer.h"
-#include "World.h"
+#include "Hub.h"
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
 #include "plugins/ForceCommander.h"
@@ -33,7 +33,7 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 void Dispatcher::OnGameStart() {
     gHistory << "[INFO] New game started!" << std::endl;
 
-    gWorld.reset(new World(gAPI->observer().GetCurrentRace()));
+    gHub.reset(new Hub(gAPI->observer().GetCurrentRace()));
 
     for (const auto& i : m_plugins)
         i->OnGameStart();
@@ -55,7 +55,7 @@ void Dispatcher::OnStep() {
     Timer clock;
     clock.Start();
 
-    gWorld->OnStep();
+    gHub->OnStep();
 
     for (const auto& i : m_plugins)
         i->OnStep();
@@ -73,13 +73,16 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
     gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
         " was created" << std::endl;
 
-    gWorld->OnUnitCreated(*unit_);
+    gHub->OnUnitCreated(*unit_);
+    m_builder->OnUnitCreated(*unit_);
 
     for (const auto& i : m_plugins)
         i->OnUnitCreated(unit_);
 }
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
+    gHub->OnUnitIdle(*unit_);
+
     for (const auto& i : m_plugins)
         i->OnUnitIdle(unit_);
 }
@@ -88,7 +91,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
     gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
         " was destroyed" << std::endl;
 
-    gWorld->OnUnitDestroyed(unit_);
+    gHub->OnUnitDestroyed(*unit_);
 }
 
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,

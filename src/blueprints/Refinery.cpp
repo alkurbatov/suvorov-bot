@@ -4,11 +4,8 @@
 
 #include "../API.h"
 #include "../Helpers.h"
-#include "../World.h"
+#include "../Hub.h"
 #include "Refinery.h"
-
-Refinery::Refinery(): Blueprint(true) {
-}
 
 bool Refinery::Build(Order* order_) {
     sc2::Point3D base = gAPI->observer().StartingLocation();
@@ -19,8 +16,5 @@ bool Refinery::Build(Order* order_) {
     if (!geyser)
         return false;
 
-    gAPI->action().Build(*order_, geyser);
-    gWorld->ClaimObject(*geyser);
-
-    return true;
+    return gHub->AssignRefineryConstruction(order_, geyser);
 }
