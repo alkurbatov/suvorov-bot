@@ -68,6 +68,10 @@ Observer::Observer(const sc2::ObservationInterface* observer_):
     m_observer(observer_) {
 }
 
+const sc2::Unit* Observer::GetUnit(sc2::Tag tag_) const {
+    return m_observer->GetUnit(tag_);
+}
+
 sc2::Units Observer::GetUnits(const sc2::Filter& filter_,
     sc2::Unit::Alliance alliance_) const {
     return m_observer->GetUnits(alliance_, filter_);

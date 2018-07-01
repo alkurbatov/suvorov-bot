@@ -8,30 +8,19 @@
 #include <sc2api/sc2_unit.h>
 
 struct GameObject {
-    explicit GameObject(sc2::Tag tag_): m_tag(tag_) {
-    }
+    explicit GameObject(sc2::Tag tag_);
 
-    explicit GameObject(const sc2::Unit& unit_): m_tag(unit_.tag) {
-    }
+    explicit GameObject(const sc2::Unit& unit_);
 
-    bool operator==(const GameObject& obj_) const {
-        return this->m_tag == obj_.m_tag;
-    }
+    bool operator==(const GameObject& obj_) const;
 
-    bool operator==(const sc2::Unit& unit_) const {
-        return this->m_tag == unit_.tag;
-    }
+    bool operator==(const sc2::Unit& unit_) const;
 
-    sc2::Tag tag() const {
-        return m_tag;
-    }
+    sc2::Tag tag() const;
 
-    sc2::Unit ToUnit() const {
-        sc2::Unit unit;
-        unit.tag = m_tag;
+    sc2::Point3D GetPos() const;
 
-        return unit;
-    }
+    sc2::Unit ToUnit() const;
 
  private:
     sc2::Tag m_tag;

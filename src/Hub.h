@@ -32,8 +32,6 @@ struct Hub {
 
     sc2::Race GetCurrentRace() const;
 
-    Worker* GetFreeWorker();
-
     Worker* GetClosestFreeWorker(const sc2::Point2D& location_);
 
     sc2::UNIT_TYPEID GetCurrentWorkerType() const;

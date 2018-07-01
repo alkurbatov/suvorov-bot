@@ -65,6 +65,8 @@ struct Debug {
 struct Observer {
     explicit Observer(const sc2::ObservationInterface* observer_);
 
+    const sc2::Unit* GetUnit(sc2::Tag tag_) const;
+
     sc2::Units GetUnits(const sc2::Filter& filter_,
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
 

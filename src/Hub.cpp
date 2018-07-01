@@ -150,40 +150,27 @@ sc2::Race Hub::GetCurrentRace() const {
     return m_current_race;
 }
 
-Worker* Hub::GetFreeWorker() {
+Worker* Hub::GetClosestFreeWorker(const sc2::Point2D& location_) {
     if (m_free_workers.empty())
         return nullptr;
 
-    m_busy_workers.push_back(m_free_workers.front());
-    m_free_workers.erase(m_free_workers.begin());
-
-    return &m_busy_workers.back();
-}
-
-Worker* Hub::GetClosestFreeWorker(const sc2::Point2D& location_) {
-    return GetFreeWorker();
-
-    // FIXME (alkurbatov): Find the way to query pos.
-    /* auto index = m_free_workers.end();
+    auto closest_worker = m_free_workers.end();
     float distance = std::numeric_limits<float>::max();
 
     for (auto it = m_free_workers.begin(); it != m_free_workers.end(); ++it) {
-        float d = sc2::DistanceSquared2D((*it)->pos, location_);
+        float d = sc2::DistanceSquared2D(it->GetPos(), location_);
 
         if (d >= distance)
             continue;
 
         distance = d;
-        index = it;
+        closest_worker = it;
     }
 
-    if (index == m_free_workers.end())
-        return nullptr;
+    m_busy_workers.push_back(*closest_worker);
+    m_free_workers.erase(closest_worker);
 
-    const sc2::Unit* worker = *index;
-    m_free_workers.erase(index);
-    return worker;
-    */
+    return &m_busy_workers.back();
 }
 
 sc2::UNIT_TYPEID Hub::GetCurrentWorkerType() const {
@@ -191,7 +178,7 @@ sc2::UNIT_TYPEID Hub::GetCurrentWorkerType() const {
 }
 
 bool Hub::AssignRefineryConstruction(Order* order_, const sc2::Unit* geyser_) {
-    Worker* worker = GetFreeWorker();
+    Worker* worker = GetClosestFreeWorker(geyser_->pos);
     if (!worker)
         return false;
 
@@ -201,7 +188,7 @@ bool Hub::AssignRefineryConstruction(Order* order_, const sc2::Unit* geyser_) {
 }
 
 bool Hub::AssignBuildTask(Order* order_, const sc2::Point2D& point_) {
-    Worker* worker = GetFreeWorker();
+    Worker* worker = GetClosestFreeWorker(point_);
     if (!worker)
         return false;
 
