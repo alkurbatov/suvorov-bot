@@ -4,14 +4,14 @@
 
 #include "Geyser.h"
 
-Geyser::Geyser(const sc2::Unit& unit_): GameObject(unit_), pos(unit_.pos) {
+Geyser::Geyser(const sc2::Unit& unit_): GameObject(unit_), m_pos(unit_.pos) {
 }
 
 Geyser::Geyser(const sc2::UnitOrder& order_): GameObject(order_.target_unit_tag),
-    pos(order_.target_pos) {
+    m_pos(order_.target_pos) {
 }
 
 bool Geyser::operator==(const Geyser& geyser_) const {
     return this->tag() == geyser_.tag() ||
-        (this->pos.x == geyser_.pos.x && this->pos.y == geyser_.pos.y);
+        (this->m_pos.x == geyser_.m_pos.x && this->m_pos.y == geyser_.m_pos.y);
 }

@@ -16,5 +16,5 @@ struct Geyser: GameObject {
     bool operator==(const Geyser& geyser_) const;
 
  private:
-    sc2::Point2D pos;
+    sc2::Point2D m_pos;
 };
