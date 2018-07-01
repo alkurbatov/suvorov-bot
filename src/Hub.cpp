@@ -2,10 +2,10 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "API.h"
-#include "Helpers.h"
 #include "Historican.h"
 #include "Hub.h"
+#include "core/API.h"
+#include "core/Helpers.h"
 
 Hub::Hub(sc2::Race current_race_): m_current_race(current_race_),
     m_current_worker_type(sc2::UNIT_TYPEID::INVALID) {

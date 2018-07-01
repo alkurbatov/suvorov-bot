@@ -2,8 +2,8 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
 #include "Worker.h"
+#include "core/API.h"
 
 Worker::Worker(const sc2::Unit& unit_):
     GameObject(unit_), m_job(Job::GATHERING_MINERALS) {

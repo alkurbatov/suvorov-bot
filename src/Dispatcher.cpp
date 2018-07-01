@@ -2,12 +2,12 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "API.h"
 #include "Dispatcher.h"
-#include "Helpers.h"
 #include "Historican.h"
-#include "Timer.h"
 #include "Hub.h"
+#include "core/API.h"
+#include "core/Helpers.h"
+#include "core/Timer.h"
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
 #include "plugins/ForceCommander.h"

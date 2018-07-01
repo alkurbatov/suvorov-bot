@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../Order.h"
 #include "GameObject.h"
+#include "core/Order.h"
 
 enum Job {
     GATHERING_MINERALS = 0,

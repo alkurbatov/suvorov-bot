@@ -2,10 +2,10 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
-#include "../Helpers.h"
 #include "../Pathfinder.h"
 #include "ForceCommander.h"
+#include "core/API.h"
+#include "core/Helpers.h"
 
 #include <algorithm>
 

@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
-#include "../Helpers.h"
 #include "Unit.h"
+#include "core/API.h"
+#include "core/Helpers.h"
 
 Unit::Unit(sc2::UNIT_TYPEID who_builds_): m_who_builds(who_builds_) {
 }

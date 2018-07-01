@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
 #include "../Hub.h"
 #include "Building.h"
+#include "core/API.h"
 
 bool Building::Build(Order* order_) {
     // Find place to build the structure

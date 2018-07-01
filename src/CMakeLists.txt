@@ -9,6 +9,7 @@ include_directories(SYSTEM
     ${PROJECT_SOURCE_DIR}/s2client-api/include
     ${PROJECT_SOURCE_DIR}/s2client-api/contrib/protobuf/src
     ${PROJECT_BINARY_DIR}/s2client-api/generated
+    "."
 )
 
 link_directories(${PROJECT_BINARY_DIR}/s2client-api/bin)

@@ -2,8 +2,8 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
 #include "GameObject.h"
+#include "core/API.h"
 
 GameObject::GameObject(sc2::Tag tag_): m_tag(tag_) {
 }

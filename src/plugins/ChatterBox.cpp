@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
 #include "../Historican.h"
 #include "ChatterBox.h"
+#include "core/API.h"
 
 void ChatterBox::OnGameStart() {
     gAPI->action().SendMessage("gl hf");

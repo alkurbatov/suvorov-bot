@@ -2,13 +2,13 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
 #include "Blueprint.h"
 #include "Building.h"
 #include "Refinery.h"
 #include "Unit.h"
 #include "Upgrade.h"
 #include "Queen.h"
+#include "core/API.h"
 
 Blueprint::~Blueprint() {
 }

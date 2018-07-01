@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "API.h"
-#include "Helpers.h"
 #include "Pathfinder.h"
+#include "core/API.h"
+#include "core/Helpers.h"
 
 #include <sc2api/sc2_map_info.h>
 #include <sc2api/sc2_typeenums.h>

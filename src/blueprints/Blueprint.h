@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../Order.h"
+#include "core/Order.h"
 
 #include <sc2api/sc2_typeenums.h>
 

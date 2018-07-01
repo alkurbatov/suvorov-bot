@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
 #include "../Historican.h"
 #include "Diagnosis.h"
+#include "core/API.h"
 
 Diagnosis::Diagnosis(const std::shared_ptr<Builder>& builder_):
     Plugin(), m_builder(builder_) {

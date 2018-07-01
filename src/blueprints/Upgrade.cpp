@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../API.h"
-#include "../Helpers.h"
 #include "Upgrade.h"
+#include "core/API.h"
+#include "core/Helpers.h"
 
 bool BuildingUpgrade::Build(Order* order_) {
     sc2::Units buildings = gAPI->observer().GetUnits(
