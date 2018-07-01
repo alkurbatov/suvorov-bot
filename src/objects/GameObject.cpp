@@ -24,8 +24,8 @@ sc2::Tag GameObject::tag() const {
 }
 
 sc2::Point3D GameObject::GetPos() const {
-     return gAPI->observer().GetUnit(m_tag)->pos;
- }
+    return gAPI->observer().GetUnit(m_tag)->pos;
+}
 
 sc2::Unit GameObject::ToUnit() const {
     sc2::Unit unit;
