@@ -7,7 +7,7 @@
 #include "Blueprint.h"
 
 struct Upgrade: Blueprint {
-    virtual bool Build(Order* order_) = 0;
+    bool Build(Order* order_) override = 0;
 };
 
 struct BuildingUpgrade: Upgrade {
