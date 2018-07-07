@@ -25,7 +25,7 @@ Suvorov currently provides the following features:
 * Manages resource gathering and worker allocation.
 * Supports all available buildings upgrades (e.g. Orbital Command, Planetary Fortress, Lair).
 * Calls down MULEs.
-* Automatically builds new supplies when needed (Terran only).
+* Automatically builds new supplies when needed.
 * Supports launch under [Sc2LadderServer](https://github.com/Cryptyc/Sc2LadderServer).
 
 Build requirements

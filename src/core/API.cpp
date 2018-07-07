@@ -72,6 +72,10 @@ const sc2::Unit* Observer::GetUnit(sc2::Tag tag_) const {
     return m_observer->GetUnit(tag_);
 }
 
+sc2::Units Observer::GetUnits(sc2::Unit::Alliance alliance_) const {
+    return m_observer->GetUnits(alliance_);
+}
+
 sc2::Units Observer::GetUnits(const sc2::Filter& filter_,
     sc2::Unit::Alliance alliance_) const {
     return m_observer->GetUnits(alliance_, filter_);
@@ -113,13 +117,6 @@ int32_t Observer::GetFoodCap() const {
 
 int32_t Observer::GetFoodUsed() const {
     return m_observer->GetFoodUsed();
-}
-
-float Observer::GetExpectedFoodCap() const {
-    return GetUnits(IsCommandCenter()).size()
-        * FOOD_PROVIDED::TERRAN_COMMANDCENTER
-        + CountUnitType(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT, true)
-        * FOOD_PROVIDED::TERRAN_SUPPLY;
 }
 
 int32_t Observer::GetMinerals() const {

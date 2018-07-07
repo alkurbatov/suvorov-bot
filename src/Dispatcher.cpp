@@ -13,6 +13,7 @@
 #include "plugins/ForceCommander.h"
 #include "plugins/Governor.h"
 #include "plugins/Miner.h"
+#include "plugins/QuarterMaster.h"
 
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
@@ -22,6 +23,7 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 
     m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
+    m_plugins.emplace_back(new QuarterMaster(m_builder));
     m_plugins.emplace_back(new ForceCommander());
 
 #ifdef DEBUG

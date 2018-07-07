@@ -5,9 +5,6 @@
 #include "../Historican.h"
 #include "../Hub.h"
 #include "Governor.h"
-#include "core/API.h"
-
-#include <numeric>
 
 Governor::Governor(const std::shared_ptr<Builder>& builder_):
     Plugin(), m_builder(builder_) {
@@ -57,31 +54,6 @@ void Governor::OnGameStart() {
 }
 
 void Governor::OnStep() {
-    if (gHub->GetCurrentRace() != sc2::Race::Terran)
-        return;
-
-    auto builder = m_builder.lock();
-    if (!builder)
-        return;
-
-    float expected_food = API::FOOD_PROVIDED::TERRAN_SUPPLY
-        * builder->CountScheduledStructures(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT)
-        + gAPI->observer().GetExpectedFoodCap();
-
-    const std::list<Order> training_orders = builder->GetTrainigOrders();
-    float expected_consumption = gAPI->observer().GetFoodUsed()
-        + API::FOOD_PROVIDED::TERRAN_SUPPLY
-        + std::accumulate(
-            training_orders.begin(),
-            training_orders.end(),
-            0, [](int food, const Order& order_) {
-                return food + order_.data.food_required;
-            });
-
-    if (expected_food > expected_consumption)
-        return;
-
-    builder->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT, true);
 }
 
 void Governor::OnUnitIdle(const sc2::Unit* unit_) {

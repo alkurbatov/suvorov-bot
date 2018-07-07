@@ -15,11 +15,6 @@
 
 namespace API {
 
-enum FOOD_PROVIDED {
-    TERRAN_COMMANDCENTER = 15,
-    TERRAN_SUPPLY = 8,
-};
-
 struct Action {
     explicit Action(sc2::ActionInterface* action_);
 
@@ -67,6 +62,9 @@ struct Observer {
 
     const sc2::Unit* GetUnit(sc2::Tag tag_) const;
 
+    sc2::Units GetUnits(
+        sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
+
     sc2::Units GetUnits(const sc2::Filter& filter_,
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
 
@@ -83,8 +81,6 @@ struct Observer {
     int32_t GetFoodCap() const;
 
     int32_t GetFoodUsed() const;
-
-    float GetExpectedFoodCap() const;
 
     int32_t GetMinerals() const;
 

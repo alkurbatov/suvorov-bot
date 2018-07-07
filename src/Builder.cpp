@@ -83,7 +83,13 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
     m_construction_orders.emplace_back(structure);
 }
 
-void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_, const sc2::Unit* unit_) {
+void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_,
+    const sc2::Unit* unit_, bool urgent) {
+    if (urgent) {
+        m_training_orders.emplace_front(gAPI->observer().GetUnitTypeData(id_), unit_);
+        return;
+    }
+
     m_training_orders.emplace_back(gAPI->observer().GetUnitTypeData(id_), unit_);
 }
 
