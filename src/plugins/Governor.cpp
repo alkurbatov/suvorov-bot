@@ -44,11 +44,14 @@ void Governor::OnGameStart() {
 
         default:
             gHistory << "[INFO] Started game as Protoss" << std::endl;
+            // 4 wgp push
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
-            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
-            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
             return;
     }
