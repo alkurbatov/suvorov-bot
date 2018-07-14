@@ -18,6 +18,8 @@ struct Governor : Plugin {
 
     void OnUnitIdle(const sc2::Unit* unit_) final;
 
+    void OnUnitDestroyed(const sc2::Unit* unit_) final;
+
  private:
     std::weak_ptr<Builder> m_builder;
 };
