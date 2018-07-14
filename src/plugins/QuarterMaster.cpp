@@ -49,6 +49,7 @@ float CalcSupplies::operator()(float sum, const Order& order_) const {
 
         case sc2::ABILITY_ID::BUILD_PYLON:
         case sc2::ABILITY_ID::BUILD_SUPPLYDEPOT:
+        case sc2::ABILITY_ID::TRAIN_OVERLORD:
             return sum + 8.0f;
 
         default:
@@ -83,19 +84,24 @@ void QuarterMaster::OnStep() {
     const std::list<Order> training_orders = builder->GetTrainigOrders();
 
     float expected_consumption =
-        gAPI->observer().GetFoodUsed() +
-        8 +  // NOTE (alkurbatov): Plan ahead.
-        std::accumulate(
+        gAPI->observer().GetFoodUsed()
+        + 8  // NOTE (alkurbatov): Plan ahead.
+        + std::accumulate(
             training_orders.begin(),
             training_orders.end(),
             0.0f,
             CalcConsumption());
 
     float expected_supply =
-        std::accumulate(units.begin(), units.end(), 0, CalcSupplies()) +
-        std::accumulate(
+        std::accumulate(units.begin(), units.end(), 0, CalcSupplies())
+        + std::accumulate(
             construction_orders.begin(),
             construction_orders.end(),
+            0.0f,
+            CalcSupplies())
+        + std::accumulate(
+            training_orders.begin(),
+            training_orders.end(),
             0.0f,
             CalcSupplies());
 
