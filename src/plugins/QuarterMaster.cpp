@@ -26,7 +26,7 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING:
         case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
-            return sum + 15;
+            return sum + 15.0f;
 
         case sc2::UNIT_TYPEID::PROTOSS_PYLON:
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT:
@@ -34,7 +34,7 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
         case sc2::UNIT_TYPEID::ZERG_OVERLORD:
         case sc2::UNIT_TYPEID::ZERG_OVERLORDCOCOON:
         case sc2::UNIT_TYPEID::ZERG_OVERSEER:
-            return sum + 8;
+            return sum + 8.0f;
 
         default:
             return sum;
@@ -45,11 +45,11 @@ float CalcSupplies::operator()(float sum, const Order& order_) const {
     switch (convert::ToAbilityID(order_.data.ability_id)) {
         case sc2::ABILITY_ID::BUILD_NEXUS:
         case sc2::ABILITY_ID::BUILD_COMMANDCENTER:
-            return sum + 15;
+            return sum + 15.0f;
 
         case sc2::ABILITY_ID::BUILD_PYLON:
         case sc2::ABILITY_ID::BUILD_SUPPLYDEPOT:
-            return sum + 8;
+            return sum + 8.0f;
 
         default:
             return sum;
