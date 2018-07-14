@@ -94,6 +94,9 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
         " was destroyed" << std::endl;
 
     gHub->OnUnitDestroyed(*unit_);
+
+    for (const auto& i : m_plugins)
+        i->OnUnitDestroyed(unit_);
 }
 
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,

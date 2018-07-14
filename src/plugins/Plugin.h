@@ -18,6 +18,9 @@ struct Plugin {
     virtual void OnUnitCreated(const sc2::Unit*) {
     }
 
+    virtual void OnUnitDestroyed(const sc2::Unit*) {
+    }
+
     virtual void OnUnitIdle(const sc2::Unit*) {
     }
 
