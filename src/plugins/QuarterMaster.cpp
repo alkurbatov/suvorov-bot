@@ -28,6 +28,12 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
         case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
             return sum + 15.0f;
 
+        case sc2::UNIT_TYPEID::ZERG_EGG:
+            if (unit_->orders.front().ability_id == sc2::ABILITY_ID::TRAIN_OVERLORD)
+                return sum + 8.0f;
+
+            return sum;
+
         case sc2::UNIT_TYPEID::PROTOSS_PYLON:
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT:
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOTLOWERED:
