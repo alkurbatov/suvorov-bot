@@ -48,7 +48,7 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
 }
 
 float CalcSupplies::operator()(float sum, const Order& order_) const {
-    switch (convert::ToAbilityID(order_.data.ability_id)) {
+    switch (convert::ToAbilityID(order_.ability_id)) {
         case sc2::ABILITY_ID::BUILD_NEXUS:
         case sc2::ABILITY_ID::BUILD_COMMANDCENTER:
             return sum + 15.0f;
@@ -68,7 +68,7 @@ struct CalcConsumption {
 };
 
 float CalcConsumption::operator()(float sum, const Order& order_) const {
-    return sum + order_.data.food_required;
+    return sum + order_.food_required;
 }
 
 }  // namespace

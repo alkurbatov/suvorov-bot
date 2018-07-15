@@ -29,9 +29,9 @@ void Builder::OnStep() {
         if (!Build(&(*it)))
             break;
 
-        if (it->data.tech_alias.empty()) {  // Skip building upgrades.
-            m_reserved_minerals += it->data.mineral_cost;
-            m_reserved_vespene += it->data.vespene_cost;
+        if (it->tech_alias.empty()) {  // Skip building upgrades.
+            m_reserved_minerals += it->mineral_cost;
+            m_reserved_vespene += it->vespene_cost;
         }
 
         it = m_construction_orders.erase(it);
@@ -123,27 +123,27 @@ int64_t Builder::CountScheduledTrainings(sc2::UNIT_TYPEID id_) const {
 }
 
 bool Builder::Build(Order* order_) {
-    if (m_minerals < order_->data.mineral_cost || m_vespene < order_->data.vespene_cost)
+    if (m_minerals < order_->mineral_cost || m_vespene < order_->vespene_cost)
         return false;
 
-    std::shared_ptr<Blueprint> blueprint = Blueprint::Plot(order_->data.ability_id);
+    std::shared_ptr<Blueprint> blueprint = Blueprint::Plot(order_->ability_id);
 
     // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
-    if (order_->data.tech_requirement != sc2::UNIT_TYPEID::INVALID &&
-        gAPI->observer().CountUnitType(order_->data.tech_requirement) == 0) {
+    if (order_->tech_requirement != sc2::UNIT_TYPEID::INVALID &&
+        gAPI->observer().CountUnitType(order_->tech_requirement) == 0) {
             return false;
     }
 
-    if (m_available_food < order_->data.food_required)
+    if (m_available_food < order_->food_required)
         return false;
 
     if (!blueprint->Build(order_))
         return false;
 
-    m_minerals -= order_->data.mineral_cost;
-    m_vespene -= order_->data.vespene_cost;
-    m_available_food -= order_->data.food_required;
+    m_minerals -= order_->mineral_cost;
+    m_vespene -= order_->vespene_cost;
+    m_available_food -= order_->food_required;
 
-    gHistory << "[INFO] Started building a " << order_->data.name << std::endl;
+    gHistory << "[INFO] Started building a " << order_->name << std::endl;
     return true;
 }

@@ -17,15 +17,15 @@ Action::Action(sc2::ActionInterface* action_): m_action(action_) {
 }
 
 void Action::Build(const Order& order_) {
-    m_action->UnitCommand(order_.assignee, order_.data.ability_id);
+    m_action->UnitCommand(order_.assignee, order_.ability_id);
 }
 
 void Action::Build(const Order& order_, const sc2::Unit* unit_) {
-    m_action->UnitCommand(order_.assignee, order_.data.ability_id, unit_);
+    m_action->UnitCommand(order_.assignee, order_.ability_id, unit_);
 }
 
 void Action::Build(const Order& order_, const sc2::Point2D& point_) {
-    m_action->UnitCommand(order_.assignee, order_.data.ability_id, point_);
+    m_action->UnitCommand(order_.assignee, order_.ability_id, point_);
 }
 
 void Action::Attack(const sc2::Units& units_, const sc2::Point2D& point_) {
@@ -197,7 +197,6 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
     return data;
 }
 
-
 sc2::UpgradeData Observer::GetUpgradeData(sc2::UPGRADE_ID id_) const {
     return m_observer->GetUpgradeData()[convert::ToUpgradeID(id_)];
 }
@@ -215,7 +214,7 @@ Query::Query(sc2::QueryInterface* query_): m_query(query_) {
 }
 
 bool Query::CanBePlaced(const Order& order_, const sc2::Point2D& point_) {
-    return m_query->Placement(order_.data.ability_id, point_);
+    return m_query->Placement(order_.ability_id, point_);
 }
 
 Interface::Interface(sc2::ActionInterface* action_,

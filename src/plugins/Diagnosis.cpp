@@ -21,7 +21,7 @@ void Diagnosis::OnStep() {
         gAPI->debug().DrawText("Empty");
     } else {
         for (const auto& i : builder->GetConstructionOrders())
-            gAPI->debug().DrawText(i.data.name);
+            gAPI->debug().DrawText(i.name);
     }
 
     gAPI->debug().SendDebug();

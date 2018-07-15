@@ -167,7 +167,7 @@ IsOrdered::IsOrdered(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
 bool IsOrdered::operator()(const Order& order_) const {
-    return order_.data.unit_type_id == m_type;
+    return order_.unit_type_id == m_type;
 }
 
 bool IsTrainingWorkers::operator()(const sc2::UnitOrder& order_) const {
