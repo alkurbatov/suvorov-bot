@@ -15,7 +15,5 @@ struct Blueprint {
 
     virtual bool Build(Order* order_) = 0;
 
-    bool NeedsWorker() const;
-
     static std::shared_ptr<Blueprint> Plot(sc2::ABILITY_ID ability_);
 };
