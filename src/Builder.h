@@ -20,6 +20,8 @@ struct Builder {
 
     void ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent = false);
 
+    void ScheduleUpgrade(sc2::UPGRADE_ID id_);
+
     void ScheduleTraining(sc2::UNIT_TYPEID id_,
         const sc2::Unit* unit_ = nullptr, bool urgent = false);
 

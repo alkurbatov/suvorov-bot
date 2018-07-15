@@ -6,10 +6,6 @@
 
 #include "Blueprint.h"
 
-struct Upgrade: Blueprint {
-    bool Build(Order* order_) override = 0;
-};
-
-struct BuildingUpgrade: Upgrade {
+struct BuildingUpgrade: Blueprint {
     bool Build(Order* order_) final;
 };

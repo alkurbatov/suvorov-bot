@@ -83,6 +83,10 @@ void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
     m_construction_orders.emplace_back(structure);
 }
 
+void Builder::ScheduleUpgrade(sc2::UPGRADE_ID id_) {
+    m_construction_orders.emplace_back(gAPI->observer().GetUpgradeData(id_));
+}
+
 void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_,
     const sc2::Unit* unit_, bool urgent) {
     if (urgent) {

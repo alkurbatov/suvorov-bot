@@ -2,7 +2,7 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "Upgrade.h"
+#include "BuildingUpgrade.h"
 #include "core/API.h"
 #include "core/Helpers.h"
 

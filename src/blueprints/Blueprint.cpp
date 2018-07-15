@@ -4,9 +4,9 @@
 
 #include "Blueprint.h"
 #include "Building.h"
+#include "BuildingUpgrade.h"
 #include "Refinery.h"
 #include "Unit.h"
-#include "Upgrade.h"
 #include "Queen.h"
 #include "core/API.h"
 
@@ -101,6 +101,12 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_ZERGLING:
             return std::shared_ptr<Blueprint>(
                 new Unit(sc2::UNIT_TYPEID::ZERG_LARVA));
+
+        case sc2::ABILITY_ID::RESEARCH_WARPGATE:
+            // NOTE (alkurbatov): Yes, this is weird from the first glance
+            // but anyway the code required for research is completely the same. :)
+            return std::shared_ptr<Blueprint>(
+                new Unit(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
 
         default:
             return std::shared_ptr<Blueprint>(new Building());

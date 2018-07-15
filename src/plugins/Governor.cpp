@@ -50,6 +50,7 @@ void Governor::OnGameStart() {
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE);
+            builder->ScheduleUpgrade(sc2::UPGRADE_ID::WARPGATERESEARCH);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
