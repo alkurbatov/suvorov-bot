@@ -40,6 +40,7 @@ void Governor::OnGameStart() {
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_EXTRACTOR);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_QUEEN);
+            builder->ScheduleUpgrade(sc2::UPGRADE_ID::ZERGLINGMOVEMENTSPEED);
             return;
 
         default:

@@ -108,6 +108,11 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
             return std::shared_ptr<Blueprint>(
                 new Unit(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
 
+        case sc2::ABILITY_ID::RESEARCH_ZERGLINGADRENALGLANDS:
+        case sc2::ABILITY_ID::RESEARCH_ZERGLINGMETABOLICBOOST:
+            return std::shared_ptr<Blueprint>(
+                new Unit(sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL));
+
         default:
             return std::shared_ptr<Blueprint>(new Building());
     }
