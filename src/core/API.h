@@ -92,6 +92,8 @@ struct Observer {
 
     sc2::UpgradeData GetUpgradeData(sc2::UPGRADE_ID id_) const;
 
+    sc2::AbilityData GetAbilityData(sc2::ABILITY_ID id_) const;
+
     sc2::Race GetCurrentRace() const;
 
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;

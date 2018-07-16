@@ -201,6 +201,10 @@ sc2::UpgradeData Observer::GetUpgradeData(sc2::UPGRADE_ID id_) const {
     return m_observer->GetUpgradeData()[convert::ToUpgradeID(id_)];
 }
 
+sc2::AbilityData Observer::GetAbilityData(sc2::ABILITY_ID id_) const {
+    return m_observer->GetAbilityData()[convert::ToAbilityID(id_)];
+}
+
 sc2::Race Observer::GetCurrentRace() const {
     uint32_t id = m_observer->GetPlayerID();
     return m_observer->GetGameInfo().player_info[id - 1].race_actual;
