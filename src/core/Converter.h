@@ -20,8 +20,8 @@ inline sc2::UpgradeID ToUpgradeID(sc2::UPGRADE_ID id_) {
     return static_cast<sc2::UpgradeID>(id_);
 }
 
-inline sc2::ABILITY_ID ToAbilityID(sc2::AbilityID id_) {
-    return static_cast<sc2::ABILITY_ID>(id_);
+inline sc2::AbilityID ToAbilityID(sc2::ABILITY_ID id_) {
+    return static_cast<sc2::AbilityID>(id_);
 }
 
 sc2::Difficulty StringToDifficulty(const std::string& name_);
