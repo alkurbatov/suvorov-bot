@@ -6,7 +6,6 @@
 #include "../Hub.h"
 #include "QuarterMaster.h"
 #include "core/API.h"
-#include "core/Converter.h"
 
 #include <numeric>
 
@@ -48,7 +47,7 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
 }
 
 float CalcSupplies::operator()(float sum, const Order& order_) const {
-    switch (convert::ToAbilityID(order_.ability_id)) {
+    switch (order_.ability_id.ToType()) {
         case sc2::ABILITY_ID::BUILD_NEXUS:
         case sc2::ABILITY_ID::BUILD_COMMANDCENTER:
             return sum + 15.0f;
