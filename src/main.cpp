@@ -99,9 +99,6 @@ int main(int argc, char* argv[]) {
     ParseArguments(argc, argv, &options);
 
     sc2::Coordinator coordinator;
-    if (!coordinator.LoadSettings(argc, argv))
-        return -1;
-
     Dispatcher bot;
 
     size_t num_agents;
