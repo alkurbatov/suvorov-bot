@@ -14,6 +14,7 @@
 #include "plugins/Governor.h"
 #include "plugins/Miner.h"
 #include "plugins/QuarterMaster.h"
+#include "plugins/WarpSmith.h"
 
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
@@ -35,7 +36,11 @@ Dispatcher::Dispatcher(): m_builder(new Builder()) {
 void Dispatcher::OnGameStart() {
     gHistory << "[INFO] New game started!" << std::endl;
 
-    gHub.reset(new Hub(gAPI->observer().GetCurrentRace()));
+    sc2::Race current_race = gAPI->observer().GetCurrentRace();
+    gHub.reset(new Hub(current_race));
+
+    if (current_race == sc2::Race::Protoss)
+        m_plugins.emplace_back(new WarpSmith());
 
     for (const auto& i : m_plugins)
         i->OnGameStart();
