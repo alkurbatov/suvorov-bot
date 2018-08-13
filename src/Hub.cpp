@@ -35,7 +35,7 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_PROBE:
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE:
-            m_free_workers.emplace_back(unit_);
+            m_free_workers.Add(Worker(unit_));
             return;
 
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
@@ -67,19 +67,13 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_PROBE:
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
-            auto it = std::find(m_busy_workers.begin(), m_busy_workers.end(), unit_);
-            if (m_busy_workers.end() != it) {
-                m_busy_workers.erase(it);
+            if (m_busy_workers.Remove(Worker(unit_))) {
                 gHistory << "[INFO] Our busy worker was destroyed" << std::endl;
                 return;
             }
 
-            it = std::find(m_free_workers.begin(), m_free_workers.end(), unit_);
-            if (m_free_workers.end() != it) {
-                m_free_workers.erase(it);
-                gHistory << "[INFO] Our worker was destroyed" << std::endl;
-                return;
-            }
+            if (m_free_workers.Remove(Worker(unit_)))
+                gHistory << "[INFO] Our free worker was destroyed" << std::endl;
 
             return;
         }
@@ -108,13 +102,8 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_PROBE:
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
-            auto it = std::find(m_busy_workers.begin(), m_busy_workers.end(), unit_);
-
-            if (m_busy_workers.end() != it) {
-                m_free_workers.emplace_back(*it);
-                m_busy_workers.erase(it);
-                gHistory << "[INFO] Our worker finished task" << std::endl;
-            }
+            if (m_free_workers.Swap(Worker(unit_), m_busy_workers))
+                gHistory << "[INFO] Our busy worker has finished task" << std::endl;
 
             return;
         }
@@ -151,26 +140,12 @@ sc2::Race Hub::GetCurrentRace() const {
 }
 
 Worker* Hub::GetClosestFreeWorker(const sc2::Point2D& location_) {
-    if (m_free_workers.empty())
+    Worker* closest_worker = m_free_workers.GetClosestTo(location_);
+    if (!closest_worker)
         return nullptr;
 
-    auto closest_worker = m_free_workers.end();
-    float distance = std::numeric_limits<float>::max();
-
-    for (auto it = m_free_workers.begin(); it != m_free_workers.end(); ++it) {
-        float d = sc2::DistanceSquared2D(it->GetPos(), location_);
-
-        if (d >= distance)
-            continue;
-
-        distance = d;
-        closest_worker = it;
-    }
-
-    m_busy_workers.push_back(*closest_worker);
-    m_free_workers.erase(closest_worker);
-
-    return &m_busy_workers.back();
+    m_free_workers.Swap(*closest_worker, m_busy_workers);
+    return &m_busy_workers.Back();
 }
 
 sc2::UNIT_TYPEID Hub::GetCurrentWorkerType() const {
