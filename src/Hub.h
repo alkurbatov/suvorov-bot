@@ -11,7 +11,6 @@
 #include <sc2api/sc2_unit.h>
 
 #include <list>
-#include <unordered_set>
 
 template <typename T>
 struct Cache {
@@ -20,6 +19,8 @@ struct Cache {
     void Add(const T& obj_);
 
     T& Back();
+
+    bool IsCached(const T& obj_) const;
 
     bool Swap(const T& obj_, Cache<T>& dst_);
 
@@ -44,6 +45,13 @@ void Cache<T>::Add(const T& obj_) {
 template <typename T>
 T& Cache<T>::Back() {
     return m_objects.back();
+}
+
+template <typename T>
+bool Cache<T>::IsCached(const T& obj_) const {
+    auto it = std::find(m_objects.begin(), m_objects.end(), obj_);
+
+    return m_objects.end() != it;
 }
 
 template <typename T>
@@ -122,7 +130,7 @@ struct Hub {
     sc2::Race m_current_race;
     sc2::UNIT_TYPEID m_current_worker_type;
 
-    std::unordered_set<Geyser, GameObjectHasher> m_captured_geysers;
+    Cache<Geyser> m_captured_geysers;
 
     Cache<Worker> m_busy_workers;
     Cache<Worker> m_free_workers;

@@ -43,15 +43,10 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
             Geyser obj(unit_);
 
-            auto it = std::find(
-                m_captured_geysers.begin(), m_captured_geysers.end(), obj);
-            if (m_captured_geysers.end() != it) {
-                m_captured_geysers.erase(it);  // might be claimed geyser
-                gHistory << "[INFO] " << "Release claimed geyser " <<
-                    sc2::UnitTypeToName(unit_.unit_type) << std::endl;
-            }
+            if (m_captured_geysers.Remove(obj))  // might be claimed geyser
+                gHistory << "[INFO] " << "Release claimed geyser " << std::endl;
 
-            m_captured_geysers.insert(obj);
+            m_captured_geysers.Add(obj);
             gHistory << "[INFO] " << "Capture object " <<
                 sc2::UnitTypeToName(unit_.unit_type) << std::endl;
             return;
@@ -81,10 +76,7 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
         case sc2::UNIT_TYPEID::TERRAN_REFINERY:
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
-            auto it = m_captured_geysers.find(Geyser(unit_));
-
-            if (m_captured_geysers.end() != it) {
-                m_captured_geysers.erase(it);
+            if (m_captured_geysers.Remove(Geyser(unit_))) {
                 gHistory << "[INFO] Release object " <<
                     sc2::UnitTypeToName(unit_.unit_type) << std::endl;
             }
@@ -114,22 +106,16 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
 }
 
 bool Hub::IsOccupied(const sc2::Unit& unit_) const {
-    auto it = std::find(m_captured_geysers.begin(), m_captured_geysers.end(),
-        Geyser(unit_));
-
-    return m_captured_geysers.end() != it;
+    return m_captured_geysers.IsCached(Geyser(unit_));
 }
 
 bool Hub::IsTargetOccupied(const sc2::UnitOrder& order_) const {
-    if (m_captured_geysers.empty())
-        return false;
-
-    return m_captured_geysers.end() != m_captured_geysers.find(Geyser(order_));
+    return m_captured_geysers.IsCached(Geyser(order_));
 }
 
 void Hub::ClaimObject(const sc2::Unit& unit_) {
     if (IsGeyser()(unit_)) {
-        m_captured_geysers.emplace(unit_);
+        m_captured_geysers.Add(Geyser(unit_));
         gHistory << "[INFO] " << "Claim object " <<
             sc2::UnitTypeToName(unit_.unit_type) << std::endl;
     }
