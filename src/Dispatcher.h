@@ -13,7 +13,7 @@
 
 // The main bot class.
 struct Dispatcher: sc2::Agent {
-    Dispatcher();
+    explicit Dispatcher(const std::string& opponent_id_);
 
  private:
     void OnGameStart() final;

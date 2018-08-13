@@ -19,13 +19,18 @@
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
 
-Dispatcher::Dispatcher(): m_builder(new Builder()) {
+Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
 
     m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
     m_plugins.emplace_back(new QuarterMaster(m_builder));
     m_plugins.emplace_back(new ForceCommander());
+
+    if (!opponent_id_.empty()) {
+        gHistory << "[INFO] Playing against an opponent with id "
+            << opponent_id_ << std::endl;
+    }
 
 #ifdef DEBUG
     m_plugins.emplace_back(new ChatterBox());

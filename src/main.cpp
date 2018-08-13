@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(1, argv);
 
-    Dispatcher bot;
+    Dispatcher bot("TrainingDummy");
     coordinator.SetParticipants({
         CreateParticipant(sc2::Race::Random, &bot),
         CreateComputer(sc2::Race::Random, sc2::Difficulty::CheatInsane)
@@ -44,21 +44,27 @@ int main(int argc, char* argv[]) {
 #else
 
 namespace {
-struct ConnectionOptions {
+
+struct Options {
+    Options(): GamePort(0), StartPort(0), ComputerOpponent(false) {
+    }
+
     int32_t GamePort;
     int32_t StartPort;
     std::string ServerAddress;
+    std::string OpponentId;
     bool ComputerOpponent;
     sc2::Difficulty ComputerDifficulty;
     sc2::Race ComputerRace;
 };
 
-void ParseArguments(int argc, char* argv[], ConnectionOptions* options_) {
+void ParseArguments(int argc, char* argv[], Options* options_) {
     sc2::ArgParser arg_parser(argv[0]);
     arg_parser.AddOptions({
             {"-g", "--GamePort", "Port of client to connect to", false},
             {"-o", "--StartPort", "Starting server port", false},
             {"-l", "--LadderServer", "Ladder server address", false},
+            {"-x", "--OpponentId", "PlayerId of opponent", false},
             {"-c", "--ComputerOpponent", "If we set up a computer opponent", false},
             {"-a", "--ComputerRace", "Race of computer oppent", false},
             {"-d", "--ComputerDifficulty", "Difficulty of computer opponent", false}
@@ -74,6 +80,10 @@ void ParseArguments(int argc, char* argv[], ConnectionOptions* options_) {
     if (arg_parser.Get("StartPort", StartPortStr))
         options_->StartPort = atoi(StartPortStr.c_str());
 
+    std::string OpponentId;
+    if (arg_parser.Get("OpponentId", OpponentId))
+        options_->OpponentId = OpponentId;
+
     arg_parser.Get("LadderServer", options_->ServerAddress);
 
     std::string CompOpp;
@@ -88,18 +98,18 @@ void ParseArguments(int argc, char* argv[], ConnectionOptions* options_) {
         if (arg_parser.Get("ComputerDifficulty", CompDiff))
             options_->ComputerDifficulty = convert::StringToDifficulty(CompDiff);
     }
-
-    options_->ComputerOpponent = false;
 }
 
 }  // namespace
 
 int main(int argc, char* argv[]) {
-    ConnectionOptions options;
+    Options options;
     ParseArguments(argc, argv, &options);
 
+    gHistory.Init("history.log");
+
     sc2::Coordinator coordinator;
-    Dispatcher bot;
+    Dispatcher bot(options.OpponentId);
 
     size_t num_agents;
     if (options.ComputerOpponent) {
@@ -125,4 +135,5 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
 #endif
