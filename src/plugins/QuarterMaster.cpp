@@ -86,7 +86,7 @@ void QuarterMaster::OnStep() {
 
     auto units = gAPI->observer().GetUnits();
     const std::list<Order> construction_orders = builder->GetConstructionOrders();
-    const std::list<Order> training_orders = builder->GetTrainigOrders();
+    const std::list<Order> training_orders = builder->GetTrainingOrders();
 
     float expected_consumption =
         gAPI->observer().GetFoodUsed()

@@ -108,7 +108,7 @@ const std::list<Order>& Builder::GetConstructionOrders() const {
     return m_construction_orders;
 }
 
-const std::list<Order>& Builder::GetTrainigOrders() const {
+const std::list<Order>& Builder::GetTrainingOrders() const {
     return m_training_orders;
 }
 
