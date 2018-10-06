@@ -5,6 +5,7 @@
 #include "Blueprint.h"
 #include "Building.h"
 #include "BuildingUpgrade.h"
+#include "Creature.h"
 #include "Refinery.h"
 #include "Unit.h"
 #include "Queen.h"
@@ -99,8 +100,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_VIPER:
         case sc2::ABILITY_ID::TRAIN_ULTRALISK:
         case sc2::ABILITY_ID::TRAIN_ZERGLING:
-            return std::shared_ptr<Blueprint>(
-                new Unit(sc2::UNIT_TYPEID::ZERG_LARVA));
+            return std::shared_ptr<Blueprint>(new Creature());
 
         case sc2::ABILITY_ID::RESEARCH_WARPGATE:
             // NOTE (alkurbatov): Yes, this is weird from the first glance

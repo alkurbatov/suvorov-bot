@@ -20,6 +20,8 @@ struct Cache {
 
     T& Back();
 
+    void PopBack();
+
     bool IsCached(const T& obj_) const;
 
     bool Swap(const T& obj_, Cache<T>& dst_);
@@ -45,6 +47,11 @@ void Cache<T>::Add(const T& obj_) {
 template <typename T>
 T& Cache<T>::Back() {
     return m_objects.back();
+}
+
+template <typename T>
+void Cache<T>::PopBack() {
+    m_objects.pop_back();
 }
 
 template <typename T>
@@ -126,6 +133,8 @@ struct Hub {
 
     void AssignVespeneHarvester(const sc2::Unit& refinery_);
 
+    bool AssignLarva(Order* order_);
+
  private:
     sc2::Race m_current_race;
     sc2::UNIT_TYPEID m_current_worker_type;
@@ -134,6 +143,7 @@ struct Hub {
 
     Cache<Worker> m_busy_workers;
     Cache<Worker> m_free_workers;
+    Cache<GameObject> m_larva;
 };
 
 extern std::unique_ptr<Hub> gHub;
