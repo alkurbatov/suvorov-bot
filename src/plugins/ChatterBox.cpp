@@ -7,10 +7,12 @@
 #include "core/API.h"
 
 void ChatterBox::OnGameStart() {
+    gAPI->action().SendMessage("Suvorov v0.0.2 by @alkurbatov");
     gAPI->action().SendMessage("gl hf");
 }
 
 void ChatterBox::OnStep() {
+#ifdef DEBUG
     auto messages = gAPI->observer().GetChatMessages();
 
     auto it = std::find_if(messages.begin(), messages.end(),
@@ -23,4 +25,5 @@ void ChatterBox::OnStep() {
 
     gHistory.warning() << "The game was finished forcibly." << std::endl;
     gAPI->debug().EndGame();
+#endif
 }

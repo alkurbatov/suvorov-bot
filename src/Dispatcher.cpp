@@ -26,6 +26,7 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
     m_plugins.emplace_back(new Miner(m_builder));
     m_plugins.emplace_back(new QuarterMaster(m_builder));
     m_plugins.emplace_back(new ForceCommander());
+    m_plugins.emplace_back(new ChatterBox());
 
     if (!opponent_id_.empty()) {
         gHistory.info() << "Playing against an opponent with id "
@@ -33,7 +34,6 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
     }
 
 #ifdef DEBUG
-    m_plugins.emplace_back(new ChatterBox());
     m_plugins.emplace_back(new Diagnosis(m_builder));
 #endif
 }
