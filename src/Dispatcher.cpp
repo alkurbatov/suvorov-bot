@@ -28,7 +28,7 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
     m_plugins.emplace_back(new ForceCommander());
 
     if (!opponent_id_.empty()) {
-        gHistory << "[INFO] Playing against an opponent with id "
+        gHistory.info() << "Playing against an opponent with id "
             << opponent_id_ << std::endl;
     }
 
@@ -39,7 +39,7 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
 }
 
 void Dispatcher::OnGameStart() {
-    gHistory << "[INFO] New game started!" << std::endl;
+    gHistory.info() << "New game started!" << std::endl;
 
     sc2::Race current_race = gAPI->observer().GetCurrentRace();
     gHub.reset(new Hub(current_race));
@@ -52,14 +52,14 @@ void Dispatcher::OnGameStart() {
 }
 
 void Dispatcher::OnGameEnd() {
-    gHistory << "[INFO] Game over!" <<std::endl;
+    gHistory.info() << "Game over!" <<std::endl;
 
     for (const auto& i : m_plugins)
         i->OnGameEnd();
 }
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
-    gHistory << "[INFO] " << sc2::UnitTypeToName(building_->unit_type) <<
+    gHistory.info() << sc2::UnitTypeToName(building_->unit_type) <<
         ": construction complete" << std::endl;
 }
 
@@ -78,11 +78,11 @@ void Dispatcher::OnStep() {
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
-    // Could be just a worker exiting a refinery.
+    // NOTE (alkurbatov): Could be just a worker exiting a refinery.
     if (IsGasWorker()(*unit_))
         return;
 
-    gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
+    gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
         " was created" << std::endl;
 
     gHub->OnUnitCreated(*unit_);
@@ -100,7 +100,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
-    gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
+    gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
         " was destroyed" << std::endl;
 
     gHub->OnUnitDestroyed(*unit_);
@@ -112,10 +112,10 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
         const std::vector<std::string>& protocol_errors) {
     for (const auto i : client_errors) {
-        gHistory << "[ERROR] Encountered client error: " <<
+        gHistory.error() << "Encountered client error: " <<
             static_cast<int>(i) << std::endl;
     }
 
     for (const auto& i : protocol_errors)
-        gHistory << "[ERROR] Encountered protocol error: " << i << std::endl;
+        gHistory.error() << "Encountered protocol error: " << i << std::endl;
 }

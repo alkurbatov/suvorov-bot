@@ -54,15 +54,15 @@ void Builder::OnUnitCreated(const sc2::Unit& unit_) {
 
     sc2::UnitTypeData data = gAPI->observer().GetUnitTypeData(unit_.unit_type);
 
-    gHistory << "[INFO] Decreasing reserved resources: -" <<
+    gHistory.info() << "Decreasing reserved resources: -" <<
         data.mineral_cost << " minerals, -" <<
         data.vespene_cost << " vespene" << std::endl;
 
     m_reserved_minerals -= data.mineral_cost;
     m_reserved_vespene -= data.vespene_cost;
 
-    gHistory << "[INFO] Reserved minerals left: " << m_reserved_minerals << std::endl;
-    gHistory << "[INFO] Reserved vespene left: " << m_reserved_vespene << std::endl;
+    gHistory.info() << "Reserved minerals left: " << m_reserved_minerals << std::endl;
+    gHistory.info() << "Reserved vespene left: " << m_reserved_vespene << std::endl;
 }
 
 void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
@@ -148,6 +148,6 @@ bool Builder::Build(Order* order_) {
     m_vespene -= order_->vespene_cost;
     m_available_food -= order_->food_required;
 
-    gHistory << "[INFO] Started building a " << order_->name << std::endl;
+    gHistory.info() << "Started building a " << order_->name << std::endl;
     return true;
 }

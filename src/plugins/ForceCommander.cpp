@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
+#include "../Historican.h"
 #include "../Pathfinder.h"
 #include "ForceCommander.h"
 #include "core/API.h"
@@ -34,7 +35,7 @@ void ForceCommander::OnUnitCreated(const sc2::Unit* unit_) {
     if (!IsCombatUnit()(*unit_))
         return;
 
-    gHistory << "[INFO] " << sc2::UnitTypeToName(unit_->unit_type) <<
+    gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
         " added to attack group" << std::endl;
 
     m_units.push_back(unit_);

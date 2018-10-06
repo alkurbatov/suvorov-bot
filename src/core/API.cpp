@@ -214,6 +214,10 @@ const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {
     return m_observer->GetChatMessages();
 }
 
+uint32_t Observer::GetGameLoop() const {
+    return m_observer->GetGameLoop();
+}
+
 Query::Query(sc2::QueryInterface* query_): m_query(query_) {
 }
 

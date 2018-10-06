@@ -4,7 +4,6 @@
 
 #include "Historican.h"
 #include "Hub.h"
-#include "core/API.h"
 #include "core/Helpers.h"
 
 Hub::Hub(sc2::Race current_race_): m_current_race(current_race_),
@@ -44,10 +43,10 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
             Geyser obj(unit_);
 
             if (m_captured_geysers.Remove(obj))  // might be claimed geyser
-                gHistory << "[INFO] " << "Release claimed geyser " << std::endl;
+                gHistory.info() << "Release claimed geyser " << std::endl;
 
             m_captured_geysers.Add(obj);
-            gHistory << "[INFO] " << "Capture object " <<
+            gHistory.info() << "Capture object " <<
                 sc2::UnitTypeToName(unit_.unit_type) << std::endl;
             return;
         }
@@ -63,12 +62,12 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
             if (m_busy_workers.Remove(Worker(unit_))) {
-                gHistory << "[INFO] Our busy worker was destroyed" << std::endl;
+                gHistory.info() << "Our busy worker was destroyed" << std::endl;
                 return;
             }
 
             if (m_free_workers.Remove(Worker(unit_)))
-                gHistory << "[INFO] Our free worker was destroyed" << std::endl;
+                gHistory.info() << "Our free worker was destroyed" << std::endl;
 
             return;
         }
@@ -77,7 +76,7 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::TERRAN_REFINERY:
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
             if (m_captured_geysers.Remove(Geyser(unit_))) {
-                gHistory << "[INFO] Release object " <<
+                gHistory.info() << "Release object " <<
                     sc2::UnitTypeToName(unit_.unit_type) << std::endl;
             }
 
@@ -95,7 +94,7 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
             if (m_free_workers.Swap(Worker(unit_), m_busy_workers))
-                gHistory << "[INFO] Our busy worker has finished task" << std::endl;
+                gHistory.info() << "Our busy worker has finished task" << std::endl;
 
             return;
         }
@@ -116,7 +115,7 @@ bool Hub::IsTargetOccupied(const sc2::UnitOrder& order_) const {
 void Hub::ClaimObject(const sc2::Unit& unit_) {
     if (IsGeyser()(unit_)) {
         m_captured_geysers.Add(Geyser(unit_));
-        gHistory << "[INFO] " << "Claim object " <<
+        gHistory.info() << "Claim object " <<
             sc2::UnitTypeToName(unit_.unit_type) << std::endl;
     }
 }

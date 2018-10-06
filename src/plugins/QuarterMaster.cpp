@@ -113,7 +113,7 @@ void QuarterMaster::OnStep() {
     if (expected_supply > expected_consumption || expected_supply >= 200)
         return;
 
-    gHistory << "[INFO] Request additional supplies: " <<
+    gHistory.info() << "Request additional supplies: " <<
         expected_consumption << " >= " << expected_supply << std::endl;
 
     m_skip_turn = true;

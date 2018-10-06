@@ -21,6 +21,6 @@ void ChatterBox::OnStep() {
     if (it == messages.end())
         return;
 
-    gHistory << "[WARNING] The game was finished forcibly." << std::endl;
+    gHistory.warning() << "The game was finished forcibly." << std::endl;
     gAPI->debug().EndGame();
 }

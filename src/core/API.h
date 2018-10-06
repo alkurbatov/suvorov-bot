@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include "Historican.h"
 #include "Order.h"
 
 #include <sc2api/sc2_gametypes.h>
@@ -97,6 +96,8 @@ struct Observer {
     sc2::Race GetCurrentRace() const;
 
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;
+
+    uint32_t GetGameLoop() const;
 
  private:
     const sc2::ObservationInterface* m_observer;

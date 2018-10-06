@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "core/API.h"
+
 #include <fstream>
 #include <iostream>
 
@@ -12,12 +14,17 @@ struct Historican {
 
     void Init(const std::string &filename_);
 
+    Historican& info();
+
+    Historican& warning();
+
+    Historican& error();
+
     template <class T>
     Historican& operator<<(const T& data_) {
-        if (!m_file.is_open())
-            return *this;
+        if (m_file.is_open())
+            m_file << data_;
 
-        m_file << data_;
         std::cout << data_;
 
         return *this;
