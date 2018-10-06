@@ -79,7 +79,7 @@ void Dispatcher::OnStep() {
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
     // NOTE (alkurbatov): Could be just a worker exiting a refinery.
-    if (IsGasWorker()(*unit_))
+    if (unit_->alliance != sc2::Unit::Alliance::Self || IsGasWorker()(*unit_))
         return;
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
@@ -100,6 +100,9 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
+    if (unit_->alliance != sc2::Unit::Alliance::Self)
+        return;
+
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
         " was destroyed" << std::endl;
 
