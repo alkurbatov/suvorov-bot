@@ -35,11 +35,16 @@ void Governor::OnGameStart() {
 
         case sc2::Race::Zerg:
             gHistory.info() << "Started game as Zerg" << std::endl;
+            // NOTE (alkurbatov): Here we use 'ScheduleConstruction' for creatures
+            // in order to support proper build order. The training queue is much faster
+            // and always has priority over the construction queue.
+            // Zergling flood.
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_HATCHERY);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_EXTRACTOR);
-            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
             builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_QUEEN);
+            builder->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_OVERLORD);
             builder->ScheduleUpgrade(sc2::UPGRADE_ID::ZERGLINGMOVEMENTSPEED);
             return;
 
