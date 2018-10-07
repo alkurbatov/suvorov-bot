@@ -16,6 +16,8 @@ template <typename T>
 struct Cache {
     bool Empty() const;
 
+    uint32_t Count() const;
+
     void Add(const T& obj_);
 
     T& Back();
@@ -37,6 +39,11 @@ struct Cache {
 template <typename T>
 bool Cache<T>::Empty() const {
     return m_objects.empty();
+}
+
+template <typename T>
+uint32_t Cache<T>::Count() const {
+    return m_objects.size();
 }
 
 template <typename T>
@@ -134,6 +141,8 @@ struct Hub {
     void AssignVespeneHarvester(const sc2::Unit& refinery_);
 
     bool AssignLarva(Order* order_);
+
+    uint32_t GetLarvaCount() const;
 
  private:
     sc2::Race m_current_race;

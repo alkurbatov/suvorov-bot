@@ -67,14 +67,26 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
     if (!builder)
         return;
 
-    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::TERRAN_BARRACKS)
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::TERRAN_BARRACKS) {
         builder->ScheduleTraining(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
+        gHistory.info() << "Schedule Marine training" << std::endl;
+        return;
+    }
 
-    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_LARVA)
-        builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING);
-
-    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_GATEWAY)
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_GATEWAY) {
         builder->ScheduleTraining(sc2::UNIT_TYPEID::PROTOSS_ZEALOT, unit_);
+        gHistory.info() << "Schedule Zealot training" << std::endl;
+        return;
+    }
+
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_LARVA) {
+        if (gHub->GetLarvaCount() <= builder->GetTrainingOrders().size())
+            return;
+
+        builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING);
+        gHistory.info() << "Schedule Zerglings training" << std::endl;
+        return;
+    }
 }
 
 void Governor::OnUnitDestroyed(const sc2::Unit* unit_) {
