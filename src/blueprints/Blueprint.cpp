@@ -27,6 +27,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:
         case sc2::ABILITY_ID::MORPH_OVERSEER:
         case sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS:
+        case sc2::ABILITY_ID::TRAIN_BANELING:
             return std::shared_ptr<Blueprint>(new Mutation());
 
         case sc2::ABILITY_ID::TRAIN_ADEPT:
