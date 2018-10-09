@@ -95,9 +95,6 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
 }
 
 void Governor::OnUnitDestroyed(const sc2::Unit* unit_) {
-    if (unit_->alliance != sc2::Unit::Alliance::Self)
-        return;
-
     if (IsCombatUnit()(*unit_))
         return;
 
