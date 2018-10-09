@@ -171,6 +171,13 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
             data.tech_requirement = sc2::UNIT_TYPEID::ZERG_LAIR;
             break;
 
+        case sc2::UNIT_TYPEID::ZERG_RAVAGER:
+            data.mineral_cost = 25;
+            data.vespene_cost = 75;
+            data.tech_alias.push_back(sc2::UNIT_TYPEID::ZERG_ROACH);
+            data.tech_requirement = sc2::UNIT_TYPEID::ZERG_ROACHWARREN;
+            break;
+
         case sc2::UNIT_TYPEID::ZERG_HIVE:
             data.mineral_cost = 200;
             data.vespene_cost = 150;
