@@ -196,8 +196,9 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
         case sc2::UNIT_TYPEID::ZERG_BANELINGNEST:
         case sc2::UNIT_TYPEID::ZERG_EVOLUTIONCHAMBER:
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR:
-        case sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT:
         case sc2::UNIT_TYPEID::ZERG_HYDRALISKDEN:
+        case sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT:
+        case sc2::UNIT_TYPEID::ZERG_LURKERDENMP:
         case sc2::UNIT_TYPEID::ZERG_ROACHWARREN:
         case sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL:
         case sc2::UNIT_TYPEID::ZERG_SPINECRAWLER:
