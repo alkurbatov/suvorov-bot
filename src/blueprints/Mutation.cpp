@@ -2,18 +2,18 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "BuildingUpgrade.h"
+#include "Mutation.h"
 #include "core/API.h"
 #include "core/Helpers.h"
 
-bool BuildingUpgrade::Build(Order* order_) {
-    sc2::Units buildings = gAPI->observer().GetUnits(
+bool Mutation::Build(Order* order_) {
+    sc2::Units targets = gAPI->observer().GetUnits(
         IsIdleUnit(order_->tech_alias.back()));
 
-    if (buildings.empty())
+    if (targets.empty())
         return false;
 
-    order_->assignee = buildings.front();
+    order_->assignee = targets.front();
     gAPI->action().Build(*order_);
 
     return true;

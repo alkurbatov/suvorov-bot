@@ -4,11 +4,11 @@
 
 #include "Blueprint.h"
 #include "Building.h"
-#include "BuildingUpgrade.h"
+#include "Mutation.h"
 #include "Creature.h"
+#include "Queen.h"
 #include "Refinery.h"
 #include "Unit.h"
-#include "Queen.h"
 #include "core/API.h"
 
 Blueprint::~Blueprint() {
@@ -25,8 +25,9 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::MORPH_HIVE:
         case sc2::ABILITY_ID::MORPH_LAIR:
         case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:
+        case sc2::ABILITY_ID::MORPH_OVERSEER:
         case sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS:
-            return std::shared_ptr<Blueprint>(new BuildingUpgrade());
+            return std::shared_ptr<Blueprint>(new Mutation());
 
         case sc2::ABILITY_ID::TRAIN_ADEPT:
         case sc2::ABILITY_ID::TRAIN_DARKTEMPLAR:

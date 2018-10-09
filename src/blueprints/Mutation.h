@@ -6,6 +6,6 @@
 
 #include "Blueprint.h"
 
-struct BuildingUpgrade: Blueprint {
+struct Mutation: Blueprint {
     bool Build(Order* order_) final;
 };

@@ -161,6 +161,11 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
             data.tech_requirement = sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL;
             break;
 
+        case sc2::UNIT_TYPEID::ZERG_OVERSEER:
+            data.mineral_cost = 50;
+            data.tech_requirement = sc2::UNIT_TYPEID::ZERG_LAIR;
+            break;
+
         case sc2::UNIT_TYPEID::ZERG_HIVE:
             data.mineral_cost = 200;
             data.vespene_cost = 150;
