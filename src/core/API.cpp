@@ -191,6 +191,14 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
             data.tech_requirement = sc2::UNIT_TYPEID::ZERG_INFESTATIONPIT;
             break;
 
+        case sc2::UNIT_TYPEID::ZERG_LURKERMP:
+            data.mineral_cost = 50;
+            data.vespene_cost = 100;
+            data.ability_id = sc2::ABILITY_ID::MORPH_LURKER;
+            data.tech_alias.push_back(sc2::UNIT_TYPEID::ZERG_HYDRALISK);
+            data.tech_requirement = sc2::UNIT_TYPEID::ZERG_LURKERDENMP;
+            break;
+
         // NOTE (alkurbatov): By some reason all zerg buildings
         // include drone mineral cost.
         case sc2::UNIT_TYPEID::ZERG_BANELINGNEST:

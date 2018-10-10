@@ -25,6 +25,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::MORPH_GREATERSPIRE:
         case sc2::ABILITY_ID::MORPH_HIVE:
         case sc2::ABILITY_ID::MORPH_LAIR:
+        case sc2::ABILITY_ID::MORPH_LURKER:
         case sc2::ABILITY_ID::MORPH_ORBITALCOMMAND:
         case sc2::ABILITY_ID::MORPH_OVERSEER:
         case sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS:
