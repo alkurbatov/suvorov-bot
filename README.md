@@ -24,6 +24,7 @@ Suvorov currently provides the following features:
 * Plays all 3 races.
 * Manages resource gathering and worker allocation.
 * Supports all available buildings upgrades (e.g. Orbital Command, Planetary Fortress, Lair).
+* Supports all available zerg units mutations (e.g. Overseer, Baneling, Ravager).
 * Calls down MULEs, casts chronoboost.
 * Automatically builds new supplies when needed.
 * Supports launch under [Sc2LadderServer](https://github.com/Cryptyc/Sc2LadderServer).
