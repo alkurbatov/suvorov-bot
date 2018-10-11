@@ -43,6 +43,7 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOTLOWERED:
         case sc2::UNIT_TYPEID::ZERG_OVERLORD:
         case sc2::UNIT_TYPEID::ZERG_OVERLORDCOCOON:
+        case sc2::UNIT_TYPEID::ZERG_OVERLORDTRANSPORT:
         case sc2::UNIT_TYPEID::ZERG_OVERSEER:
             return sum + 8.0f;
 
