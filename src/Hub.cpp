@@ -133,7 +133,7 @@ bool Hub::IsTargetOccupied(const sc2::UnitOrder& order_) const {
 }
 
 void Hub::ClaimObject(const sc2::Unit& unit_) {
-    if (IsGeyser()(unit_)) {
+    if (IsVisibleGeyser()(unit_)) {
         m_captured_geysers.Add(Geyser(unit_));
         gHistory.info() << "Claim object " <<
             sc2::UnitTypeToName(unit_.unit_type) << std::endl;

@@ -85,16 +85,16 @@ bool IsCombatUnit::operator()(const sc2::Unit& unit_) const {
     }
 }
 
-bool IsMineralPatch::operator()(const sc2::Unit& unit_) const {
+bool IsVisibleMineralPatch::operator()(const sc2::Unit& unit_) const {
     return unit_.mineral_contents > 0;
 }
 
-bool IsGeyser::operator()(const sc2::Unit& unit_) const {
+bool IsVisibleGeyser::operator()(const sc2::Unit& unit_) const {
     return unit_.vespene_contents > 0;
 }
 
 bool IsFreeGeyser::operator()(const sc2::Unit& unit_) const {
-    return IsGeyser()(unit_) && !gHub->IsOccupied(unit_);
+    return IsVisibleGeyser()(unit_) && !gHub->IsOccupied(unit_);
 }
 
 bool IsRefinery::operator()(const sc2::Unit& unit_) const {

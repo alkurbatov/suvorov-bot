@@ -23,13 +23,21 @@ struct IsCombatUnit {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
-// FIXME(alkurbatov): Check that the provided unit is not depleted mineral patch
-struct IsMineralPatch {
+struct IsVisibleMineralPatch {
+    // NOTE (alkurbatov): All the visible mineral patches has non-zero mineral
+    // contents while the mineral patches covered by the fog of war don't have
+    // such parameter (it is always zero) and can't be selected/targeted.
+    // This filter returns only the visible  and not depleted mineral patches.
+
     bool operator()(const sc2::Unit& unit_) const;
 };
 
-// Check that the provided unit is not depleted geyser
-struct IsGeyser {
+struct IsVisibleGeyser {
+    // NOTE (alkurbatov): All the geysers has non-zero vespene contents while
+    // the geysers covered by the fog of war don't have such parameter
+    // (it is always zero) and can't be selected/targeted.
+    // This filter returns only the visible  and not depleted geysers.
+
     bool operator()(const sc2::Unit& unit_) const;
 };
 
