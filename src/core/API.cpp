@@ -158,12 +158,14 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
 
         case sc2::UNIT_TYPEID::ZERG_BANELING:
             data.mineral_cost = 25;
+            data.food_required = 0.0f;
             data.tech_alias.push_back(sc2::UNIT_TYPEID::ZERG_ZERGLING);
             break;
 
         case sc2::UNIT_TYPEID::ZERG_BROODLORD:
             data.mineral_cost = 150;
             data.vespene_cost = 150;
+            data.food_required = 2.0f;
             data.tech_alias.push_back(sc2::UNIT_TYPEID::ZERG_CORRUPTOR);
             data.tech_requirement = sc2::UNIT_TYPEID::ZERG_GREATERSPIRE;
             break;
@@ -181,6 +183,7 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
         case sc2::UNIT_TYPEID::ZERG_RAVAGER:
             data.mineral_cost = 25;
             data.vespene_cost = 75;
+            data.food_required = 1.0f;
             data.tech_alias.push_back(sc2::UNIT_TYPEID::ZERG_ROACH);
             data.tech_requirement = sc2::UNIT_TYPEID::ZERG_ROACHWARREN;
             break;
@@ -195,6 +198,7 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
             data.mineral_cost = 50;
             data.vespene_cost = 100;
             data.ability_id = sc2::ABILITY_ID::MORPH_LURKER;
+            data.food_required = 1.0f;
             data.tech_alias.push_back(sc2::UNIT_TYPEID::ZERG_HYDRALISK);
             data.tech_requirement = sc2::UNIT_TYPEID::ZERG_LURKERDENMP;
             break;
