@@ -106,6 +106,10 @@ void Governor::OnUnitDestroyed(const sc2::Unit* unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_PYLON:
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT:
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOTLOWERED:
+        case sc2::UNIT_TYPEID::ZERG_OVERLORD:
+        case sc2::UNIT_TYPEID::ZERG_OVERLORDCOCOON:
+        case sc2::UNIT_TYPEID::ZERG_OVERLORDTRANSPORT:
+        case sc2::UNIT_TYPEID::ZERG_OVERSEER:
             // NOTE (alkurbatov): QuarterMaster is responsible for supplies rebuild.
             return;
 
