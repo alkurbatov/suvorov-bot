@@ -48,6 +48,14 @@ struct Debug {
 
     void DrawText(const std::string& message_) const;
 
+    void DrawText(const std::string& message_, const sc2::Point3D& pos_) const;
+
+    void DrawSphere(const sc2::Point3D& center_, float radius_) const;
+
+    void DrawBox(const sc2::Point3D& min_, const sc2::Point3D& max_) const;
+
+    void DrawLine(const sc2::Point3D& start_, const sc2::Point3D& end_) const;
+
     void EndGame() const;
 
     void SendDebug() const;

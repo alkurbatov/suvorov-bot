@@ -55,6 +55,22 @@ void Debug::DrawText(const std::string& message_) const {
     m_debug->DebugTextOut(message_);
 }
 
+void Debug::DrawText(const std::string& message_, const sc2::Point3D& pos_) const {
+    m_debug->DebugTextOut(message_, pos_);
+}
+
+void Debug::DrawSphere(const sc2::Point3D& center_, float radius_) const {
+    m_debug->DebugSphereOut(center_, radius_);
+}
+
+void Debug::DrawBox(const sc2::Point3D& min_, const sc2::Point3D& max_) const {
+    m_debug->DebugBoxOut(min_, max_);
+}
+
+void Debug::DrawLine(const sc2::Point3D& start_, const sc2::Point3D& end_) const {
+    m_debug->DebugLineOut(start_, end_);
+}
+
 void Debug::EndGame() const {
     m_debug->DebugEndGame(true);
     SendDebug();
