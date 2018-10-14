@@ -197,8 +197,8 @@ bool Hub::AssignLarva(Order* order_) {
     return true;
 }
 
-uint32_t Hub::GetLarvaCount() const {
-    return m_larva.Count();
+const Cache<GameObject>&  Hub::GetLarvas() const {
+    return m_larva;
 }
 
 const Expansions& Hub::GetExpansions() const {

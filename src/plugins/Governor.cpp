@@ -85,7 +85,7 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
     }
 
     if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::ZERG_LARVA) {
-        if (gHub->GetLarvaCount() <= builder->GetTrainingOrders().size())
+        if (gHub->GetLarvas().Count() <= builder->GetTrainingOrders().size())
             return;
 
         builder->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_ZERGLING);

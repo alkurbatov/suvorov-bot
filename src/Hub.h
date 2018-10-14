@@ -143,7 +143,7 @@ struct Hub {
 
     bool AssignLarva(Order* order_);
 
-    uint32_t GetLarvaCount() const;
+    const Cache<GameObject>&  GetLarvas() const;
 
     const Expansions& GetExpansions() const;
 
