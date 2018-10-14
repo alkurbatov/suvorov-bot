@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
+#include "../Hub.h"
 #include "../Historican.h"
 #include "Diagnosis.h"
 #include "core/API.h"
@@ -23,6 +24,9 @@ void Diagnosis::OnStep() {
         for (const auto& i : builder->GetConstructionOrders())
             gAPI->debug().DrawText(i.name);
     }
+
+    for (const auto& i : gHub->GetExpansions())
+        gAPI->debug().DrawSphere(i.town_hall_location, 0.35f);
 
     gAPI->debug().SendDebug();
 }

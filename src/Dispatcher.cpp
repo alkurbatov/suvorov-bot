@@ -7,6 +7,7 @@
 #include "Hub.h"
 #include "core/API.h"
 #include "core/Helpers.h"
+#include "core/Map.h"
 #include "core/Timer.h"
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
@@ -42,7 +43,7 @@ void Dispatcher::OnGameStart() {
     gHistory.info() << "New game started!" << std::endl;
 
     sc2::Race current_race = gAPI->observer().GetCurrentRace();
-    gHub.reset(new Hub(current_race));
+    gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
 
     if (current_race == sc2::Race::Protoss)
         m_plugins.emplace_back(new WarpSmith());

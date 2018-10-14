@@ -278,6 +278,11 @@ bool Query::CanBePlaced(const Order& order_, const sc2::Point2D& point_) {
     return m_query->Placement(order_.ability_id, point_);
 }
 
+std::vector<bool> Query::CanBePlaced(
+    const std::vector<sc2::QueryInterface::PlacementQuery>& queries_) {
+    return m_query->Placement(queries_);
+}
+
 Interface::Interface(sc2::ActionInterface* action_,
     sc2::ControlInterface* control_, sc2::DebugInterface* debug_,
     const sc2::ObservationInterface* observer_, sc2::QueryInterface* query_):

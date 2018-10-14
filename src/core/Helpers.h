@@ -32,6 +32,10 @@ struct IsVisibleMineralPatch {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
+struct IsFoggyResource {
+    bool operator()(const sc2::Unit& unit_) const;
+};
+
 struct IsVisibleGeyser {
     // NOTE (alkurbatov): All the geysers has non-zero vespene contents while
     // the geysers covered by the fog of war don't have such parameter

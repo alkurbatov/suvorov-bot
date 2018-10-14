@@ -116,6 +116,9 @@ struct Query {
 
     bool CanBePlaced(const Order& order_, const sc2::Point2D& point_);
 
+    std::vector<bool> CanBePlaced(
+        const std::vector<sc2::QueryInterface::PlacementQuery>& queries_);
+
  private:
     sc2::QueryInterface* m_query;
 };

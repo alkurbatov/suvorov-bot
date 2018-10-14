@@ -6,7 +6,8 @@
 #include "Hub.h"
 #include "core/Helpers.h"
 
-Hub::Hub(sc2::Race current_race_): m_current_race(current_race_),
+Hub::Hub(sc2::Race current_race_, const Expansions& expansions_):
+    m_current_race(current_race_), m_expansions(expansions_),
     m_current_worker_type(sc2::UNIT_TYPEID::INVALID) {
     switch (m_current_race) {
         case sc2::Race::Protoss:
@@ -198,6 +199,10 @@ bool Hub::AssignLarva(Order* order_) {
 
 uint32_t Hub::GetLarvaCount() const {
     return m_larva.Count();
+}
+
+const Expansions& Hub::GetExpansions() const {
+    return m_expansions;
 }
 
 std::unique_ptr<Hub> gHub;
