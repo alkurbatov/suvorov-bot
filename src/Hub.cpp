@@ -71,16 +71,12 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
                 return;
             }
 
-            if (m_free_workers.Remove(Worker(unit_)))
-                gHistory.info() << "Our free worker was destroyed" << std::endl;
-
+            m_free_workers.Remove(Worker(unit_));
             return;
         }
 
         case sc2::UNIT_TYPEID::ZERG_LARVA:
-            if (m_larva.Remove(GameObject(unit_)))
-                gHistory.info() << "Our larva was destroyed" << std::endl;
-
+            m_larva.Remove(GameObject(unit_));
             return;
 
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
