@@ -88,12 +88,14 @@ void Builder::ScheduleUpgrade(sc2::UPGRADE_ID id_) {
 
 void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_,
     const sc2::Unit* unit_, bool urgent) {
+    auto data = gAPI->observer().GetUnitTypeData(id_);
+
     if (urgent) {
-        m_training_orders.emplace_front(gAPI->observer().GetUnitTypeData(id_), unit_);
+        m_training_orders.emplace_front(data, unit_);
         return;
     }
 
-    m_training_orders.emplace_back(gAPI->observer().GetUnitTypeData(id_), unit_);
+    m_training_orders.emplace_back(data, unit_);
 }
 
 void Builder::ScheduleOrders(const std::vector<Order>& orders_) {
