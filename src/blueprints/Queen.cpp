@@ -11,7 +11,7 @@ bool Queen::Build(Order* order_) {
     if (town_halls().empty())
         return false;
 
-    order_->assignee = town_halls().front();
+    order_->assignee = town_halls().front()->tag;
 
     gAPI->action().Build(*order_);
 

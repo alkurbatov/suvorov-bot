@@ -10,16 +10,14 @@ Worker::Worker(const sc2::Unit& unit_):
 }
 
 void Worker::BuildRefinery(Order* order_, const sc2::Unit* geyser_) {
-    sc2::Unit assignee = ToUnit();
-    order_->assignee = &assignee;
+    order_->assignee = tag();
 
     gAPI->action().Build(*order_, geyser_);
     m_job = Job::BUILDING_REFINERY;
 }
 
 void Worker::Build(Order* order_, const sc2::Point2D& point_) {
-    sc2::Unit assignee = ToUnit();
-    order_->assignee = &assignee;
+    order_->assignee = tag();
 
     gAPI->action().Build(*order_, point_);
     m_job = Job::BUILDING;

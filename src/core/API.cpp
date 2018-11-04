@@ -5,6 +5,7 @@
 #include "API.h"
 #include "Converter.h"
 #include "Helpers.h"
+#include "objects/GameObject.h"
 
 #include <sc2api/sc2_map_info.h>
 
@@ -16,15 +17,18 @@ Action::Action(sc2::ActionInterface* action_): m_action(action_) {
 }
 
 void Action::Build(const Order& order_) {
-    m_action->UnitCommand(order_.assignee, order_.ability_id);
+    sc2::Unit unit = GameObject::ToUnit(order_.assignee);
+    m_action->UnitCommand(&unit, order_.ability_id);
 }
 
 void Action::Build(const Order& order_, const sc2::Unit* unit_) {
-    m_action->UnitCommand(order_.assignee, order_.ability_id, unit_);
+    sc2::Unit unit = GameObject::ToUnit(order_.assignee);
+    m_action->UnitCommand(&unit, order_.ability_id, unit_);
 }
 
 void Action::Build(const Order& order_, const sc2::Point2D& point_) {
-    m_action->UnitCommand(order_.assignee, order_.ability_id, point_);
+    sc2::Unit unit = GameObject::ToUnit(order_.assignee);
+    m_action->UnitCommand(&unit, order_.ability_id, point_);
 }
 
 void Action::Attack(const sc2::Units& units_, const sc2::Point2D& point_) {

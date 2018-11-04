@@ -189,8 +189,7 @@ bool Hub::AssignLarva(Order* order_) {
     if (m_larva.Empty())
         return false;
 
-    sc2::Unit assignee = m_larva.Back().ToUnit();
-    order_->assignee = &assignee;
+    order_->assignee = m_larva.Back().tag();
     gAPI->action().Build(*order_);
 
     m_larva.PopBack();

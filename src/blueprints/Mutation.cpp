@@ -13,7 +13,7 @@ bool Mutation::Build(Order* order_) {
     if (targets().empty())
         return false;
 
-    order_->assignee = targets().front();
+    order_->assignee = targets().front()->tag;
     gAPI->action().Build(*order_);
 
     return true;

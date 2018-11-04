@@ -16,8 +16,9 @@ struct Order {
         tech_requirement(data_.tech_requirement),
         unit_type_id(data_.unit_type_id),
         ability_id(data_.ability_id),
-        tech_alias(data_.tech_alias),
-        assignee(assignee_) {
+        tech_alias(data_.tech_alias) {
+        if (assignee_)
+            assignee = assignee_->tag;
     }
 
     explicit Order(const sc2::UpgradeData& data_):
@@ -28,7 +29,7 @@ struct Order {
         tech_requirement(sc2::UNIT_TYPEID::INVALID),
         unit_type_id(sc2::UNIT_TYPEID::INVALID),
         ability_id(data_.ability_id),
-        assignee(nullptr) {
+        assignee(0) {
     }
 
     std::string name;
@@ -43,5 +44,5 @@ struct Order {
     sc2::AbilityID ability_id;
     std::vector<sc2::UnitTypeID> tech_alias;
 
-    const sc2::Unit* assignee;
+    sc2::Tag assignee;
 };

@@ -15,7 +15,7 @@ bool Unit::Build(Order* order_) {
         if (producers().empty())
             return false;
 
-        order_->assignee = producers().front();
+        order_->assignee = producers().front()->tag;
     }
 
     gAPI->action().Build(*order_);

@@ -22,6 +22,8 @@ struct GameObject {
 
     sc2::Unit ToUnit() const;
 
+    static sc2::Unit ToUnit(sc2::Tag tag_);
+
  private:
     sc2::Tag m_tag;
 };

@@ -28,8 +28,12 @@ sc2::Point3D GameObject::GetPos() const {
 }
 
 sc2::Unit GameObject::ToUnit() const {
+    return ToUnit(m_tag);
+}
+
+sc2::Unit GameObject::ToUnit(sc2::Tag tag_) {
     sc2::Unit unit;
-    unit.tag = m_tag;
+    unit.tag = tag_;
 
     return unit;
 }
