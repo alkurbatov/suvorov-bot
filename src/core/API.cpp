@@ -8,7 +8,6 @@
 
 #include <sc2api/sc2_map_info.h>
 
-#include <limits>
 #include <memory>
 
 namespace API {
@@ -92,35 +91,17 @@ const sc2::Unit* Observer::GetUnit(sc2::Tag tag_) const {
     return m_observer->GetUnit(tag_);
 }
 
-sc2::Units Observer::GetUnits(sc2::Unit::Alliance alliance_) const {
-    return m_observer->GetUnits(alliance_);
+Units Observer::GetUnits(sc2::Unit::Alliance alliance_) const {
+    return Units(m_observer->GetUnits(alliance_));
 }
 
-sc2::Units Observer::GetUnits(const sc2::Filter& filter_,
+Units Observer::GetUnits(const sc2::Filter& filter_,
     sc2::Unit::Alliance alliance_) const {
-    return m_observer->GetUnits(alliance_, filter_);
-}
-
-const sc2::Unit* Observer::GetClosestUnit(const sc2::Point2D& point_,
-    const sc2::Filter& filter_, sc2::Unit::Alliance alliance_) const {
-    float distance = std::numeric_limits<float>::max();
-
-    sc2::Units units = GetUnits(filter_, alliance_);
-
-    const sc2::Unit* target = nullptr;
-    for (const auto& i : units) {
-        float d = sc2::DistanceSquared2D(i->pos, point_);
-        if (d < distance) {
-            distance = d;
-            target = i;
-        }
-    }
-
-    return target;
+    return Units(m_observer->GetUnits(alliance_, filter_));
 }
 
 size_t Observer::CountUnitType(sc2::UNIT_TYPEID type_, bool with_not_finished) const {
-    return GetUnits(IsUnit(type_, with_not_finished)).size();
+    return m_observer->GetUnits(IsUnit(type_, with_not_finished)).size();
 }
 
 const sc2::GameInfo& Observer::GameInfo() const {

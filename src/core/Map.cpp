@@ -97,16 +97,16 @@ Expansions CalculateExpansionLocations() {
     Clusters clusters;
     clusters.reserve(20);
 
-    sc2::Units resources = gAPI->observer().GetUnits(
+    auto resources = gAPI->observer().GetUnits(
         IsFoggyResource(),
         sc2::Unit::Alliance::Neutral);
 
-    if (resources.empty()) {
+    if (resources().empty()) {
         gHistory.warning() << "No expansions locations could be found!" << std::endl;
         return Expansions();
     }
 
-    for (const auto& i : resources) {
+    for (const auto& i : resources()) {
         bool cluster_found = false;
 
         for (auto& j : clusters) {

@@ -3,10 +3,11 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "../Historican.h"
-#include "../Pathfinder.h"
 #include "ForceCommander.h"
 #include "core/API.h"
 #include "core/Helpers.h"
+
+#include <sc2api/sc2_map_info.h>
 
 #include <algorithm>
 
@@ -25,7 +26,8 @@ void ForceCommander::OnStep() {
     if (m_units.size() < m_attack_limit)
         return;
 
-    gAPI->action().Attack(m_units, Pathfinder::GetEnemyBaseLocation());
+    auto targets = gAPI->observer().GameInfo().enemy_start_locations;
+    gAPI->action().Attack(m_units, targets.front());
 
     m_units.clear();
     m_attack_limit = std::min<float>(m_attack_limit * 1.5f, 170.0f);

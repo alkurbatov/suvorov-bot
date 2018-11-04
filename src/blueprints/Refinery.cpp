@@ -8,11 +8,10 @@
 #include "core/Helpers.h"
 
 bool Refinery::Build(Order* order_) {
-    sc2::Point3D base = gAPI->observer().StartingLocation();
-
-    auto geyser = gAPI->observer().GetClosestUnit(base, IsFreeGeyser(),
+    auto geysers = gAPI->observer().GetUnits(IsFreeGeyser(),
         sc2::Unit::Alliance::Neutral);
 
+    auto geyser = geysers.GetClosestUnit(gAPI->observer().StartingLocation());
     if (!geyser)
         return false;
 

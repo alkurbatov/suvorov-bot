@@ -104,7 +104,7 @@ void QuarterMaster::OnStep() {
             CalcConsumption());
 
     float expected_supply =
-        std::accumulate(units.begin(), units.end(), 0, CalcSupplies())
+        std::accumulate(units().begin(), units().end(), 0, CalcSupplies())
         + std::accumulate(
             construction_orders.begin(),
             construction_orders.end(),

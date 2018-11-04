@@ -9,7 +9,6 @@
 #include "Builder.h"
 #include "Historican.h"
 #include "Hub.h"
-#include "Pathfinder.h"
 
 #include <algorithm>
 #include <memory>

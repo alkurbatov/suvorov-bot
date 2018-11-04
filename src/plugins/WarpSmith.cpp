@@ -19,8 +19,9 @@ typedef std::queue<sc2::Unit> targets_t;
 
 targets_t PickTargets() {
     targets_t targets;
+    auto units = gAPI->observer().GetUnits();
 
-    for (const auto& i : gAPI->observer().GetUnits()) {
+    for (const auto& i : units()) {
         if (i->unit_type != sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE &&
             i->unit_type != sc2::UNIT_TYPEID::PROTOSS_FORGE &&
             i->unit_type != sc2::UNIT_TYPEID::PROTOSS_NEXUS &&
@@ -61,7 +62,7 @@ void WarpSmith::OnStep() {
     auto nexuses = gAPI->observer().GetUnits(IsUnit(sc2::UNIT_TYPEID::PROTOSS_NEXUS));
     targets_t targets = PickTargets();
 
-    for (const auto& i : nexuses) {
+    for (const auto& i : nexuses()) {
         if (targets.empty())
             return;
 

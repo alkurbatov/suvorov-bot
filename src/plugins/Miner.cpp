@@ -2,7 +2,6 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../Pathfinder.h"
 #include "../Hub.h"
 #include "Miner.h"
 #include "core/API.h"
@@ -19,7 +18,7 @@ void SecureMineralsIncome(Builder* builder_) {
     std::vector<Order> orders;
     auto town_halls = gAPI->observer().GetUnits(IsTownHall());
 
-    for (const auto& i : town_halls) {
+    for (const auto& i : town_halls()) {
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
@@ -48,7 +47,7 @@ void SecureMineralsIncome(Builder* builder_) {
 void SecureVespeneIncome() {
     auto refineries = gAPI->observer().GetUnits(IsRefinery());
 
-    for (const auto& i : refineries) {
+    for (const auto& i : refineries()) {
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
@@ -60,18 +59,21 @@ void CallDownMULE() {
     auto orbitals = gAPI->observer().GetUnits(
         IsUnit(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND));
 
-    if (orbitals.empty())
+    if (orbitals().empty())
         return;
 
-    const sc2::Unit* mineral_target = Pathfinder::FindMineralPatch(
-            gAPI->observer().StartingLocation());
+    auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
+        sc2::Unit::Alliance::Neutral);
+
+    const sc2::Unit* mineral_target = units.GetClosestUnit(
+        gAPI->observer().StartingLocation());
     if (!mineral_target)
         return;
 
     int energy_cost = gAPI->observer().GetUnitTypeData(
         sc2::UNIT_TYPEID::TERRAN_MULE).mineral_cost;
 
-    for ( const auto& i : orbitals ) {
+    for (const auto& i : orbitals()) {
         if (i->energy < energy_cost)
             continue;
 
@@ -97,14 +99,17 @@ void Miner::OnStep() {
 }
 
 void Miner::OnUnitIdle(const sc2::Unit* unit_) {
+    auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
+        sc2::Unit::Alliance::Neutral);
+
     switch (unit_->unit_type.ToType()) {
         case sc2::UNIT_TYPEID::PROTOSS_PROBE:
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
-            const sc2::Unit* mineral_target = Pathfinder::FindMineralPatch(
+            const sc2::Unit* mineral_target = units.GetClosestUnit(
                 gAPI->observer().StartingLocation());
             if (!mineral_target)
-                break;
+                return;
 
             gAPI->action().Cast(*unit_, sc2::ABILITY_ID::SMART, *mineral_target);
             break;

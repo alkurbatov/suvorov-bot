@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Order.h"
+#include "Units.h"
 
 #include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_interfaces.h>
@@ -71,14 +72,11 @@ struct Observer {
 
     const sc2::Unit* GetUnit(sc2::Tag tag_) const;
 
-    sc2::Units GetUnits(
+    Units GetUnits(
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
 
-    sc2::Units GetUnits(const sc2::Filter& filter_,
+    Units GetUnits(const sc2::Filter& filter_,
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
-
-    const sc2::Unit* GetClosestUnit(const sc2::Point2D& point_,
-        const sc2::Filter& filter_, sc2::Unit::Alliance alliance_) const;
 
     size_t CountUnitType(sc2::UNIT_TYPEID type_,
         bool with_not_finished = false) const;
