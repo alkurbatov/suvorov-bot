@@ -28,3 +28,8 @@ const sc2::Unit* Units::GetClosestUnit(const sc2::Point2D& point_) const {
 
     return target;
 }
+
+const sc2::Unit* Units::GetRandomUnit() const {
+    int index = sc2::GetRandomInteger(0, static_cast<int>(m_units.size()) - 1);
+    return m_units[static_cast<unsigned>(index)];
+}
