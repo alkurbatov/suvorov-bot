@@ -17,7 +17,7 @@ template <typename T>
 struct Cache {
     bool Empty() const;
 
-    uint32_t Count() const;
+    uint64_t Count() const;
 
     void Add(const T& obj_);
 
@@ -43,7 +43,7 @@ bool Cache<T>::Empty() const {
 }
 
 template <typename T>
-uint32_t Cache<T>::Count() const {
+uint64_t Cache<T>::Count() const {
     return m_objects.size();
 }
 
