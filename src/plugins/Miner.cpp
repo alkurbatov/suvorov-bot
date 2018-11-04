@@ -13,6 +13,7 @@
 #include <vector>
 
 namespace {
+const int mule_energy_cost = 50;
 
 void SecureMineralsIncome(Builder* builder_) {
     std::vector<Order> orders;
@@ -65,16 +66,12 @@ void CallDownMULE() {
     auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
         sc2::Unit::Alliance::Neutral);
 
-    const sc2::Unit* mineral_target = units.GetClosestUnit(
-        gAPI->observer().StartingLocation());
-    if (!mineral_target)
-        return;
-
-    int energy_cost = gAPI->observer().GetUnitTypeData(
-        sc2::UNIT_TYPEID::TERRAN_MULE).mineral_cost;
-
     for (const auto& i : orbitals()) {
-        if (i->energy < energy_cost)
+        if (i->energy < mule_energy_cost)
+            continue;
+
+        const sc2::Unit* mineral_target = units.GetClosestUnit(i->pos);
+        if (!mineral_target)
             continue;
 
         gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CALLDOWNMULE, *mineral_target);
