@@ -4,10 +4,11 @@
 
 #include "Blueprint.h"
 #include "Building.h"
-#include "Mutation.h"
 #include "Creature.h"
+#include "Mutation.h"
 #include "Queen.h"
 #include "Refinery.h"
+#include "TownHall.h"
 #include "Unit.h"
 #include "core/API.h"
 
@@ -112,6 +113,11 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
             // but anyway the code required for research is completely the same. :)
             return std::shared_ptr<Blueprint>(
                 new Unit(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
+
+        case sc2::ABILITY_ID::BUILD_COMMANDCENTER:
+        case sc2::ABILITY_ID::BUILD_HATCHERY:
+        case sc2::ABILITY_ID::BUILD_NEXUS:
+            return std::shared_ptr<Blueprint>(new TownHall());
 
         case sc2::ABILITY_ID::RESEARCH_ZERGLINGADRENALGLANDS:
         case sc2::ABILITY_ID::RESEARCH_ZERGLINGMETABOLICBOOST:
