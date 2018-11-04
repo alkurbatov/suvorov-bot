@@ -6,9 +6,35 @@
 #include "Hub.h"
 #include "core/Helpers.h"
 
+#include <algorithm>
+
+namespace {
+struct SortByDistance {
+    explicit SortByDistance(const sc2::Point3D& point_);
+
+    bool operator()(const Expansion& lhs_, const Expansion& rhs_) const;
+
+ private:
+    sc2::Point3D m_point;
+};
+
+SortByDistance::SortByDistance(const sc2::Point3D& point_):
+    m_point(point_) {
+}
+
+bool SortByDistance::operator()(const Expansion& lhs_, const Expansion& rhs_) const {
+    return sc2::DistanceSquared2D(lhs_.town_hall_location, m_point) <
+        sc2::DistanceSquared2D(rhs_.town_hall_location, m_point);
+}
+
+}  // namespace
+
 Hub::Hub(sc2::Race current_race_, const Expansions& expansions_):
     m_current_race(current_race_), m_expansions(expansions_),
     m_current_worker_type(sc2::UNIT_TYPEID::INVALID) {
+    std::sort(m_expansions.begin(), m_expansions.end(),
+        SortByDistance(gAPI->observer().StartingLocation()));
+
     switch (m_current_race) {
         case sc2::Race::Protoss:
             m_current_worker_type = sc2::UNIT_TYPEID::PROTOSS_PROBE;
