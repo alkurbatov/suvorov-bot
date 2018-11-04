@@ -12,6 +12,6 @@ Geyser::Geyser(const sc2::UnitOrder& order_): GameObject(order_.target_unit_tag)
 }
 
 bool Geyser::operator==(const Geyser& geyser_) const {
-    return this->tag() == geyser_.tag() ||
+    return this->Tag() == geyser_.Tag() ||
         (this->m_pos.x == geyser_.m_pos.x && this->m_pos.y == geyser_.m_pos.y);
 }

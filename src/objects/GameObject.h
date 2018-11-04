@@ -16,7 +16,7 @@ struct GameObject {
 
     bool operator==(const sc2::Unit& unit_) const;
 
-    sc2::Tag tag() const;
+    sc2::Tag Tag() const;
 
     sc2::Point3D GetPos() const;
 
@@ -26,10 +26,4 @@ struct GameObject {
 
  private:
     sc2::Tag m_tag;
-};
-
-struct GameObjectHasher {
-    size_t operator()(const GameObject& obj_) const {
-        return std::hash<sc2::Tag>()(obj_.tag());
-    }
 };

@@ -19,7 +19,7 @@ bool GameObject::operator==(const sc2::Unit& unit_) const {
     return this->m_tag == unit_.tag;
 }
 
-sc2::Tag GameObject::tag() const {
+sc2::Tag GameObject::Tag() const {
     return m_tag;
 }
 

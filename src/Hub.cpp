@@ -189,7 +189,7 @@ bool Hub::AssignLarva(Order* order_) {
     if (m_larva.Empty())
         return false;
 
-    order_->assignee = m_larva.Back().tag();
+    order_->assignee = m_larva.Back().Tag();
     gAPI->action().Build(*order_);
 
     m_larva.PopBack();
