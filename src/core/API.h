@@ -28,6 +28,8 @@ struct Action {
     void Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
         const sc2::Unit& target_);
 
+    void OpenGate(const sc2::Unit& assignee_);
+
     void SendMessage(const std::string& text_);
 
  private:

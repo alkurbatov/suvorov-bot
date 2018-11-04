@@ -115,6 +115,13 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
         i->OnUnitDestroyed(unit_);
 }
 
+void Dispatcher::OnUpgradeCompleted(sc2::UpgradeID id_) {
+    gHistory.info() << sc2::UpgradeIDToName(id_) << " completed" << std::endl;
+
+    for (const auto& i : m_plugins)
+        i->OnUpgradeCompleted(id_);
+}
+
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
         const std::vector<std::string>& protocol_errors) {
     for (const auto i : client_errors) {

@@ -37,6 +37,10 @@ void Action::Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
     m_action->UnitCommand(&assignee_, convert::ToAbilityID(ability_), &target_);
 }
 
+void Action::OpenGate(const sc2::Unit& assignee_) {
+    m_action->UnitCommand(&assignee_, sc2::ABILITY_ID::MORPH_WARPGATE);
+}
+
 void Action::SendMessage(const std::string& text_) {
     m_action->SendChat(text_);
 }

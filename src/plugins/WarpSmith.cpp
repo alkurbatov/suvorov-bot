@@ -46,6 +46,17 @@ targets_t PickTargets() {
 
 }  // namespace
 
+WarpSmith::WarpSmith(): m_warp_gates_researched(false) {
+}
+
+void WarpSmith::OnUnitIdle(const sc2::Unit* unit_) {
+    if (!m_warp_gates_researched ||
+        unit_->unit_type.ToType() != sc2::UNIT_TYPEID::PROTOSS_GATEWAY)
+        return;
+
+    gAPI->action().OpenGate(*unit_);
+}
+
 void WarpSmith::OnStep() {
     auto nexuses = gAPI->observer().GetUnits(IsUnit(sc2::UNIT_TYPEID::PROTOSS_NEXUS));
     targets_t targets = PickTargets();
@@ -60,4 +71,11 @@ void WarpSmith::OnStep() {
         gAPI->action().Cast(*i, chronoboost_id, targets.front());
         targets.pop();
     }
+}
+
+void WarpSmith::OnUpgradeCompleted(sc2::UpgradeID id_) {
+    if (id_ != sc2::UPGRADE_ID::WARPGATERESEARCH)
+        return;
+
+    m_warp_gates_researched = true;
 }

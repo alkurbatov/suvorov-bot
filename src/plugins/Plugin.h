@@ -24,6 +24,9 @@ struct Plugin {
     virtual void OnUnitIdle(const sc2::Unit*) {
     }
 
+    virtual void OnUpgradeCompleted(sc2::UpgradeID) {
+    }
+
     virtual void OnGameEnd() {
     }
 };
