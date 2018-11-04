@@ -9,14 +9,12 @@
 
 #include <memory>
 
-struct Governor : Plugin {
-    explicit Governor(const std::shared_ptr<Builder>& builder_);
-
-    void OnGameStart() final;
+struct RepairMan : Plugin {
+    explicit RepairMan(const std::shared_ptr<Builder>& builder_);
 
     void OnStep() final;
 
-    void OnUnitIdle(const sc2::Unit* unit_) final;
+    void OnUnitDestroyed(const sc2::Unit* unit_) final;
 
  private:
     std::weak_ptr<Builder> m_builder;

@@ -14,6 +14,7 @@
 #include "plugins/ForceCommander.h"
 #include "plugins/Governor.h"
 #include "plugins/Miner.h"
+#include "plugins/RepairMan.h"
 #include "plugins/QuarterMaster.h"
 #include "plugins/WarpSmith.h"
 
@@ -26,6 +27,7 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
     m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
     m_plugins.emplace_back(new QuarterMaster(m_builder));
+    m_plugins.emplace_back(new RepairMan(m_builder));
     m_plugins.emplace_back(new ForceCommander());
     m_plugins.emplace_back(new ChatterBox());
 
