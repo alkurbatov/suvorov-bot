@@ -44,6 +44,7 @@ Build requirements
   * OS X: /Applications/StarCraft II/Maps
   * Linux: anywhere.
 * Download and install [CMake](https://cmake.org/download/).
+* A compiler with C++14 support.
 
 ### Windows
 * Download and install [Visual Studio 2017](https://www.visualstudio.com/downloads/)
