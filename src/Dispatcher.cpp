@@ -23,6 +23,21 @@
 
 Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
+    m_plugins.reserve(10);
+
+    if (opponent_id_.empty())
+        return;
+
+    gHistory.info() << "Playing against an opponent with id "
+        << opponent_id_ << std::endl;
+}
+
+void Dispatcher::OnGameStart() {
+    m_plugins.clear();
+    gHistory.info() << "New game started!" << std::endl;
+
+    sc2::Race current_race = gAPI->observer().GetCurrentRace();
+    gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
 
     m_plugins.emplace_back(new Governor(m_builder));
     m_plugins.emplace_back(new Miner(m_builder));
@@ -31,24 +46,12 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
     m_plugins.emplace_back(new ForceCommander());
     m_plugins.emplace_back(new ChatterBox());
 
-    if (!opponent_id_.empty()) {
-        gHistory.info() << "Playing against an opponent with id "
-            << opponent_id_ << std::endl;
-    }
+    if (current_race == sc2::Race::Protoss)
+        m_plugins.emplace_back(new WarpSmith());
 
 #ifdef DEBUG
     m_plugins.emplace_back(new Diagnosis(m_builder));
 #endif
-}
-
-void Dispatcher::OnGameStart() {
-    gHistory.info() << "New game started!" << std::endl;
-
-    sc2::Race current_race = gAPI->observer().GetCurrentRace();
-    gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
-
-    if (current_race == sc2::Race::Protoss)
-        m_plugins.emplace_back(new WarpSmith());
 
     for (const auto& i : m_plugins)
         i->OnGameStart();
