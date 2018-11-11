@@ -91,7 +91,3 @@ struct IsOrdered {
  private:
     sc2::UNIT_TYPEID m_type;
 };
-
-struct IsTrainingWorkers {
-    bool operator()(const sc2::UnitOrder& order_) const;
-};

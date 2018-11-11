@@ -199,9 +199,3 @@ IsOrdered::IsOrdered(sc2::UNIT_TYPEID type_): m_type(type_) {
 bool IsOrdered::operator()(const Order& order_) const {
     return order_.unit_type_id == m_type;
 }
-
-bool IsTrainingWorkers::operator()(const sc2::UnitOrder& order_) const {
-    return order_.ability_id == sc2::ABILITY_ID::TRAIN_DRONE ||
-           order_.ability_id == sc2::ABILITY_ID::TRAIN_PROBE ||
-           order_.ability_id == sc2::ABILITY_ID::TRAIN_SCV;
-}

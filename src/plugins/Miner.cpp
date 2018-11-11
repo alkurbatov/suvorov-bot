@@ -23,8 +23,7 @@ void SecureMineralsIncome(Builder* builder_) {
         if (i->assigned_harvesters >= i->ideal_harvesters)
             continue;
 
-        if (std::end(i->orders) != std::find_if(
-                i->orders.begin(), i->orders.end(), IsTrainingWorkers()))
+        if (!i->orders.empty())
             continue;
 
         if (builder_->CountScheduledTrainings(gHub->GetCurrentWorkerType()) > 0)
