@@ -114,6 +114,12 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
             return std::shared_ptr<Blueprint>(
                 new Unit(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
 
+        case sc2::ABILITY_ID::RESEARCH_ADEPTRESONATINGGLAIVES:
+        case sc2::ABILITY_ID::RESEARCH_BLINK:
+        case sc2::ABILITY_ID::RESEARCH_CHARGE:
+            return std::shared_ptr<Blueprint>(
+                new Unit(sc2::UNIT_TYPEID::PROTOSS_TWILIGHTCOUNCIL));
+
         case sc2::ABILITY_ID::BUILD_COMMANDCENTER:
         case sc2::ABILITY_ID::BUILD_HATCHERY:
         case sc2::ABILITY_ID::BUILD_NEXUS:
