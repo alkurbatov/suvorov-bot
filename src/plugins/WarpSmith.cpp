@@ -23,6 +23,7 @@ targets_t PickTargets() {
 
     for (const auto& i : units()) {
         if (i->unit_type != sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE &&
+            i->unit_type != sc2::UNIT_TYPEID::PROTOSS_TWILIGHTCOUNCIL &&
             i->unit_type != sc2::UNIT_TYPEID::PROTOSS_FORGE &&
             i->unit_type != sc2::UNIT_TYPEID::PROTOSS_NEXUS &&
             i->unit_type != sc2::UNIT_TYPEID::PROTOSS_ROBOTICSBAY &&
