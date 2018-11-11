@@ -95,6 +95,20 @@ void Miner::OnStep() {
         CallDownMULE();
 }
 
+void Miner::OnUnitCreated(const sc2::Unit* unit_) {
+    if (!IsTownHall()(*unit_))
+        return;
+
+    auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
+        sc2::Unit::Alliance::Neutral);
+
+    const sc2::Unit* mineral_target = units.GetClosestUnit(unit_->pos);
+    if (!mineral_target)
+        return;
+
+    gAPI->action().Cast(*unit_, sc2::ABILITY_ID::RALLY_WORKERS, *mineral_target);
+}
+
 void Miner::OnUnitIdle(const sc2::Unit* unit_) {
     auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
         sc2::Unit::Alliance::Neutral);

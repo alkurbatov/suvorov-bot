@@ -14,6 +14,8 @@ struct Miner : Plugin {
 
     void OnStep() final;
 
+    void OnUnitCreated(const sc2::Unit* unit_) final;
+
     void OnUnitIdle(const sc2::Unit* unit_) final;
 
  private:
