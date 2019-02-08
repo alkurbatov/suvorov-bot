@@ -86,6 +86,9 @@ $ bin\Debug\Suvorov.exe Ladder2017Season3\InterloperLE.SC2Map
 # Get the project.
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
 
+# Apply compilation fixes for OS X and some Linux systems.
+$ git apply hacks/civetweb_compilation_fix.patch
+
 # Create build directory.
 $ mkdir build && cd build
 
