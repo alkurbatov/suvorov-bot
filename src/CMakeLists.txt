@@ -38,6 +38,10 @@ target_link_libraries(Suvorov
     sc2api sc2lib sc2utils sc2protocol civetweb libprotobuf
 )
 
+if (MINGW)
+    target_link_libraries(Suvorov ssp)
+endif()
+
 if (APPLE)
     target_link_libraries(Suvorov "-framework Carbon")
 endif ()
