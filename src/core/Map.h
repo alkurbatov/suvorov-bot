@@ -13,6 +13,7 @@ struct Expansion {
     explicit Expansion(const sc2::Point3D& town_hall_location_);
 
     sc2::Point3D town_hall_location;
+    sc2::Unit::Alliance alliance;
 };
 
 typedef std::vector<Expansion> Expansions;

@@ -7,6 +7,7 @@
 #include "core/Helpers.h"
 
 #include <algorithm>
+#include <cmath>
 
 namespace {
 struct SortByDistance {
@@ -82,6 +83,22 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
             return;
         }
 
+        case sc2::UNIT_TYPEID::PROTOSS_NEXUS:
+        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
+        case sc2::UNIT_TYPEID::ZERG_HATCHERY:
+            for (auto i : m_expansions) {
+                if (std::floor(i.town_hall_location.x) != std::floor(unit_.pos.x) ||
+                        std::floor(i.town_hall_location.y) != std::floor(unit_.pos.y))
+                    continue;
+
+                i.alliance = sc2::Unit::Alliance::Self;
+                gHistory.info() << "Captured region: (" <<
+                    unit_.pos.x << ", " << unit_.pos.y <<
+                    ")" << std::endl;
+                return;
+            }
+            return;
+
         default:
             return;
     }
@@ -115,6 +132,22 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
 
             return;
         }
+
+        case sc2::UNIT_TYPEID::PROTOSS_NEXUS:
+        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
+        case sc2::UNIT_TYPEID::ZERG_HATCHERY:
+            for (auto i : m_expansions) {
+                if (std::floor(i.town_hall_location.x) != std::floor(unit_.pos.x) ||
+                        std::floor(i.town_hall_location.y) != std::floor(unit_.pos.y))
+                    continue;
+
+                i.alliance = sc2::Unit::Alliance::Neutral;
+                gHistory.info() << "Lost region: (" <<
+                    unit_.pos.x << ", " << unit_.pos.y <<
+                    ")" << std::endl;
+                return;
+            }
+            return;
 
         default:
             return;
