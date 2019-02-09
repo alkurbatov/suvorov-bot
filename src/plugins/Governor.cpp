@@ -77,7 +77,8 @@ void Governor::OnUnitIdle(const sc2::Unit* unit_) {
         return;
     }
 
-    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_GATEWAY) {
+    if (unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_GATEWAY ||
+            unit_->unit_type.ToType() == sc2::UNIT_TYPEID::PROTOSS_WARPGATE) {
         builder->ScheduleTraining(sc2::UNIT_TYPEID::PROTOSS_ZEALOT, unit_);
         gHistory.info() << "Schedule Zealot training" << std::endl;
         return;

@@ -5,12 +5,14 @@
 #include "Blueprint.h"
 #include "Building.h"
 #include "Creature.h"
+#include "GateUnit.h"
 #include "Mutation.h"
 #include "Queen.h"
 #include "Refinery.h"
 #include "TownHall.h"
 #include "Unit.h"
 #include "core/API.h"
+#include "core/Errors.h"
 
 Blueprint::~Blueprint() {
 }
@@ -40,8 +42,15 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_SENTRY:
         case sc2::ABILITY_ID::TRAIN_STALKER:
         case sc2::ABILITY_ID::TRAIN_ZEALOT:
-            return std::shared_ptr<Blueprint>(
-                new Unit(sc2::UNIT_TYPEID::PROTOSS_GATEWAY));
+            return std::shared_ptr<Blueprint>(new GateUnit());
+
+        case sc2::ABILITY_ID::TRAINWARP_ADEPT:
+        case sc2::ABILITY_ID::TRAINWARP_DARKTEMPLAR:
+        case sc2::ABILITY_ID::TRAINWARP_HIGHTEMPLAR:
+        case sc2::ABILITY_ID::TRAINWARP_SENTRY:
+        case sc2::ABILITY_ID::TRAINWARP_STALKER:
+        case sc2::ABILITY_ID::TRAINWARP_ZEALOT:
+            throw InvalidBuildCommand(ability_);
 
         case sc2::ABILITY_ID::TRAIN_COLOSSUS:
         case sc2::ABILITY_ID::TRAIN_DISRUPTOR:
