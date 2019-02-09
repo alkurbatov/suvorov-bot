@@ -2,6 +2,10 @@ language: cpp
 
 matrix:
   include:
+    - os: windows
+      env: BUILD_CONFIGURATION=Debug
+    - os: windows
+      env: BUILD_CONFIGURATION=Release
     - os: linux
       dist: trusty
       group: travis_lts
@@ -30,4 +34,4 @@ script:
   - mkdir build
   - cd build
   - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION ../
-  - make
+  - cmake --build .
