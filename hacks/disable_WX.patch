@@ -1,0 +1,19 @@
+diff --git a/s2client-api/src/CMakeLists.txt b/s2client-api/src/CMakeLists.txt
+index 8116647..64ec5ee 100644
+--- a/s2client-api/src/CMakeLists.txt
++++ b/s2client-api/src/CMakeLists.txt
+@@ -89,10 +89,10 @@ endforeach()
+ 
+ 
+ if (MSVC)
+-    set_target_properties(sc2api PROPERTIES COMPILE_FLAGS "/W4 /WX")
+-    set_target_properties(sc2lib PROPERTIES COMPILE_FLAGS "/W4 /WX")
+-    set_target_properties(sc2renderer PROPERTIES COMPILE_FLAGS "/W4 /WX")
+-    set_target_properties(sc2utils PROPERTIES COMPILE_FLAGS "/W3 /WX")
++    set_target_properties(sc2api PROPERTIES COMPILE_FLAGS "/W4 /WX-")
++    set_target_properties(sc2lib PROPERTIES COMPILE_FLAGS "/W4 /WX-")
++    set_target_properties(sc2renderer PROPERTIES COMPILE_FLAGS "/W4 /WX-")
++    set_target_properties(sc2utils PROPERTIES COMPILE_FLAGS "/W3 /WX-")
+     set_target_properties(sc2protocol PROPERTIES COMPILE_FLAGS "/W0")
+ endif (MSVC)
+ 

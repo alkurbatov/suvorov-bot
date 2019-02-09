@@ -9,8 +9,11 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
     sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90
     sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 90
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    # Apply compilation fixes for OS X.
+    # NOTE (alkurbatov): Apply compilation fixes for OS X.
     git apply hacks/civetweb_compilation_fix.patch
+elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+    # NOTE (alkurbatov): Disable /WX compiler flag otherwise CI fails.
+    git apply hacks/disable_WX.patch
 fi
 
 curl -o cpplint.py https://raw.githubusercontent.com/google/styleguide/gh-pages/cpplint/cpplint.py
