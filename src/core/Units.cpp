@@ -4,6 +4,7 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "Units.h"
+#include "core/API.h"
 
 #include <limits>
 
@@ -27,6 +28,14 @@ const sc2::Unit* Units::GetClosestUnit(const sc2::Point2D& point_) const {
     }
 
     return target;
+}
+
+const sc2::Unit* Units::GetClosestUnit(sc2::Tag tag_) const {
+    const sc2::Unit* unit = gAPI->observer().GetUnit(tag_);
+    if (!unit)
+        return nullptr;
+
+    return GetClosestUnit(unit->pos);
 }
 
 const sc2::Unit* Units::GetRandomUnit() const {
