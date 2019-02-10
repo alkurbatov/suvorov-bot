@@ -96,7 +96,7 @@ void QuarterMaster::OnStep() {
 
     float expected_consumption =
         gAPI->observer().GetFoodUsed()
-        + 8  // NOTE (alkurbatov): Plan ahead.
+        + 8.0f  // NOTE (alkurbatov): Plan ahead.
         + std::accumulate(
             training_orders.begin(),
             training_orders.end(),
@@ -104,7 +104,7 @@ void QuarterMaster::OnStep() {
             CalcConsumption());
 
     float expected_supply =
-        std::accumulate(units().begin(), units().end(), 0, CalcSupplies())
+        std::accumulate(units().begin(), units().end(), 0.0f, CalcSupplies())
         + std::accumulate(
             construction_orders.begin(),
             construction_orders.end(),
@@ -116,7 +116,7 @@ void QuarterMaster::OnStep() {
             0.0f,
             CalcSupplies());
 
-    if (expected_supply > expected_consumption || expected_supply >= 200)
+    if (expected_supply > expected_consumption || expected_supply >= 200.0f)
         return;
 
     gHistory.info() << "Request additional supplies: " <<

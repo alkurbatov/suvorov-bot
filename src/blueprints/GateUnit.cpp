@@ -38,8 +38,8 @@ bool GateUnit::Build(Order* order_) {
     sc2::Point2D point;
     unsigned attempt = 0;
     do {
-        point.x = pylon->pos.x + sc2::GetRandomInteger(-5.0f, 5.0f);
-        point.y = pylon->pos.y + sc2::GetRandomInteger(-5.0f, 5.0f);
+        point.x = pylon->pos.x + static_cast<float>(sc2::GetRandomInteger(-5, 5));
+        point.y = pylon->pos.y + static_cast<float>(sc2::GetRandomInteger(-5, 5));
 
         if (++attempt > 30)
             return false;

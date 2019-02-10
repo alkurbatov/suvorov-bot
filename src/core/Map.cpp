@@ -8,6 +8,8 @@
 
 #include "sc2lib/sc2_search.h"
 
+#include <cmath>
+
 namespace {
 
 const float PI = 3.1415927f;
@@ -29,7 +31,7 @@ size_t CalculateQueries(float radius, float step_size, const sc2::Point2D& cente
         sc2::QueryInterface::PlacementQuery query(
             sc2::ABILITY_ID::BUILD_COMMANDCENTER, point);
 
-        current_grid = sc2::Point2D(floor(point.x), floor(point.y));
+        current_grid = sc2::Point2D(std::floor(point.x), std::floor(point.y));
 
         if (previous_grid != current_grid) {
             queries->push_back(query);
