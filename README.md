@@ -10,7 +10,8 @@
         - [OS X](#os-x)
     - [Build instructions](#build-instructions)
         - [Windows](#windows)
-        - [Linux and OS X](#linux-and-os-x)
+        - [Linux](#linux)
+        - [OS X](#os-x)
     - [Coding Standard](#coding-standard)
     - [License](#license)
 
@@ -67,6 +68,9 @@ Build instructions
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git
 $ cd suvorov-bot
 
+:: Disable /WX compiler flag in case of fresh compilers.
+$ git apply hacks/disable_WX.patch
+
 :: Create build directory.
 $ mkdir build
 $ cd build
@@ -81,13 +85,35 @@ $ start Suvorov.sln
 $ bin\Debug\Suvorov.exe Ladder2017Season3\InterloperLE.SC2Map
 ```
 
-### Linux and OS X
+### Linux
 
 ```bash
 # Get the project.
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
 
-# Apply compilation fixes for OS X and some Linux systems.
+# Create build directory.
+$ mkdir build && cd build
+
+# Generate a Makefile.
+# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
+# Debug build also contains additional debug features, chat support
+# and runs game at slower speed.
+$ cmake ../
+
+# Build.
+$ make
+
+# Launch the bot with the specified absolute path to a SC2 map, e.g.
+$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
+```
+
+### OS X
+
+```bash
+# Get the project.
+$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
+
+# Apply compilation fixes for OS X.
 $ git apply hacks/civetweb_compilation_fix.patch
 
 # Create build directory.
@@ -104,9 +130,6 @@ $ make
 
 # OS X: Launch the bot with the specified path to a SC2 map, e.g.
 $ ./bin/Suvorov "Ladder2017Season3/InterloperLE.SC2Map"
-
-# Linux: Launch the bot with the specified absolute path to a SC2 map, e.g.
-$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
 ```
 
 Coding Standard
