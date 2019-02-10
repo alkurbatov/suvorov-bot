@@ -9,8 +9,6 @@
 
 #include <sc2api/sc2_map_info.h>
 
-#include <memory>
-
 namespace API {
 
 Action::Action(sc2::ActionInterface* action_): m_action(action_) {

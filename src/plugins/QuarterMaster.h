@@ -7,16 +7,13 @@
 #include "../Builder.h"
 #include "Plugin.h"
 
-#include <memory>
-
 struct QuarterMaster : Plugin {
-    explicit QuarterMaster(const std::shared_ptr<Builder>& builder_);
+    QuarterMaster();
 
-    void OnStep() final;
+    void OnStep(Builder* builder_) final;
 
     void OnUnitCreated(const sc2::Unit* unit_) final;
 
  private:
     bool m_skip_turn;
-    std::weak_ptr<Builder> m_builder;
 };

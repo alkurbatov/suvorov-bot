@@ -7,21 +7,13 @@
 #include "Diagnosis.h"
 #include "core/API.h"
 
-Diagnosis::Diagnosis(const std::shared_ptr<Builder>& builder_):
-    Plugin(), m_builder(builder_) {
-}
-
-void Diagnosis::OnStep() {
-    auto builder = m_builder.lock();
-    if (!builder)
-        return;
-
+void Diagnosis::OnStep(Builder* builder_) {
     gAPI->debug().DrawText("Build order:");
 
-    if (builder->GetConstructionOrders().empty()) {
+    if (builder_->GetConstructionOrders().empty()) {
         gAPI->debug().DrawText("Empty");
     } else {
-        for (const auto& i : builder->GetConstructionOrders())
+        for (const auto& i : builder_->GetConstructionOrders())
             gAPI->debug().DrawText(i.name);
     }
 

@@ -6,23 +6,15 @@
 #include "core/API.h"
 #include "core/Helpers.h"
 
-RepairMan::RepairMan(const std::shared_ptr<Builder>& builder_):
-    Plugin(), m_builder(builder_) {
-}
-
-void RepairMan::OnStep() {
+void RepairMan::OnStep(Builder*) {
     if (gAPI->observer().GetCurrentRace() != sc2::Race::Terran)
         return;
 
     // FIXME (alkuratov): Put buildings repair code here.
 }
 
-void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_) {
+void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
     if (IsCombatUnit()(*unit_))
-        return;
-
-    auto builder = m_builder.lock();
-    if (!builder)
         return;
 
     switch (unit_->unit_type.ToType()) {
@@ -51,7 +43,7 @@ void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_) {
             return;
 
         default:
-            builder->ScheduleConstruction(unit_->unit_type.ToType(), true);
+            builder_->ScheduleConstruction(unit_->unit_type.ToType(), true);
             return;
     }
 }

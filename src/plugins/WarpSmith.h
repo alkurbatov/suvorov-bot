@@ -9,9 +9,9 @@
 struct WarpSmith : Plugin {
     WarpSmith();
 
-    void OnStep() final;
+    void OnStep(Builder* builder_) final;
 
-    void OnUnitIdle(const sc2::Unit* unit_) final;
+    void OnUnitIdle(const sc2::Unit* unit_, Builder*) final;
 
     void OnUpgradeCompleted(sc2::UpgradeID id_) final;
 

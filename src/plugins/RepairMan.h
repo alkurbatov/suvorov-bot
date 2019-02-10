@@ -7,15 +7,8 @@
 #include "../Builder.h"
 #include "Plugin.h"
 
-#include <memory>
-
 struct RepairMan : Plugin {
-    explicit RepairMan(const std::shared_ptr<Builder>& builder_);
+    void OnStep(Builder* builder_) final;
 
-    void OnStep() final;
-
-    void OnUnitDestroyed(const sc2::Unit* unit_) final;
-
- private:
-    std::weak_ptr<Builder> m_builder;
+    void OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) final;
 };

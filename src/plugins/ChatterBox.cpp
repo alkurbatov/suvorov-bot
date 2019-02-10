@@ -6,12 +6,12 @@
 #include "ChatterBox.h"
 #include "core/API.h"
 
-void ChatterBox::OnGameStart() {
+void ChatterBox::OnGameStart(Builder*) {
     gAPI->action().SendMessage("Suvorov v0.0.2 by @alkurbatov");
     gAPI->action().SendMessage("gl hf");
 }
 
-void ChatterBox::OnStep() {
+void ChatterBox::OnStep(Builder*) {
 #ifdef DEBUG
     auto messages = gAPI->observer().GetChatMessages();
 

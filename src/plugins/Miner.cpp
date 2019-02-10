@@ -79,15 +79,8 @@ void CallDownMULE() {
 
 }  // namespace
 
-Miner::Miner(const std::shared_ptr<Builder>& builder_): Plugin(), m_builder(builder_) {
-}
-
-void Miner::OnStep() {
-    auto builder = m_builder.lock();
-    if (!builder)
-        return;
-
-    SecureMineralsIncome(builder.get());
+void Miner::OnStep(Builder* builder_) {
+    SecureMineralsIncome(builder_);
     SecureVespeneIncome();
 
     if (gHub->GetCurrentRace() == sc2::Race::Terran)
@@ -108,7 +101,7 @@ void Miner::OnUnitCreated(const sc2::Unit* unit_) {
     gAPI->action().Cast(*unit_, sc2::ABILITY_ID::RALLY_WORKERS, *mineral_target);
 }
 
-void Miner::OnUnitIdle(const sc2::Unit* unit_) {
+void Miner::OnUnitIdle(const sc2::Unit* unit_, Builder*) {
     auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
         sc2::Unit::Alliance::Neutral);
 

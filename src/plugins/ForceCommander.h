@@ -9,7 +9,7 @@
 struct ForceCommander : Plugin {
     ForceCommander();
 
-    void OnStep() final;
+    void OnStep(Builder*) final;
 
     void OnUnitCreated(const sc2::Unit* unit_) final;
 

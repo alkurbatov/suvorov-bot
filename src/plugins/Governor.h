@@ -7,17 +7,10 @@
 #include "../Builder.h"
 #include "Plugin.h"
 
-#include <memory>
-
 struct Governor : Plugin {
-    explicit Governor(const std::shared_ptr<Builder>& builder_);
+    void OnGameStart(Builder* builder_) final;
 
-    void OnGameStart() final;
+    void OnStep(Builder* builder_) final;
 
-    void OnStep() final;
-
-    void OnUnitIdle(const sc2::Unit* unit_) final;
-
- private:
-    std::weak_ptr<Builder> m_builder;
+    void OnUnitIdle(const sc2::Unit* unit_, Builder* builder_) final;
 };

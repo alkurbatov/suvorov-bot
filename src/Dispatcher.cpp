@@ -39,10 +39,10 @@ void Dispatcher::OnGameStart() {
     sc2::Race current_race = gAPI->observer().GetCurrentRace();
     gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
 
-    m_plugins.emplace_back(new Governor(m_builder));
-    m_plugins.emplace_back(new Miner(m_builder));
-    m_plugins.emplace_back(new QuarterMaster(m_builder));
-    m_plugins.emplace_back(new RepairMan(m_builder));
+    m_plugins.emplace_back(new Governor());
+    m_plugins.emplace_back(new Miner());
+    m_plugins.emplace_back(new QuarterMaster());
+    m_plugins.emplace_back(new RepairMan());
     m_plugins.emplace_back(new ForceCommander());
     m_plugins.emplace_back(new ChatterBox());
 
@@ -50,11 +50,11 @@ void Dispatcher::OnGameStart() {
         m_plugins.emplace_back(new WarpSmith());
 
 #ifdef DEBUG
-    m_plugins.emplace_back(new Diagnosis(m_builder));
+    m_plugins.emplace_back(new Diagnosis());
 #endif
 
     for (const auto& i : m_plugins)
-        i->OnGameStart();
+        i->OnGameStart(m_builder.get());
 }
 
 void Dispatcher::OnGameEnd() {
@@ -76,7 +76,7 @@ void Dispatcher::OnStep() {
     gHub->OnStep();
 
     for (const auto& i : m_plugins)
-        i->OnStep();
+        i->OnStep(m_builder.get());
 
     m_builder->OnStep();
 
@@ -102,7 +102,7 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     gHub->OnUnitIdle(*unit_);
 
     for (const auto& i : m_plugins)
-        i->OnUnitIdle(unit_);
+        i->OnUnitIdle(unit_, m_builder.get());
 }
 
 void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
@@ -115,7 +115,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
     gHub->OnUnitDestroyed(*unit_);
 
     for (const auto& i : m_plugins)
-        i->OnUnitDestroyed(unit_);
+        i->OnUnitDestroyed(unit_, m_builder.get());
 }
 
 void Dispatcher::OnUpgradeCompleted(sc2::UpgradeID id_) {

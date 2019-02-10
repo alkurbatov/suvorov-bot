@@ -7,15 +7,8 @@
 #include "../Builder.h"
 #include "Plugin.h"
 
-#include <memory>
-
 struct Diagnosis : Plugin {
-    explicit Diagnosis(const std::shared_ptr<Builder>& builder_);
-
-    void OnStep() final;
+    void OnStep(Builder*) final;
 
     void OnGameEnd() final;
-
- private:
-    std::weak_ptr<Builder> m_builder;
 };

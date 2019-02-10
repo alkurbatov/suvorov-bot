@@ -14,7 +14,7 @@
 ForceCommander::ForceCommander(): m_attack_limit(16) {
 }
 
-void ForceCommander::OnStep() {
+void ForceCommander::OnStep(Builder*) {
     // Clean up dead bodies.
     auto it = std::remove_if(m_units.begin(), m_units.end(),
         [](const sc2::Unit* unit_) {

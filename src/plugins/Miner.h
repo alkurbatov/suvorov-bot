@@ -7,17 +7,10 @@
 #include "../Builder.h"
 #include "Plugin.h"
 
-#include <memory>
-
 struct Miner : Plugin {
-    explicit Miner(const std::shared_ptr<Builder>& builder_);
-
-    void OnStep() final;
+    void OnStep(Builder* builder_) final;
 
     void OnUnitCreated(const sc2::Unit* unit_) final;
 
-    void OnUnitIdle(const sc2::Unit* unit_) final;
-
- private:
-    std::weak_ptr<Builder> m_builder;
+    void OnUnitIdle(const sc2::Unit* unit_, Builder*) final;
 };

@@ -51,7 +51,7 @@ targets_t PickTargets() {
 WarpSmith::WarpSmith(): m_warp_gates_researched(false) {
 }
 
-void WarpSmith::OnUnitIdle(const sc2::Unit* unit_) {
+void WarpSmith::OnUnitIdle(const sc2::Unit* unit_, Builder*) {
     if (!m_warp_gates_researched ||
         unit_->unit_type.ToType() != sc2::UNIT_TYPEID::PROTOSS_GATEWAY)
         return;
@@ -59,7 +59,7 @@ void WarpSmith::OnUnitIdle(const sc2::Unit* unit_) {
     gAPI->action().OpenGate(*unit_);
 }
 
-void WarpSmith::OnStep() {
+void WarpSmith::OnStep(Builder*) {
     auto nexuses = gAPI->observer().GetUnits(IsUnit(sc2::UNIT_TYPEID::PROTOSS_NEXUS));
     targets_t targets = PickTargets();
 
