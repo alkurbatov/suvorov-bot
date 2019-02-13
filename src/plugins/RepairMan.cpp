@@ -37,6 +37,7 @@ void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
 
         case sc2::UNIT_TYPEID::TERRAN_MULE:
         case sc2::UNIT_TYPEID::TERRAN_POINTDEFENSEDRONE:
+        case sc2::UNIT_TYPEID::TERRAN_KD8CHARGE:
         case sc2::UNIT_TYPEID::ZERG_BROODLING:
         case sc2::UNIT_TYPEID::ZERG_EGG:
         case sc2::UNIT_TYPEID::ZERG_LARVA:
