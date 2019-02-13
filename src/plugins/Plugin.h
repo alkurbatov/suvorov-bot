@@ -15,7 +15,8 @@ struct Plugin {
     virtual void OnGameStart(Builder*) {
     }
 
-    virtual void OnStep(Builder*) = 0;
+    virtual void OnStep(Builder*) {
+    }
 
     virtual void OnUnitCreated(const sc2::Unit*) {
     }
