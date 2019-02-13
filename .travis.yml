@@ -33,5 +33,4 @@ script:
   - . .travis/lint.sh
   - mkdir build
   - cd build
-  - cmake -DCMAKE_BUILD_TYPE=$BUILD_CONFIGURATION ../
-  - cmake --build .
+  - . ../.travis/build.sh

@@ -11,9 +11,6 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     # NOTE (alkurbatov): Apply compilation fixes for OS X.
     git apply hacks/civetweb_compilation_fix.patch
-elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-    # NOTE (alkurbatov): Disable /WX compiler flag otherwise CI fails.
-    git apply hacks/disable_WX.patch
 fi
 
 curl -o cpplint.py https://raw.githubusercontent.com/google/styleguide/gh-pages/cpplint/cpplint.py
