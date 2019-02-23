@@ -4,6 +4,7 @@
 
 - [suvorov-bot](#suvorov-bot)
     - [About](#about)
+    - [Support](#support)
     - [Build requirements](#build-requirements)
         - [Windows](#windows)
         - [Linux](#linux)
@@ -15,9 +16,7 @@
     - [Coding Standard](#coding-standard)
     - [License](#license)
 
-About
------
-
+## About
 Starcraft 2 bot.
 
 Suvorov currently provides the following features:
@@ -31,9 +30,10 @@ Suvorov currently provides the following features:
 * Automatically builds new supplies when needed.
 * Supports launch under [Sc2LadderServer](https://github.com/Cryptyc/Sc2LadderServer).
 
-Build requirements
-------------------
+## Support
+Feel free to post questions on the unofficial Starcraft II AI Discord server. [Invite Link](https://discordapp.com/invite/Emm5Ztz)
 
+## Build requirements
 * Download (the password is iagreetotheeula) at least one of the following map packs:
   * [Ladder 2017 Season 1](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season1.zip)
   * [Ladder 2017 Season 2](http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season2.zip)
@@ -58,11 +58,9 @@ Build requirements
 ### OS X
 * Install XCode command-line tools.
 
-Build instructions
-------------------
+## Build instructions
 
 ### Windows
-
 ```bat
 :: Get the project.
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git
@@ -87,7 +85,6 @@ $ bin\Debug\Suvorov.exe Ladder2017Season3\InterloperLE.SC2Map
 ```
 
 ### Linux
-
 ```bash
 # Get the project.
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
@@ -109,7 +106,6 @@ $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Ma
 ```
 
 ### OS X
-
 ```bash
 # Get the project.
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
@@ -129,19 +125,15 @@ $ cmake ../
 # Build.
 $ make
 
-# OS X: Launch the bot with the specified path to a SC2 map, e.g.
+# Launch the bot with the specified path to a SC2 map, e.g.
 $ ./bin/Suvorov "Ladder2017Season3/InterloperLE.SC2Map"
 ```
 
-Coding Standard
----------------
-
+## Coding Standard
 We follow slightly modified [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
 See [.travis/lint.sh](.travis/lint.sh) for details.
 
-License
--------
-
-Copyright (c) 2017
+## License
+Copyright (c) 2017-2019 Alexander Kurbatov
 
 Licensed under the [MIT license](LICENSE).
