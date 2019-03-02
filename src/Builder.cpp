@@ -13,13 +13,12 @@
 #include <algorithm>
 #include <memory>
 
-Builder::Builder(): m_minerals(0), m_vespene(0),
-    m_reserved_minerals(0), m_reserved_vespene(0), m_available_food(0.0f) {
+Builder::Builder(): m_minerals(0), m_vespene(0), m_available_food(0.0f) {
 }
 
 void Builder::OnStep() {
-    m_minerals = gAPI->observer().GetMinerals() - m_reserved_minerals;
-    m_vespene = gAPI->observer().GetVespene() - m_reserved_vespene;
+    m_minerals = gAPI->observer().GetMinerals();
+    m_vespene = gAPI->observer().GetVespene();
 
     m_available_food = gAPI->observer().GetAvailableFood();
 
@@ -27,11 +26,6 @@ void Builder::OnStep() {
     while (it != m_construction_orders.end()) {
         if (!Build(&(*it)))
             break;
-
-        if (it->tech_alias.empty()) {  // Skip building upgrades.
-            m_reserved_minerals += it->mineral_cost;
-            m_reserved_vespene += it->vespene_cost;
-        }
 
         it = m_construction_orders.erase(it);
     }
@@ -45,23 +39,6 @@ void Builder::OnStep() {
 
         it = m_training_orders.erase(it);
     }
-}
-
-void Builder::OnUnitCreated(const sc2::Unit& unit_) {
-    if (unit_.build_progress > 0.0f)
-        return;
-
-    sc2::UnitTypeData data = gAPI->observer().GetUnitTypeData(unit_.unit_type);
-
-    gHistory.info() << "Decreasing reserved resources: -" <<
-        data.mineral_cost << " minerals, -" <<
-        data.vespene_cost << " vespene" << std::endl;
-
-    m_reserved_minerals -= data.mineral_cost;
-    m_reserved_vespene -= data.vespene_cost;
-
-    gHistory.info() << "Reserved minerals left: " << m_reserved_minerals << std::endl;
-    gHistory.info() << "Reserved vespene left: " << m_reserved_vespene << std::endl;
 }
 
 void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {

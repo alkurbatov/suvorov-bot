@@ -41,9 +41,6 @@ struct Builder {
     int32_t m_minerals;
     int32_t m_vespene;
 
-    int32_t m_reserved_minerals;
-    int32_t m_reserved_vespene;
-
     float m_available_food;
 
     std::list<Order> m_construction_orders;

@@ -98,7 +98,6 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
         " was created" << std::endl;
 
     gHub->OnUnitCreated(*unit_);
-    m_builder->OnUnitCreated(*unit_);
 
     for (const auto& i : m_plugins)
         i->OnUnitCreated(unit_);
