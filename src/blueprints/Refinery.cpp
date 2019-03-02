@@ -2,7 +2,7 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../Hub.h"
+#include "Hub.h"
 #include "Refinery.h"
 #include "core/API.h"
 #include "core/Helpers.h"

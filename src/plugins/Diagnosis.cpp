@@ -2,9 +2,9 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../Hub.h"
-#include "../Historican.h"
 #include "Diagnosis.h"
+#include "Hub.h"
+#include "Historican.h"
 #include "core/API.h"
 
 void Diagnosis::OnStep(Builder* builder_) {

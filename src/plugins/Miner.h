@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../Builder.h"
+#include "Builder.h"
 #include "Plugin.h"
 
 struct Miner : Plugin {

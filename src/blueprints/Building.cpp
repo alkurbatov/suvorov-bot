@@ -2,8 +2,8 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../Hub.h"
 #include "Building.h"
+#include "Hub.h"
 #include "core/API.h"
 
 bool Building::Build(Order* order_) {

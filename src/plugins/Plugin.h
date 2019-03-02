@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "../Builder.h"
+#include "Builder.h"
 
 #include <sc2api/sc2_unit.h>
 

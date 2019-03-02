@@ -2,7 +2,7 @@
 //
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
-#include "../Hub.h"
+#include "Hub.h"
 #include "TownHall.h"
 #include "core/API.h"
 

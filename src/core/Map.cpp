@@ -3,8 +3,8 @@
 // Copyright (c) 2017-2018 Alexander Kurbatov
 
 #include "Helpers.h"
+#include "Historican.h"
 #include "Map.h"
-#include "../Historican.h"
 
 #include "sc2lib/sc2_search.h"
 
