@@ -11,12 +11,13 @@
 #include "core/Timer.h"
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
-#include "plugins/ForceCommander.h"
-#include "plugins/Governor.h"
 #include "plugins/Miner.h"
 #include "plugins/RepairMan.h"
 #include "plugins/QuarterMaster.h"
 #include "plugins/WarpSmith.h"
+#include "strategies/protoss/FourWGP.h"
+#include "strategies/terran/MarinePush.h"
+#include "strategies/zerg/ZerglingFlood.h"
 
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
@@ -39,15 +40,20 @@ void Dispatcher::OnGameStart() {
     sc2::Race current_race = gAPI->observer().GetCurrentRace();
     gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
 
-    m_plugins.emplace_back(new Governor());
     m_plugins.emplace_back(new Miner());
     m_plugins.emplace_back(new QuarterMaster());
     m_plugins.emplace_back(new RepairMan());
-    m_plugins.emplace_back(new ForceCommander());
     m_plugins.emplace_back(new ChatterBox());
 
-    if (current_race == sc2::Race::Protoss)
+    // FIXME (alkurbatov): Implement smarter strategy picker.
+    if (current_race == sc2::Race::Protoss) {
         m_plugins.emplace_back(new WarpSmith());
+        m_plugins.emplace_back(new FourWGP());
+    } else if (current_race == sc2::Race::Terran) {
+        m_plugins.emplace_back(new MarinePush());
+    } else if (current_race == sc2::Race::Zerg) {
+        m_plugins.emplace_back(new ZerglingFlood());
+    }
 
 #ifdef DEBUG
     m_plugins.emplace_back(new Diagnosis());

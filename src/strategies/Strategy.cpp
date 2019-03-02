@@ -1,9 +1,9 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2018 Alexander Kurbatov
+// Copyright (c) 2017-2019 Alexander Kurbatov
 
-#include "../Historican.h"
-#include "ForceCommander.h"
+#include "Historican.h"
+#include "Strategy.h"
 #include "core/API.h"
 #include "core/Helpers.h"
 
@@ -11,10 +11,11 @@
 
 #include <algorithm>
 
-ForceCommander::ForceCommander(): m_attack_limit(16) {
+Strategy::Strategy(float attack_limit_):
+    m_attack_limit(attack_limit_) {
 }
 
-void ForceCommander::OnStep(Builder*) {
+void Strategy::OnStep(Builder*) {
     // Clean up dead bodies.
     auto it = std::remove_if(m_units.begin(), m_units.end(),
         [](const sc2::Unit* unit_) {
@@ -33,7 +34,7 @@ void ForceCommander::OnStep(Builder*) {
     m_attack_limit = std::min<float>(m_attack_limit * 1.5f, 170.0f);
 }
 
-void ForceCommander::OnUnitCreated(const sc2::Unit* unit_) {
+void Strategy::OnUnitCreated(const sc2::Unit* unit_) {
     if (!IsCombatUnit()(*unit_))
         return;
 
