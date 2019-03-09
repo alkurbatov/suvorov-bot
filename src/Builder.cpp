@@ -116,7 +116,7 @@ bool Builder::Build(Order* order_) {
             return false;
     }
 
-    if (m_available_food < order_->food_required)
+    if (order_->food_required > 0 && m_available_food < order_->food_required)
         return false;
 
     if (!blueprint->Build(order_))
