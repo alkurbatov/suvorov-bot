@@ -50,6 +50,8 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAINWARP_SENTRY:
         case sc2::ABILITY_ID::TRAINWARP_STALKER:
         case sc2::ABILITY_ID::TRAINWARP_ZEALOT:
+            // NOTE (alkurbatov): Instead please use
+            // TRAIN_ADEPT, TRAIN_DARKTEMPLAR etc.
             throw InvalidBuildCommand(ability_);
 
         case sc2::ABILITY_ID::TRAIN_COLOSSUS:
@@ -122,6 +124,17 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
             // but anyway the code required for research is completely the same. :)
             return std::shared_ptr<Blueprint>(
                 new Unit(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
+
+        case sc2::ABILITY_ID::RESEARCH_HISECAUTOTRACKING:
+        case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYARMORLEVEL1:
+        case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYARMORLEVEL2:
+        case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYARMORLEVEL3:
+        case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYWEAPONSLEVEL1:
+        case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYWEAPONSLEVEL2:
+        case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYWEAPONSLEVEL3:
+        case sc2::ABILITY_ID::RESEARCH_TERRANSTRUCTUREARMORUPGRADE:
+            return std::shared_ptr<Blueprint>(
+                new Unit(sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY));
 
         case sc2::ABILITY_ID::RESEARCH_ADEPTRESONATINGGLAIVES:
         case sc2::ABILITY_ID::RESEARCH_BLINK:
