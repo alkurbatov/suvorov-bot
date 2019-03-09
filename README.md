@@ -94,8 +94,7 @@ $ mkdir build && cd build
 
 # Generate a Makefile.
 # Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
-# Debug build also contains additional debug features, chat support
-# and runs game at slower speed.
+# Debug build also contains additional debug features and chat commands support.
 $ cmake ../
 
 # Build.
@@ -118,8 +117,7 @@ $ mkdir build && cd build
 
 # Generate a Makefile.
 # Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
-# Debug build also contains additional debug features, chat support
-# and runs game at slower speed.
+# Debug build also contains additional debug features and chat commands support.
 $ cmake ../
 
 # Build.
