@@ -9,6 +9,7 @@
 #include "Mutation.h"
 #include "Queen.h"
 #include "Refinery.h"
+#include "Research.h"
 #include "TownHall.h"
 #include "Unit.h"
 #include "core/API.h"
@@ -120,10 +121,8 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
             return std::shared_ptr<Blueprint>(new Creature());
 
         case sc2::ABILITY_ID::RESEARCH_WARPGATE:
-            // NOTE (alkurbatov): Yes, this is weird from the first glance
-            // but anyway the code required for research is completely the same. :)
             return std::shared_ptr<Blueprint>(
-                new Unit(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
+                new Research(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE));
 
         case sc2::ABILITY_ID::RESEARCH_HISECAUTOTRACKING:
         case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYARMORLEVEL1:
@@ -134,7 +133,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYWEAPONSLEVEL3:
         case sc2::ABILITY_ID::RESEARCH_TERRANSTRUCTUREARMORUPGRADE:
             return std::shared_ptr<Blueprint>(
-                new Unit(sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY));
+                new Research(sc2::UNIT_TYPEID::TERRAN_ENGINEERINGBAY));
 
         case sc2::ABILITY_ID::RESEARCH_PROTOSSGROUNDARMORLEVEL1:
         case sc2::ABILITY_ID::RESEARCH_PROTOSSGROUNDARMORLEVEL2:
@@ -146,7 +145,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::RESEARCH_PROTOSSSHIELDSLEVEL2:
         case sc2::ABILITY_ID::RESEARCH_PROTOSSSHIELDSLEVEL3:
             return std::shared_ptr<Blueprint>(
-                new Unit(sc2::UNIT_TYPEID::PROTOSS_FORGE));
+                new Research(sc2::UNIT_TYPEID::PROTOSS_FORGE));
 
         case sc2::ABILITY_ID::RESEARCH_ADEPTRESONATINGGLAIVES:
         case sc2::ABILITY_ID::RESEARCH_BLINK:
