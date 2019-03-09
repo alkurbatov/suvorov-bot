@@ -163,6 +163,18 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
             return std::shared_ptr<Blueprint>(
                 new Unit(sc2::UNIT_TYPEID::ZERG_SPAWNINGPOOL));
 
+        case sc2::ABILITY_ID::RESEARCH_ZERGGROUNDARMORLEVEL1:
+        case sc2::ABILITY_ID::RESEARCH_ZERGGROUNDARMORLEVEL2:
+        case sc2::ABILITY_ID::RESEARCH_ZERGGROUNDARMORLEVEL3:
+        case sc2::ABILITY_ID::RESEARCH_ZERGMELEEWEAPONSLEVEL1:
+        case sc2::ABILITY_ID::RESEARCH_ZERGMELEEWEAPONSLEVEL2:
+        case sc2::ABILITY_ID::RESEARCH_ZERGMELEEWEAPONSLEVEL3:
+        case sc2::ABILITY_ID::RESEARCH_ZERGMISSILEWEAPONSLEVEL1:
+        case sc2::ABILITY_ID::RESEARCH_ZERGMISSILEWEAPONSLEVEL2:
+        case sc2::ABILITY_ID::RESEARCH_ZERGMISSILEWEAPONSLEVEL3:
+            return std::shared_ptr<Blueprint>(
+                new Research(sc2::UNIT_TYPEID::ZERG_EVOLUTIONCHAMBER));
+
         default:
             return std::shared_ptr<Blueprint>(new Building());
     }
