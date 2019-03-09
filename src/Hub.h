@@ -147,6 +147,8 @@ struct Hub {
 
     const Expansions& GetExpansions() const;
 
+    const sc2::Point3D* GetNextExpansion();
+
  private:
     sc2::Race m_current_race;
     Expansions m_expansions;

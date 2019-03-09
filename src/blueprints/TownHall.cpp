@@ -7,6 +7,9 @@
 #include "core/API.h"
 
 bool TownHall::Build(Order* order_) {
-    return gHub->AssignBuildTask(order_,
-        gHub->GetExpansions().front().town_hall_location);
+    const sc2::Point3D* town_hall_location = gHub->GetNextExpansion();
+    if (!town_hall_location)
+        return false;
+
+    return gHub->AssignBuildTask(order_, *town_hall_location);
 }

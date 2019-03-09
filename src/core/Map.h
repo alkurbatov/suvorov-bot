@@ -9,11 +9,18 @@
 #include <list>
 #include <vector>
 
+enum Owner {
+    NEUTRAL = 0,
+    CONTESTED = 1,
+    ENEMY = 2,
+    SELF = 3,
+};
+
 struct Expansion {
     explicit Expansion(const sc2::Point3D& town_hall_location_);
 
     sc2::Point3D town_hall_location;
-    sc2::Unit::Alliance alliance;
+    Owner owner;
 };
 
 typedef std::vector<Expansion> Expansions;

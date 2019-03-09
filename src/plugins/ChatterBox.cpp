@@ -7,7 +7,7 @@
 #include "core/API.h"
 
 void ChatterBox::OnGameStart(Builder*) {
-    gAPI->action().SendMessage("Suvorov v0.0.3 by @alkurbatov");
+    gAPI->action().SendMessage("Suvorov v0.0.4 by @alkurbatov");
     gAPI->action().SendMessage("gl hf");
 }
 

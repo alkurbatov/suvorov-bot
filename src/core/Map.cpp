@@ -92,7 +92,7 @@ sc2::Point3D Cluster::Center() const {
 }  // namespace
 
 Expansion::Expansion(const sc2::Point3D& town_hall_location_):
-    town_hall_location(town_hall_location_), alliance(sc2::Unit::Alliance::Neutral) {
+    town_hall_location(town_hall_location_), owner(Owner::NEUTRAL) {
 }
 
 Expansions CalculateExpansionLocations() {
