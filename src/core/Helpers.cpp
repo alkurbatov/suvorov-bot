@@ -17,6 +17,14 @@ bool IsUnit::operator()(const sc2::Unit& unit_) const {
         unit_.build_progress >= m_build_progress;
 }
 
+OneOfUnits::OneOfUnits(const std::set<sc2::UNIT_TYPEID>& types_): m_types(types_) {
+}
+
+bool OneOfUnits::operator()(const sc2::Unit& unit_) const {
+    return unit_.build_progress == 1.0f &&
+        m_types.find(unit_.unit_type) != m_types.end();
+}
+
 bool IsCombatUnit::operator()(const sc2::Unit& unit_) const {
     switch (unit_.unit_type.ToType()) {
        case sc2::UNIT_TYPEID::TERRAN_BANSHEE:

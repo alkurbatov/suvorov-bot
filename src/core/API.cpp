@@ -106,6 +106,10 @@ size_t Observer::CountUnitType(sc2::UNIT_TYPEID type_, bool with_not_finished) c
     return m_observer->GetUnits(IsUnit(type_, with_not_finished)).size();
 }
 
+size_t Observer::CountUnitsTypes(const std::set<sc2::UNIT_TYPEID>& types_) {
+    return m_observer->GetUnits(OneOfUnits(types_)).size();
+}
+
 const sc2::GameInfo& Observer::GameInfo() const {
     return m_observer->GetGameInfo();
 }

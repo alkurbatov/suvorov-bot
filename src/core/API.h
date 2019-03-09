@@ -12,6 +12,7 @@
 #include <sc2api/sc2_control_interfaces.h>
 
 #include <memory>
+#include <set>
 
 namespace API {
 
@@ -80,6 +81,8 @@ struct Observer {
 
     size_t CountUnitType(sc2::UNIT_TYPEID type_,
         bool with_not_finished = false) const;
+
+    size_t CountUnitsTypes(const std::set<sc2::UNIT_TYPEID>& types_);
 
     const sc2::GameInfo& GameInfo() const;
 

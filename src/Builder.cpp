@@ -110,9 +110,24 @@ bool Builder::Build(Order* order_) {
 
     std::shared_ptr<Blueprint> blueprint = Blueprint::Plot(order_->ability_id);
 
-    // Here sc2::UNIT_TYPEID::INVALID means that no tech requirements needed.
-    if (order_->tech_requirement != sc2::UNIT_TYPEID::INVALID &&
-        gAPI->observer().CountUnitType(order_->tech_requirement) == 0) {
+    // NOTE (alkurbatov): sc2::UNIT_TYPEID::INVALID means that no tech required.
+    if (order_->tech_requirement != sc2::UNIT_TYPEID::INVALID) {
+        std::set<sc2::UNIT_TYPEID> requirements;
+        requirements.insert(order_->tech_requirement);
+
+        if (order_->tech_requirement == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER) {
+            requirements.insert(sc2::UNIT_TYPEID::TERRAN_COMMANDCENTERFLYING);
+            requirements.insert(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
+            requirements.insert(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING);
+            requirements.insert(sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS);
+        }
+
+        if (order_->tech_requirement == sc2::UNIT_TYPEID::ZERG_HATCHERY) {
+            requirements.insert(sc2::UNIT_TYPEID::ZERG_HIVE);
+            requirements.insert(sc2::UNIT_TYPEID::ZERG_LAIR);
+        }
+
+        if (gAPI->observer().CountUnitsTypes(requirements) == 0)
             return false;
     }
 

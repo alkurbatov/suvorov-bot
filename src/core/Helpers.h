@@ -9,6 +9,8 @@
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
 
+#include <set>
+
 struct IsUnit {
     explicit IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished = false);
 
@@ -17,6 +19,15 @@ struct IsUnit {
  private:
     sc2::UNIT_TYPEID m_type;
     float m_build_progress;
+};
+
+struct OneOfUnits {
+    explicit OneOfUnits(const std::set<sc2::UNIT_TYPEID>& types_);
+
+    bool operator()(const sc2::Unit& unit_) const;
+
+ private:
+    const std::set<sc2::UNIT_TYPEID> m_types;
 };
 
 struct IsCombatUnit {
