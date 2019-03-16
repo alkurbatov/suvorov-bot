@@ -87,7 +87,7 @@ void Miner::OnStep(Builder* builder_) {
         CallDownMULE();
 }
 
-void Miner::OnUnitCreated(const sc2::Unit* unit_) {
+void Miner::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
     if (!IsTownHall()(*unit_))
         return;
 

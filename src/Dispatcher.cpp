@@ -11,6 +11,7 @@
 #include "core/Timer.h"
 #include "plugins/ChatterBox.h"
 #include "plugins/Diagnosis.h"
+#include "plugins/ExtraDrone.h"
 #include "plugins/Miner.h"
 #include "plugins/RepairMan.h"
 #include "plugins/QuarterMaster.h"
@@ -52,6 +53,7 @@ void Dispatcher::OnGameStart() {
     } else if (current_race == sc2::Race::Terran) {
         m_plugins.emplace_back(new MarinePush());
     } else if (current_race == sc2::Race::Zerg) {
+        m_plugins.emplace_back(new ExtraDrone());
         m_plugins.emplace_back(new ZerglingFlood());
     }
 
@@ -64,7 +66,7 @@ void Dispatcher::OnGameStart() {
 }
 
 void Dispatcher::OnGameEnd() {
-    gHistory.info() << "Game over!" <<std::endl;
+    gHistory.info() << "Game over!" << std::endl;
 
     for (const auto& i : m_plugins)
         i->OnGameEnd();
@@ -100,7 +102,7 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
     gHub->OnUnitCreated(*unit_);
 
     for (const auto& i : m_plugins)
-        i->OnUnitCreated(unit_);
+        i->OnUnitCreated(unit_, m_builder.get());
 }
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {

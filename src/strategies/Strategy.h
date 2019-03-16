@@ -11,7 +11,7 @@ struct Strategy : Plugin {
 
     void OnStep(Builder*) override;
 
-    void OnUnitCreated(const sc2::Unit* unit_) override;
+    void OnUnitCreated(const sc2::Unit* unit_, Builder*) override;
 
  protected:
     float m_attack_limit;

@@ -18,7 +18,7 @@ struct Plugin {
     virtual void OnStep(Builder*) {
     }
 
-    virtual void OnUnitCreated(const sc2::Unit*) {
+    virtual void OnUnitCreated(const sc2::Unit*, Builder*) {
     }
 
     virtual void OnUnitDestroyed(const sc2::Unit*, Builder*) {

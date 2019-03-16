@@ -38,6 +38,14 @@ void Action::Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
     m_action->UnitCommand(&assignee_, convert::ToAbilityID(ability_), &target_);
 }
 
+void Action::Cancel(const sc2::Unit& assignee_) {
+    m_action->UnitCommand(&assignee_, sc2::ABILITY_ID::CANCEL);
+}
+
+void Action::CancelConstruction(const sc2::Unit& assignee_) {
+    m_action->UnitCommand(&assignee_, sc2::ABILITY_ID::CANCEL_BUILDINPROGRESS);
+}
+
 void Action::OpenGate(const sc2::Unit& assignee_) {
     m_action->UnitCommand(&assignee_, sc2::ABILITY_ID::MORPH_WARPGATE);
 }

@@ -17,6 +17,11 @@ void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
     if (IsCombatUnit()(*unit_))
         return;
 
+    // NOTE (alkurbatov): If build_progress < 1.0f a unit might be
+    // destroyed by the CancelConstruction command.
+    if (unit_->build_progress < 1.0f)
+        return;
+
     switch (unit_->unit_type.ToType()) {
         case sc2::UNIT_TYPEID::PROTOSS_PYLON:
         case sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT:
