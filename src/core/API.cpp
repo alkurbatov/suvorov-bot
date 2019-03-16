@@ -262,6 +262,10 @@ uint32_t Observer::GetGameLoop() const {
     return m_observer->GetGameLoop();
 }
 
+const sc2::ScoreDetails Observer::GetScoreDetails() const {
+    return m_observer->GetScore().score_details;
+}
+
 Query::Query(sc2::QueryInterface* query_): m_query(query_) {
 }
 

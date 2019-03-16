@@ -7,9 +7,10 @@
 #include "Order.h"
 #include "Units.h"
 
+#include <sc2api/sc2_control_interfaces.h>
 #include <sc2api/sc2_gametypes.h>
 #include <sc2api/sc2_interfaces.h>
-#include <sc2api/sc2_control_interfaces.h>
+#include <sc2api/sc2_score.h>
 
 #include <memory>
 #include <set>
@@ -109,6 +110,8 @@ struct Observer {
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;
 
     uint32_t GetGameLoop() const;
+
+    const sc2::ScoreDetails GetScoreDetails() const;
 
  private:
     const sc2::ObservationInterface* m_observer;
