@@ -8,7 +8,7 @@
 
 bool Queen::Build(Order* order_) {
     auto town_halls = gAPI->observer().GetUnits(IsIdleTownHall());
-    if (town_halls().empty())
+    if (town_halls.Empty())
         return false;
 
     order_->assignee = town_halls().front()->tag;

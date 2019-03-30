@@ -10,12 +10,12 @@
 bool GateUnit::Build(Order* order_) {
     auto warp_gates = gAPI->observer().GetUnits(
         IsIdleUnit(sc2::UNIT_TYPEID::PROTOSS_WARPGATE));
-    if (warp_gates().empty())
+    if (warp_gates.Empty())
         return Unit(sc2::UNIT_TYPEID::PROTOSS_GATEWAY).Build(order_);
 
     auto pylons = gAPI->observer().GetUnits(
         IsUnit(sc2::UNIT_TYPEID::PROTOSS_PYLON));
-    if (pylons().empty())
+    if (pylons.Empty())
         return false;
 
     // FIXME (alkurbatov): Looks like there is no way to determine

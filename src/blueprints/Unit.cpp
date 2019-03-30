@@ -12,7 +12,7 @@ Unit::Unit(sc2::UNIT_TYPEID who_builds_): m_who_builds(who_builds_) {
 bool Unit::Build(Order* order_) {
     if (!order_->assignee) {
         auto producers = gAPI->observer().GetUnits(IsIdleUnit(m_who_builds));
-        if (producers().empty())
+        if (producers.Empty())
             return false;
 
         order_->assignee = producers().front()->tag;

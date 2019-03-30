@@ -11,6 +11,10 @@
 Units::Units(const sc2::Units& units_) : m_units(units_) {
 }
 
+bool Units::Empty() const {
+    return m_units.empty();
+}
+
 const sc2::Units& Units::operator()() const {
     return m_units;
 }

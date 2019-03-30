@@ -10,7 +10,7 @@ bool Mutation::Build(Order* order_) {
     auto targets = gAPI->observer().GetUnits(
         IsIdleUnit(order_->tech_alias.back()));
 
-    if (targets().empty())
+    if (targets.Empty())
         return false;
 
     order_->assignee = targets().front()->tag;

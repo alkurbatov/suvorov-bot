@@ -59,7 +59,7 @@ void CallDownMULE() {
     auto orbitals = gAPI->observer().GetUnits(
         IsUnit(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND));
 
-    if (orbitals().empty())
+    if (orbitals.Empty())
         return;
 
     auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),

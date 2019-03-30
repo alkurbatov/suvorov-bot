@@ -14,10 +14,10 @@ bool Research::Build(Order* order_) {
 
     // NOTE (alkurbatov): Queue upgrades if there is no free structures left
     // in order to avoid blocking of the main queue.
-    if (producers().empty())
+    if (producers.Empty())
         producers = gAPI->observer().GetUnits(IsUnit(m_who_builds));
 
-    if (producers().empty())
+    if (producers.Empty())
         return false;
 
     order_->assignee = producers().front()->tag;

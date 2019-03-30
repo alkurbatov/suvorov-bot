@@ -103,7 +103,7 @@ Expansions CalculateExpansionLocations() {
         IsFoggyResource(),
         sc2::Unit::Alliance::Neutral);
 
-    if (resources().empty()) {
+    if (resources.Empty()) {
         gHistory.warning() << "No expansions locations could be found!" << std::endl;
         return Expansions();
     }
