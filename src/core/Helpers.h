@@ -12,13 +12,12 @@
 #include <set>
 
 struct IsUnit {
-    explicit IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished = false);
+    explicit IsUnit(sc2::UNIT_TYPEID type_);
 
     bool operator()(const sc2::Unit& unit_) const;
 
  private:
     sc2::UNIT_TYPEID m_type;
-    float m_build_progress;
 };
 
 struct OneOfUnits {

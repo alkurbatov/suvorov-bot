@@ -84,8 +84,7 @@ struct Observer {
     Units GetUnits(const sc2::Filter& filter_,
         sc2::Unit::Alliance alliance_ = sc2::Unit::Alliance::Self) const;
 
-    size_t CountUnitType(sc2::UNIT_TYPEID type_,
-        bool with_not_finished = false) const;
+    size_t CountUnitType(sc2::UNIT_TYPEID type_) const;
 
     size_t CountUnitsTypes(const std::set<sc2::UNIT_TYPEID>& types_);
 

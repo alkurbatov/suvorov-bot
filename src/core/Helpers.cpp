@@ -6,15 +6,11 @@
 #include "Helpers.h"
 #include "Hub.h"
 
-IsUnit::IsUnit(sc2::UNIT_TYPEID type_, bool with_not_finished):
-    m_type(type_), m_build_progress(1.0f) {
-    if (with_not_finished)
-        m_build_progress = 0.0f;
+IsUnit::IsUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
 bool IsUnit::operator()(const sc2::Unit& unit_) const {
-    return unit_.unit_type == m_type &&
-        unit_.build_progress >= m_build_progress;
+    return unit_.unit_type == m_type && unit_.build_progress >= 1.0f;
 }
 
 OneOfUnits::OneOfUnits(const std::set<sc2::UNIT_TYPEID>& types_): m_types(types_) {
