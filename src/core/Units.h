@@ -17,6 +17,8 @@ struct Units {
 
     const sc2::Unit* GetRandomUnit() const;
 
+    bool HasOrder(sc2::ABILITY_ID id_) const;
+
  private:
     sc2::Units m_units;
 };

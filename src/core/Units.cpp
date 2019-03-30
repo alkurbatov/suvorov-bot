@@ -42,3 +42,15 @@ const sc2::Unit* Units::GetRandomUnit() const {
     int index = sc2::GetRandomInteger(0, static_cast<int>(m_units.size()) - 1);
     return m_units[static_cast<unsigned>(index)];
 }
+
+bool Units::HasOrder(sc2::ABILITY_ID id_) const {
+    for (const auto* i : m_units) {
+        if (i->orders.empty())
+            continue;
+
+        if (i->orders.front().ability_id == id_)
+            return true;
+    }
+
+    return false;
+}

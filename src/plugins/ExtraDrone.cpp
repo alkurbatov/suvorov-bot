@@ -15,7 +15,8 @@ void ExtraDrone::OnStep(Builder*) {
     if (m_state != State::WAIT_WORKER_CREATION)
         return;
 
-    if (gAPI->observer().CountUnitType(sc2::UNIT_TYPEID::ZERG_DRONE, true) < 14)
+    auto eggs = gAPI->observer().GetUnits(IsUnit(sc2::UNIT_TYPEID::ZERG_EGG));
+    if (!eggs.HasOrder(sc2::ABILITY_ID::TRAIN_DRONE))
         return;
 
     const auto extractor = gAPI->observer().GetUnit(m_extractor);
