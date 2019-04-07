@@ -107,8 +107,6 @@ int main(int argc, char* argv[]) {
     Options options;
     ParseArguments(argc, argv, &options);
 
-    gHistory.Init("history.log");
-
     sc2::Coordinator coordinator;
     Dispatcher bot(options.OpponentId);
 
