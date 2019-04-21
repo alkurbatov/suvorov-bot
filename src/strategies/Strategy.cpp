@@ -24,7 +24,7 @@ void Strategy::OnStep(Builder*) {
 
     m_units.erase(it, m_units.end());
 
-    if (m_units.size() < m_attack_limit)
+    if (static_cast<float>(m_units.size()) < m_attack_limit)
         return;
 
     auto targets = gAPI->observer().GameInfo().enemy_start_locations;

@@ -126,12 +126,12 @@ sc2::Point3D Observer::StartingLocation() const {
     return m_observer->GetStartLocation();
 }
 
-int32_t Observer::GetFoodCap() const {
-    return m_observer->GetFoodCap();
+float Observer::GetFoodCap() const {
+    return static_cast<float>(m_observer->GetFoodCap());
 }
 
-int32_t Observer::GetFoodUsed() const {
-    return m_observer->GetFoodUsed();
+float Observer::GetFoodUsed() const {
+    return static_cast<float>(m_observer->GetFoodUsed());
 }
 
 int32_t Observer::GetMinerals() const {
@@ -143,7 +143,7 @@ int32_t Observer::GetVespene() const {
 }
 
 float Observer::GetAvailableFood() const {
-    return static_cast<float>(GetFoodCap() - GetFoodUsed());
+    return GetFoodCap() - GetFoodUsed();
 }
 
 sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {

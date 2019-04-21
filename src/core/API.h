@@ -92,9 +92,9 @@ struct Observer {
 
     sc2::Point3D StartingLocation() const;
 
-    int32_t GetFoodCap() const;
+    float GetFoodCap() const;
 
-    int32_t GetFoodUsed() const;
+    float GetFoodUsed() const;
 
     int32_t GetMinerals() const;
 
