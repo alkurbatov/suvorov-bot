@@ -1,6 +1,6 @@
 # suvorov-bot
 
-[![Build Status](https://travis-ci.org/alkurbatov/suvorov-bot.png?branch=master)](https://travis-ci.org/alkurbatov/suvorov-bot)
+[![Build Status](https://travis-ci.org/alkurbatov/suvorov-bot.svg?branch=master)](https://travis-ci.org/alkurbatov/suvorov-bot)
 
 - [suvorov-bot](#suvorov-bot)
     - [About](#about)
