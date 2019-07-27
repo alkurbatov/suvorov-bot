@@ -9,10 +9,6 @@
 #include <queue>
 
 namespace {
-// FIXME (alkurbatov): Unfortunately the API doesn't contain
-// real ID for the chrono abilities.
-const sc2::ABILITY_ID chronoboost_id = static_cast<sc2::ABILITY_ID>(3755);
-const sc2::BUFF_ID chronobuff_id = static_cast<sc2::BUFF_ID>(281);
 const int chronoboost_cost = 50;
 
 typedef std::queue<sc2::Unit> targets_t;
@@ -37,7 +33,7 @@ targets_t PickTargets() {
         if (i->orders.empty())
             continue;
 
-        if (!i->buffs.empty() && i->buffs.front() == chronobuff_id)
+        if (!i->buffs.empty() && i->buffs.front() == sc2::BUFF_ID::CHRONOBOOSTED)
             continue;
 
         targets.push(*i);
@@ -70,7 +66,7 @@ void WarpSmith::OnStep(Builder*) {
         if (i->energy < chronoboost_cost)
             continue;
 
-        gAPI->action().Cast(*i, chronoboost_id, targets.front());
+        gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CHRONOBOOST, targets.front());
         targets.pop();
     }
 }
