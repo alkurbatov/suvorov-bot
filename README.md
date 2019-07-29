@@ -66,10 +66,6 @@ Feel free to post questions on the unofficial Starcraft II AI Discord server. [I
 $ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git
 $ cd suvorov-bot
 
-:: Disable /WX compiler flag if you want to build the project
-:: under fresh compiler/new Visual Studio.
-$ git apply hacks/disable_WX.patch
-
 :: Create build directory.
 $ mkdir build
 $ cd build
