@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2018 Alexander Kurbatov
+// Copyright (c) 2017-2019 Alexander Kurbatov
 
 #include "Mutation.h"
 #include "core/API.h"
