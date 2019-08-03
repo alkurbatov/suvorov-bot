@@ -10,12 +10,10 @@
                 "${workspaceFolder}/src/plugins",
                 "${workspaceFolder}/src/strategies",
                 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
-                "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include",
                 "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
-                "/usr/include",
-                "${workspaceFolder}/s2client-api/include",
-                "${workspaceFolder}/build/s2client-api/generated",
-                "${workspaceFolder}/s2client-api/contrib/protobuf/src"
+                "${workspaceFolder}/cpp-sc2/include",
+                "${workspaceFolder}/build/cpp-sc2/generated",
+                "${workspaceFolder}/cpp-sc2/contrib/protobuf/src"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
@@ -27,10 +25,7 @@
                     "${workspaceFolder}/src/objects",
                     "${workspaceFolder}/src/plugins",
                     "${workspaceFolder}/src/strategies",
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.1.0/include",
-                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include",
-                    "/usr/include"
+                    "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
