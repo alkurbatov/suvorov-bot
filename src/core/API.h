@@ -96,9 +96,9 @@ struct Observer {
 
     float GetFoodUsed() const;
 
-    int32_t GetMinerals() const;
+    uint32_t GetMinerals() const;
 
-    int32_t GetVespene() const;
+    uint32_t GetVespene() const;
 
     float GetAvailableFood() const;
 

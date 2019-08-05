@@ -38,8 +38,8 @@ struct Builder {
  private:
     bool Build(Order* order_);
 
-    int32_t m_minerals;
-    int32_t m_vespene;
+    uint32_t m_minerals;
+    uint32_t m_vespene;
 
     float m_available_food;
 

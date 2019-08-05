@@ -134,11 +134,11 @@ float Observer::GetFoodUsed() const {
     return static_cast<float>(m_observer->GetFoodUsed());
 }
 
-int32_t Observer::GetMinerals() const {
+uint32_t Observer::GetMinerals() const {
     return m_observer->GetMinerals();
 }
 
-int32_t Observer::GetVespene() const {
+uint32_t Observer::GetVespene() const {
     return m_observer->GetVespene();
 }
 

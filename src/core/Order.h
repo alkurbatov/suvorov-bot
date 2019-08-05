@@ -23,8 +23,8 @@ struct Order {
 
     explicit Order(const sc2::UpgradeData& data_):
         name(data_.name),
-        mineral_cost(static_cast<int>(data_.mineral_cost)),
-        vespene_cost(static_cast<int>(data_.vespene_cost)),
+        mineral_cost(data_.mineral_cost),
+        vespene_cost(data_.vespene_cost),
         food_required(0.0f),
         tech_requirement(sc2::UNIT_TYPEID::INVALID),
         unit_type_id(sc2::UNIT_TYPEID::INVALID),
@@ -34,8 +34,8 @@ struct Order {
 
     std::string name;
 
-    int mineral_cost;
-    int vespene_cost;
+    uint32_t mineral_cost;
+    uint32_t vespene_cost;
 
     float food_required;
     sc2::UnitTypeID tech_requirement;
