@@ -10,17 +10,19 @@
 #include <sc2api/sc2_map_info.h>
 
 void Diagnosis::OnStep(Builder* builder_) {
-    auto messages = gAPI->observer().GetChatMessages();
+    for (const auto& i : gAPI->observer().GetChatMessages()) {
+        if (i.message == "gg") {
+            gHistory.warning() << "The game was finished forcibly." << std::endl;
+            gAPI->debug().EndGame();
+            return;
+        }
 
-    auto it = std::find_if(messages.begin(), messages.end(),
-        [](const sc2::ChatMessage& chatMessage_) {
-            return chatMessage_.message == "gg";
-        });
-
-    if (it != messages.end()) {
-        gHistory.warning() << "The game was finished forcibly." << std::endl;
-        gAPI->debug().EndGame();
-        return;
+        if (i.message == "grids") {
+            auto info = gAPI->observer().GameInfo();
+            sc2::PathingGrid(info).Dump("./pathing_grid.txt");
+            sc2::PlacementGrid(info).Dump("./placement_grid.txt");
+            sc2::HeightMap(info).Dump("./height_map.txt");
+        }
     }
 
     gAPI->debug().DrawText("Build order:");
