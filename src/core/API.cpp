@@ -68,6 +68,20 @@ void Debug::DrawText(const std::string& message_) const {
     m_debug->DebugTextOut(message_);
 }
 
+void Debug::DrawText(const std::string& message_, const sc2::Point2D& point_) const {
+    m_debug->DebugTextOut(message_, sc2::Point3D(point_.x, point_.y, 0.35f));
+}
+
+void Debug::DrawText(const std::string& message_, const sc2::Point2DI& point_) const {
+    sc2::Point3D dst = {static_cast<float>(point_.x), static_cast<float>(point_.y), 0.35f};
+    m_debug->DebugTextOut(message_, dst);
+}
+
+void Debug::DrawText(float value_, const sc2::Point2DI& point_) const {
+    sc2::Point3D dst = {static_cast<float>(point_.x), static_cast<float>(point_.y), 0.35f};
+    m_debug->DebugTextOut(std::to_string(value_), dst);
+}
+
 void Debug::DrawText(const std::string& message_, const sc2::Point3D& pos_) const {
     m_debug->DebugTextOut(message_, pos_);
 }
@@ -272,6 +286,10 @@ uint32_t Observer::GetGameLoop() const {
 
 const sc2::ScoreDetails Observer::GetScoreDetails() const {
     return m_observer->GetScore().score_details;
+}
+
+bool Observer::HasCreep(const sc2::Point2D& point_) const {
+    return m_observer->HasCreep(point_);
 }
 
 Query::Query(sc2::QueryInterface* query_): m_query(query_) {

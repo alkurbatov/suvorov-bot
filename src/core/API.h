@@ -57,6 +57,12 @@ struct Debug {
 
     void DrawText(const std::string& message_) const;
 
+    void DrawText(const std::string& message_, const sc2::Point2D& point_) const;
+
+    void DrawText(const std::string& message_, const sc2::Point2DI& point_) const;
+
+    void DrawText(float value_, const sc2::Point2DI& point_) const;
+
     void DrawText(const std::string& message_, const sc2::Point3D& pos_) const;
 
     void DrawSphere(const sc2::Point3D& center_, float radius_) const;
@@ -115,6 +121,8 @@ struct Observer {
     uint32_t GetGameLoop() const;
 
     const sc2::ScoreDetails GetScoreDetails() const;
+
+    bool HasCreep(const sc2::Point2D& point_) const;
 
  private:
     const sc2::ObservationInterface* m_observer;
