@@ -7,7 +7,22 @@
 #include "Historican.h"
 #include "core/API.h"
 
+#include <sc2api/sc2_map_info.h>
+
 void Diagnosis::OnStep(Builder* builder_) {
+    auto messages = gAPI->observer().GetChatMessages();
+
+    auto it = std::find_if(messages.begin(), messages.end(),
+        [](const sc2::ChatMessage& chatMessage_) {
+            return chatMessage_.message == "gg";
+        });
+
+    if (it != messages.end()) {
+        gHistory.warning() << "The game was finished forcibly." << std::endl;
+        gAPI->debug().EndGame();
+        return;
+    }
+
     gAPI->debug().DrawText("Build order:");
 
     if (builder_->GetConstructionOrders().empty()) {
