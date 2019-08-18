@@ -30,7 +30,7 @@ bool GateUnit::Build(Order* order_) {
     order_->assignee = warp_gate->tag;
 
     // NOTE (alkurbatov): A bit of numbers magic here.
-    // We assume that Starcraft2 protol IDs are stable, thus we can safely
+    // Assuming Starcraft2 protocol IDs are stable, we can safely
     // convert e.g. TRAIN_ZEALOT command to TRAINWARP_ZEALOT
     // using delta value similar for all operations with the gates.
     order_->ability_id = order_->ability_id + 497;
