@@ -24,6 +24,9 @@ Suvorov currently provides the following features:
 * Automatically builds new supplies when needed.
 * Supports launch under [Sc2LadderServer](https://github.com/Cryptyc/Sc2LadderServer).
 
+## Notable forks
+* [MulleMech](https://github.com/ludlyl/MulleMech) - a terran bot by @ludlyl
+
 ## Support
 Feel free to post questions on the unofficial Starcraft II AI Discord server. [Invite Link](https://discordapp.com/invite/Emm5Ztz)
 
