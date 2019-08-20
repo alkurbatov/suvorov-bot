@@ -73,12 +73,20 @@ void Debug::DrawText(const std::string& message_, const sc2::Point2D& point_) co
 }
 
 void Debug::DrawText(const std::string& message_, const sc2::Point2DI& point_) const {
-    sc2::Point3D dst = {static_cast<float>(point_.x), static_cast<float>(point_.y), 0.35f};
+    sc2::Point3D dst = {
+        static_cast<float>(point_.x),
+        static_cast<float>(point_.y),
+        0.35f
+    };
     m_debug->DebugTextOut(message_, dst);
 }
 
 void Debug::DrawText(float value_, const sc2::Point2DI& point_) const {
-    sc2::Point3D dst = {static_cast<float>(point_.x), static_cast<float>(point_.y), 0.35f};
+    sc2::Point3D dst = {
+        static_cast<float>(point_.x),
+        static_cast<float>(point_.y),
+        0.35f
+    };
     m_debug->DebugTextOut(std::to_string(value_), dst);
 }
 
