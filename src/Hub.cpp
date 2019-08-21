@@ -70,8 +70,11 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
             return;
 
         case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR:
+        case sc2::UNIT_TYPEID::PROTOSS_ASSIMILATORRICH:
         case sc2::UNIT_TYPEID::TERRAN_REFINERY:
-        case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
+        case sc2::UNIT_TYPEID::TERRAN_REFINERYRICH:
+        case sc2::UNIT_TYPEID::ZERG_EXTRACTOR:
+        case sc2::UNIT_TYPEID::ZERG_EXTRACTORRICH: {
             Geyser obj(unit_);
 
             if (m_captured_geysers.Remove(obj))  // might be claimed geyser

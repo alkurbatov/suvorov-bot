@@ -136,8 +136,11 @@ bool IsRefinery::operator()(const sc2::Unit& unit_) const {
         return false;
 
     return unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR ||
+        unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_ASSIMILATORRICH ||
+        unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_REFINERY ||
+        unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_REFINERYRICH ||
         unit_.unit_type == sc2::UNIT_TYPEID::ZERG_EXTRACTOR ||
-        unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_REFINERY;
+        unit_.unit_type == sc2::UNIT_TYPEID::ZERG_EXTRACTORRICH;
 }
 
 IsIdleUnit::IsIdleUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
