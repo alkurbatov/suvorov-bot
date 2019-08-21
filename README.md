@@ -80,6 +80,23 @@ $ start Suvorov.sln
 $ bin\Debug\Suvorov.exe Ladder2017Season3\InterloperLE.SC2Map
 ```
 
+## Windows (nmake)
+```bat
+:: Get the project.
+$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git
+$ cd suvorov-bot
+
+:: Create build directory.
+$ mkdir build
+$ cd build
+
+:: Create makefiles.
+$ cmake ../ -G "NMake Makefiles"
+
+:: Build the project with nmake.
+$ nmake
+```
+
 ### Linux (make)
 ```bash
 # Get the project.
