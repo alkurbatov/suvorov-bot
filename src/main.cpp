@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
     gHistory.Init("history.log");
 
     sc2::Coordinator coordinator;
-    coordinator.LoadSettings(1, argv);
+    coordinator.LoadSettings(argc, argv);
 
     Dispatcher bot("TrainingDummy");
     coordinator.SetParticipants({
