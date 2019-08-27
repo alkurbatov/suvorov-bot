@@ -8,7 +8,12 @@
 #include "Plugin.h"
 
 struct Diagnosis : Plugin {
+    Diagnosis();
+
     void OnStep(Builder*) final;
 
     void OnGameEnd() final;
+
+ private:
+    bool m_draw_grids;
 };

@@ -81,29 +81,38 @@ void Debug::DrawText(const std::string& message_, const sc2::Point2DI& point_) c
     m_debug->DebugTextOut(message_, dst);
 }
 
-void Debug::DrawText(float value_, const sc2::Point2DI& point_) const {
-    sc2::Point3D dst = {
-        static_cast<float>(point_.x),
-        static_cast<float>(point_.y),
-        0.35f
-    };
-    m_debug->DebugTextOut(std::to_string(value_), dst);
+void Debug::DrawText(float value_, const sc2::Point3D& point_,
+    const sc2::Color& color_) const {
+    char buff[10] = {0};
+    std::snprintf(buff, sizeof(buff), "%.2f", static_cast<double>(value_));
+
+    m_debug->DebugTextOut(buff, {point_.x + 0.1f, point_.y + 0.1f, point_.z}, color_);
 }
 
 void Debug::DrawText(const std::string& message_, const sc2::Point3D& pos_) const {
     m_debug->DebugTextOut(message_, pos_);
 }
 
-void Debug::DrawSphere(const sc2::Point3D& center_, float radius_) const {
-    m_debug->DebugSphereOut(center_, radius_);
+void Debug::DrawSphere(const sc2::Point3D& center_, float radius_,
+    const sc2::Color& color_) const {
+    m_debug->DebugSphereOut(center_, radius_, color_);
 }
 
-void Debug::DrawBox(const sc2::Point3D& min_, const sc2::Point3D& max_) const {
-    m_debug->DebugBoxOut(min_, max_);
+void Debug::DrawTile(const sc2::Point3D& point_, const sc2::Color& color_) const {
+    DrawBox(
+        {point_.x + 0.1f, point_.y + 0.1f, point_.z},
+        {point_.x + 0.8f, point_.y + 0.8f, point_.z},
+        color_);
 }
 
-void Debug::DrawLine(const sc2::Point3D& start_, const sc2::Point3D& end_) const {
-    m_debug->DebugLineOut(start_, end_);
+void Debug::DrawBox(const sc2::Point3D& min_, const sc2::Point3D& max_,
+    const sc2::Color& color_) const {
+    m_debug->DebugBoxOut(min_, max_, color_);
+}
+
+void Debug::DrawLine(const sc2::Point3D& start_, const sc2::Point3D& end_,
+    const sc2::Color& color_) const {
+    m_debug->DebugLineOut(start_, end_, color_);
 }
 
 void Debug::EndGame() const {
@@ -146,6 +155,15 @@ const sc2::GameInfo& Observer::GameInfo() const {
 
 sc2::Point3D Observer::StartingLocation() const {
     return m_observer->GetStartLocation();
+}
+
+sc2::Point2D Observer::GetCameraPos() const {
+    return m_observer->GetCameraPos();
+}
+
+bool Observer::IsPlayableTile(const sc2::Point2DI& pos_) const {
+    auto info = GameInfo();
+    return sc2::Rect2DI(info.playable_min, info.playable_max).Contain(pos_);
 }
 
 float Observer::GetFoodCap() const {

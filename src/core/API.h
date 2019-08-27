@@ -61,15 +61,21 @@ struct Debug {
 
     void DrawText(const std::string& message_, const sc2::Point2DI& point_) const;
 
-    void DrawText(float value_, const sc2::Point2DI& point_) const;
+    void DrawText(float value_, const sc2::Point3D& point_,
+        const sc2::Color& color_ = sc2::Colors::White) const;
 
     void DrawText(const std::string& message_, const sc2::Point3D& pos_) const;
 
-    void DrawSphere(const sc2::Point3D& center_, float radius_) const;
+    void DrawSphere(const sc2::Point3D& center_, float radius_,
+        const sc2::Color& color_ = sc2::Colors::White) const;
 
-    void DrawBox(const sc2::Point3D& min_, const sc2::Point3D& max_) const;
+    void DrawTile(const sc2::Point3D& point_, const sc2::Color& color_) const;
 
-    void DrawLine(const sc2::Point3D& start_, const sc2::Point3D& end_) const;
+    void DrawBox(const sc2::Point3D& min_, const sc2::Point3D& max_,
+        const sc2::Color& color_ = sc2::Colors::White) const;
+
+    void DrawLine(const sc2::Point3D& start_, const sc2::Point3D& end_,
+        const sc2::Color& color_ = sc2::Colors::White) const;
 
     void EndGame() const;
 
@@ -97,6 +103,10 @@ struct Observer {
     const sc2::GameInfo& GameInfo() const;
 
     sc2::Point3D StartingLocation() const;
+
+    sc2::Point2D GetCameraPos() const;
+
+    bool IsPlayableTile(const sc2::Point2DI& pos_) const;
 
     float GetFoodCap() const;
 
