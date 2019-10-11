@@ -125,6 +125,7 @@ int main(int argc, char* argv[]) {
     std::cout << "Connecting to port " << options.GamePort << std::endl;
     coordinator.Connect(options.GamePort);
     coordinator.SetupPorts(num_agents, options.StartPort, false);
+    coordinator.SetRawAffectsSelection(true);
     coordinator.JoinGame();
     coordinator.SetTimeoutMS(10000);
     std::cout << " Successfully joined game" << std::endl;
