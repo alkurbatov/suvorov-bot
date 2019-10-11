@@ -79,7 +79,6 @@ void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
 
 void Dispatcher::OnStep() {
     Timer clock;
-    clock.Start();
 
     gHub->OnStep();
 
@@ -87,8 +86,6 @@ void Dispatcher::OnStep() {
         i->OnStep(m_builder.get());
 
     m_builder->OnStep();
-
-    clock.Finish();
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
