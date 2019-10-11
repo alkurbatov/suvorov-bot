@@ -1,33 +1,20 @@
 language: cpp
 
-matrix:
-  include:
-    - os: windows
-      env: BUILD_CONFIGURATION=Debug
-    - os: windows
-      env: BUILD_CONFIGURATION=Release
-    - os: linux
-      dist: trusty
-      group: travis_lts
-      sudo: required
-      env: BUILD_CONFIGURATION=Debug
-    - os: linux
-      dist: trusty
-      group: travis_lts
-      sudo: required
-      env: BUILD_CONFIGURATION=Release
-    - os: osx
-      osx_image: xcode9.1
-      env: BUILD_CONFIGURATION=Debug
-    - os: osx
-      osx_image: xcode9.1
-      env: BUILD_CONFIGURATION=Release
+env: 
+  - BUILD_CONFIGURATION=Debug
+  - BUILD_CONFIGURATION=Release
 
-before_install:
-  - . .travis/before-install.sh
+os: 
+  - linux
+  - osx
+  - windows
+
+dist: xenial
+
+osx_image: xcode9.1
 
 install:
-  - . .travis/install.sh
+  - curl -o cpplint.py https://raw.githubusercontent.com/google/styleguide/gh-pages/cpplint/cpplint.py
 
 script:
   - . .travis/lint.sh
