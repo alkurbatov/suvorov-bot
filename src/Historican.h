@@ -4,24 +4,16 @@
 
 #pragma once
 
-#include "core/API.h"
-
 #include <fstream>
 #include <iostream>
 
-struct Historican {
-    ~Historican();
+struct TypeWriter {
+    ~TypeWriter();
 
-    void Init(const std::string &filename_);
-
-    Historican& info();
-
-    Historican& warning();
-
-    Historican& error();
+    void RedirectToFile(const std::string& filename_);
 
     template <class T>
-    Historican& operator<<(const T& data_) {
+    TypeWriter& operator<<(const T& data_) {
         if (m_file.is_open())
             m_file << data_;
 
@@ -30,10 +22,23 @@ struct Historican {
         return *this;
     }
 
-    Historican& operator<<(std::ostream& (*manipulator_)(std::ostream&));
+    TypeWriter& operator<<(std::ostream& (*manipulator_)(std::ostream&));
 
  private:
     std::ofstream m_file;
 };
 
-extern Historican gHistory;
+struct Historican {
+    explicit Historican(const std::string topic_);
+
+    static void Init(const std::string& filename_);
+
+    TypeWriter& info() const;
+
+    TypeWriter& warning() const;
+
+    TypeWriter& error() const;
+
+ private:
+    std::string m_topic;
+};

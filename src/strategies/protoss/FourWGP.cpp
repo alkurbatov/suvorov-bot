@@ -5,6 +5,10 @@
 #include "FourWGP.h"
 #include "Historican.h"
 
+namespace {
+Historican gHistory("strategy.four_wgp");
+}  // namespace
+
 FourWGP::FourWGP(): Strategy(8.0f) {
 }
 

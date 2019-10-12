@@ -4,12 +4,15 @@
 
 #include "Historican.h"
 #include "Hub.h"
+#include "core/API.h"
 #include "core/Helpers.h"
 
 #include <algorithm>
 #include <cmath>
 
 namespace {
+Historican gHistory("hub");
+
 struct SortByDistance {
     explicit SortByDistance(const sc2::Point3D& point_);
 

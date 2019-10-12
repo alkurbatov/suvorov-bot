@@ -9,6 +9,10 @@
 
 #include <sc2api/sc2_map_info.h>
 
+namespace {
+Historican gHistory("plugin.diagnosis");
+}  // namespace
+
 Diagnosis::Diagnosis(): m_draw_grids(false) {
 }
 

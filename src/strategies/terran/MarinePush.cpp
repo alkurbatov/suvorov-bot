@@ -5,6 +5,10 @@
 #include "Historican.h"
 #include "MarinePush.h"
 
+namespace {
+Historican gHistory("strategy.marine_push");
+}  // namespace
+
 MarinePush::MarinePush(): Strategy(16.0f) {
 }
 

@@ -5,12 +5,14 @@
 #include "Helpers.h"
 #include "Historican.h"
 #include "Map.h"
+#include "core/API.h"
 
 #include "sc2lib/sc2_search.h"
 
 #include <cmath>
 
 namespace {
+Historican gHistory("map");
 
 const float PI = 3.1415927f;
 

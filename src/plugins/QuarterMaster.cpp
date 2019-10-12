@@ -10,6 +10,7 @@
 #include <numeric>
 
 namespace {
+Historican gHistory("plugin.quarter_master");
 
 struct CalcSupplies {
     float operator()(float sum, const sc2::Unit* unit_) const;

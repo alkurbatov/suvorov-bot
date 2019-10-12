@@ -3,35 +3,25 @@
 // Copyright (c) 2017-2019 Alexander Kurbatov
 
 #include "Historican.h"
+#include "core/API.h"
 
-Historican::~Historican() {
-    if (m_file.is_open())
-        m_file.close();
+namespace {
+    TypeWriter typeWriter;
 }
 
-void Historican::Init(const std::string& filename_) {
+void TypeWriter::RedirectToFile(const std::string& filename_) {
     if (m_file.is_open())
         m_file.close();
 
     m_file.open(filename_.c_str());
 }
 
-Historican& Historican::info() {
-    *this << "#" << gAPI->observer().GetGameLoop() << " [INFO] ";
-    return *this;
+TypeWriter::~TypeWriter() {
+    if (m_file.is_open())
+        m_file.close();
 }
 
-Historican& Historican::warning() {
-    *this << "#" << gAPI->observer().GetGameLoop() << " [WARNING] ";
-    return *this;
-}
-
-Historican& Historican::error() {
-    *this << "#" << gAPI->observer().GetGameLoop() << " [ERROR] ";
-    return *this;
-}
-
-Historican& Historican::operator<<(std::ostream& (*manipulator_)(std::ostream&)) {
+TypeWriter& TypeWriter::operator<<(std::ostream& (*manipulator_)(std::ostream&)) {
     if (m_file.is_open())
         m_file << manipulator_;
 
@@ -40,4 +30,27 @@ Historican& Historican::operator<<(std::ostream& (*manipulator_)(std::ostream&))
     return *this;
 }
 
-Historican gHistory;
+Historican::Historican(const std::string topic_): m_topic(topic_) {
+}
+
+void Historican::Init(const std::string& filename_) {
+    typeWriter.RedirectToFile(filename_);
+}
+
+TypeWriter& Historican::info() const {
+    typeWriter << "#" << gAPI->observer().GetGameLoop()
+        << " [INFO] " << m_topic << ": ";
+    return typeWriter;
+}
+
+TypeWriter& Historican::warning() const {
+    typeWriter << "#" << gAPI->observer().GetGameLoop()
+        << " [WARNING] " << m_topic << ": ";
+    return typeWriter;
+}
+
+TypeWriter& Historican::error() const {
+    typeWriter << "#" << gAPI->observer().GetGameLoop()
+        << " [ERROR] " << m_topic << ": ";
+    return typeWriter;
+}

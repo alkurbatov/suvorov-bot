@@ -6,6 +6,10 @@
 #include "Hub.h"
 #include "ZerglingFlood.h"
 
+namespace {
+Historican gHistory("strategy.zergling_flood");
+}  // namespace
+
 ZerglingFlood::ZerglingFlood(): Strategy(6.0f) {
 }
 

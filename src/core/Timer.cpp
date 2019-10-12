@@ -17,6 +17,7 @@ Timer::~Timer() {
     // Higher values could lead to ban and make the game much harder to play
     // in realtime mode.
     if (duration > 40000) {
-        gHistory.warning() << "Step processing took: " << duration << " mcs" << std::endl;
+        Historican("timer").warning()
+            << "Step processing took: " << duration << " mcs" << std::endl;
     }
 }

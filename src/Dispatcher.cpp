@@ -23,6 +23,10 @@
 #include <sc2api/sc2_common.h>
 #include <sc2api/sc2_unit.h>
 
+namespace {
+Historican gHistory("dispatcher");
+}  // namespace
+
 Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
     m_plugins.reserve(10);

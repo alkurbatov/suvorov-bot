@@ -11,6 +11,10 @@
 
 #include <algorithm>
 
+namespace {
+Historican gHistory("strategy");
+}  // namespace
+
 Strategy::Strategy(float attack_limit_):
     m_attack_limit(attack_limit_) {
 }
