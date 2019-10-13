@@ -2,6 +2,7 @@
 //
 // Copyright (c) 2017-2019 Alexander Kurbatov
 
+#include "Addon.h"
 #include "Blueprint.h"
 #include "Building.h"
 #include "Creature.h"
@@ -179,6 +180,24 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::RESEARCH_ZERGMISSILEWEAPONSLEVEL2:
         case sc2::ABILITY_ID::RESEARCH_ZERGMISSILEWEAPONSLEVEL3:
             return std::make_shared<Research>(sc2::UNIT_TYPEID::ZERG_EVOLUTIONCHAMBER);
+
+        case sc2::ABILITY_ID::BUILD_REACTOR_BARRACKS:
+        case sc2::ABILITY_ID::BUILD_TECHLAB_BARRACKS:
+            return std::make_shared<Addon>(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+
+        case sc2::ABILITY_ID::BUILD_REACTOR_FACTORY:
+        case sc2::ABILITY_ID::BUILD_TECHLAB_FACTORY:
+            return std::make_shared<Addon>(sc2::UNIT_TYPEID::TERRAN_FACTORY);
+
+        case sc2::ABILITY_ID::BUILD_REACTOR_STARPORT:
+        case sc2::ABILITY_ID::BUILD_TECHLAB_STARPORT:
+            return std::make_shared<Addon>(sc2::UNIT_TYPEID::TERRAN_STARPORT);
+
+        case sc2::ABILITY_ID::BUILD_REACTOR:
+        case sc2::ABILITY_ID::BUILD_TECHLAB:
+            // NOTE (alkurbatov): Instead please use
+            // BUILD_REACTOR_BARRACKS, BUILD_TECHLAB_FACTORY etc.
+            throw InvalidBuildCommand(ability_);
 
         default:
             return std::make_shared<Building>();

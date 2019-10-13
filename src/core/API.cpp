@@ -321,6 +321,10 @@ bool Observer::HasCreep(const sc2::Point2D& point_) const {
 Query::Query(sc2::QueryInterface* query_): m_query(query_) {
 }
 
+bool Query::CanBePlaced(sc2::ABILITY_ID ability_id_, const sc2::Point2D& point_) {
+    return m_query->Placement(ability_id_, point_);
+}
+
 bool Query::CanBePlaced(const Order& order_, const sc2::Point2D& point_) {
     return m_query->Placement(order_.ability_id, point_);
 }

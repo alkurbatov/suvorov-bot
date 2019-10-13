@@ -19,6 +19,7 @@ void MarinePush::OnGameStart(Builder* builder_) {
     builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
     builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_REFINERY);
     builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
+    builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
     builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
     builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
     builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_BARRACKS);

@@ -141,6 +141,8 @@ struct Observer {
 struct Query {
     explicit Query(sc2::QueryInterface* query_);
 
+    bool CanBePlaced(sc2::ABILITY_ID ability_id_, const sc2::Point2D& point_);
+
     bool CanBePlaced(const Order& order_, const sc2::Point2D& point_);
 
     std::vector<bool> CanBePlaced(
