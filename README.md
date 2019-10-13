@@ -20,6 +20,7 @@ Suvorov currently provides the following features:
 * Supports all available buildings upgrades (e.g. Orbital Command, Planetary Fortress, Lair).
 * Supports all available zerg units mutations (e.g. Overseer, Baneling, Ravager).
 * Calls down MULEs, casts chronoboost.
+* Builds Terran addons.
 * Warps in gate units.
 * Automatically builds new supplies when needed.
 * Supports launch under [Sc2LadderServer](https://github.com/Cryptyc/Sc2LadderServer).
@@ -74,7 +75,7 @@ $ cmake ../ -G "Visual Studio 15 2017 Win64"
 $ start Suvorov.sln
 
 :: Launch the bot with the specified path to a SC2 map, e.g.
-$ bin\Debug\Suvorov.exe Ladder2017Season3\InterloperLE.SC2Map
+$ bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
 ```
 
 ### Windows (nmake)
@@ -111,7 +112,7 @@ $ cmake ../
 $ make
 
 # Launch the bot with the specified absolute path to a SC2 map, e.g.
-$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
+$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.SC2Map"
 ```
 
 ### Linux (gmake)
@@ -131,7 +132,7 @@ $ cmake ../
 $ gmake
 
 # Launch the bot with the specified absolute path to a SC2 map, e.g.
-$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2017Season3/InterloperLE.SC2Map"
+$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.SC2Map"
 ```
 
 ### OS X (Xcode)
@@ -151,7 +152,7 @@ $ cmake ../ -G Xcode
 $ open Suvorov.xcodeproj/
 
 # Launch the bot with the specified path to a SC2 map, e.g.
-$ ./bin/Suvorov "Ladder2017Season3/InterloperLE.SC2Map"
+$ ./bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
 ```
 
 ### OS X (make)
@@ -171,7 +172,7 @@ $ cmake ../
 $ make
 
 # Launch the bot with the specified path to a SC2 map, e.g.
-$ ./bin/Suvorov "Ladder2017Season3/InterloperLE.SC2Map"
+$ ./bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
 ```
 
 ## Coding Standard
