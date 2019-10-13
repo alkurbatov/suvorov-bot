@@ -117,6 +117,11 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::RESEARCH_WARPGATE:
             return std::make_shared<Research>(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE);
 
+        case sc2::ABILITY_ID::RESEARCH_COMBATSHIELD:
+        case sc2::ABILITY_ID::RESEARCH_CONCUSSIVESHELLS:
+        case sc2::ABILITY_ID::RESEARCH_STIMPACK:
+            return std::make_shared<Research>(sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
+
         case sc2::ABILITY_ID::RESEARCH_HISECAUTOTRACKING:
         case sc2::ABILITY_ID::RESEARCH_NEOSTEELFRAME:
         case sc2::ABILITY_ID::RESEARCH_TERRANINFANTRYARMORLEVEL1:
