@@ -25,6 +25,9 @@ int main(int argc, char* argv[]) {
     sc2::Coordinator coordinator;
     coordinator.LoadSettings(argc, argv);
 
+    // NOTE (alkurbatov): Uncomment to start the game in full screen mode.
+    // coordinator.SetFullScreen(true);
+
     Dispatcher bot("TrainingDummy");
     coordinator.SetParticipants({
         CreateParticipant(sc2::Race::Random, &bot),
