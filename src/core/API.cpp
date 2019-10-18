@@ -195,6 +195,15 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
         // lair, hive and greater spire.
         // so we use a workaround.
         // See https://github.com/Blizzard/s2client-api/issues/191
+        case sc2::UNIT_TYPEID::TERRAN_GHOST:
+            data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_GHOSTACADEMY;
+            break;
+
+        case sc2::UNIT_TYPEID::TERRAN_MARAUDER:
+        case sc2::UNIT_TYPEID::TERRAN_REAPER:
+            data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB;
+            break;
+
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
             data.mineral_cost = 150;
             data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;

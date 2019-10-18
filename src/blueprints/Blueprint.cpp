@@ -7,6 +7,7 @@
 #include "Building.h"
 #include "Creature.h"
 #include "GateUnit.h"
+#include "HighTechUnit.h"
 #include "Mutation.h"
 #include "Queen.h"
 #include "Refinery.h"
@@ -88,11 +89,14 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_WIDOWMINE:
             return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_FACTORY);
 
-        case sc2::ABILITY_ID::TRAIN_GHOST:
         case sc2::ABILITY_ID::TRAIN_MARINE:
+            return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+
+        case sc2::ABILITY_ID::TRAIN_GHOST:
         case sc2::ABILITY_ID::TRAIN_MARAUDER:
         case sc2::ABILITY_ID::TRAIN_REAPER:
-            return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
+            return std::make_shared<HighTechUnit>(
+                sc2::UNIT_TYPEID::TERRAN_BARRACKS, sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
 
         case sc2::ABILITY_ID::TRAIN_QUEEN:
             return std::make_shared<Queen>();
