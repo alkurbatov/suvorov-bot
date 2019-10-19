@@ -16,7 +16,8 @@ struct Order {
         tech_requirement(data_.tech_requirement),
         unit_type_id(data_.unit_type_id),
         ability_id(data_.ability_id),
-        tech_alias(data_.tech_alias) {
+        tech_alias(data_.tech_alias),
+        assignee(0) {
         if (assignee_)
             assignee = assignee_->tag;
     }
