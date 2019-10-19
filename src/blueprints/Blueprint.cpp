@@ -81,13 +81,17 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::TRAIN_VIKINGFIGHTER:
             return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_STARPORT);
 
-        case sc2::ABILITY_ID::TRAIN_CYCLONE:
         case sc2::ABILITY_ID::TRAIN_HELLION:
         case sc2::ABILITY_ID::TRAIN_HELLBAT:
-        case sc2::ABILITY_ID::TRAIN_SIEGETANK:
-        case sc2::ABILITY_ID::TRAIN_THOR:
         case sc2::ABILITY_ID::TRAIN_WIDOWMINE:
             return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_FACTORY);
+
+        case sc2::ABILITY_ID::TRAIN_SIEGETANK:
+        case sc2::ABILITY_ID::TRAIN_THOR:
+        case sc2::ABILITY_ID::TRAIN_CYCLONE:
+          return std::make_shared<HighTechUnit>(
+                sc2::UNIT_TYPEID::TERRAN_FACTORY,
+                sc2::UNIT_TYPEID::TERRAN_FACTORYTECHLAB);
 
         case sc2::ABILITY_ID::TRAIN_MARINE:
             return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
