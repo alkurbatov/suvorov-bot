@@ -209,6 +209,15 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
             data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB;
             break;
 
+        case sc2::UNIT_TYPEID::TERRAN_BANSHEE:
+        case sc2::UNIT_TYPEID::TERRAN_RAVEN:
+            data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_STARPORTTECHLAB;
+            break;
+
+        case sc2::UNIT_TYPEID::TERRAN_BATTLECRUISER:
+            data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_FUSIONCORE;
+            break;
+
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
             data.mineral_cost = 150;
             data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKS;
