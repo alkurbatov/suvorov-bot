@@ -81,10 +81,6 @@ struct IsGasWorker {
     bool operator()(const sc2::Unit& unit_) const;
 };
 
-struct IsTownHall {
-    bool operator()(const sc2::Unit& unit_) const;
-};
-
 struct IsIdleTownHall {
     bool operator()(const sc2::Unit& unit_) const;
 };

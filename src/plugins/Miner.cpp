@@ -9,6 +9,7 @@
 #include "core/Order.h"
 
 #include <sc2api/sc2_typeenums.h>
+#include <sc2api/sc2_unit_filters.h>
 
 #include <vector>
 
@@ -17,7 +18,7 @@ const int mule_energy_cost = 50;
 
 void SecureMineralsIncome(Builder* builder_) {
     std::vector<Order> orders;
-    auto town_halls = gAPI->observer().GetUnits(IsTownHall());
+    auto town_halls = gAPI->observer().GetUnits(sc2::IsTownHall());
 
     for (const auto& i : town_halls()) {
         if (i->assigned_harvesters >= i->ideal_harvesters)
@@ -88,7 +89,7 @@ void Miner::OnStep(Builder* builder_) {
 }
 
 void Miner::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
-    if (!IsTownHall()(*unit_))
+    if (!sc2::IsTownHall()(*unit_))
         return;
 
     auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),

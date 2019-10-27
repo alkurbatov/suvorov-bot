@@ -6,6 +6,8 @@
 #include "Helpers.h"
 #include "Hub.h"
 
+#include <sc2api/sc2_unit_filters.h>
+
 IsUnit::IsUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
@@ -178,18 +180,9 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
     return false;
 }
 
-bool IsTownHall::operator()(const sc2::Unit& unit_) const {
-    return unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_NEXUS ||
-           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER ||
-           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND ||
-           unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS ||
-           unit_.unit_type == sc2::UNIT_TYPEID::ZERG_HATCHERY ||
-           unit_.unit_type == sc2::UNIT_TYPEID::ZERG_HIVE ||
-           unit_.unit_type == sc2::UNIT_TYPEID::ZERG_LAIR;
-}
-
 bool IsIdleTownHall::operator()(const sc2::Unit& unit_) const {
-    return IsTownHall()(unit_) && unit_.orders.empty() && unit_.build_progress == 1.0f;
+    return sc2::IsTownHall()(unit_) &&
+        unit_.orders.empty() && unit_.build_progress == 1.0f;
 }
 
 bool IsCommandCenter::operator()(const sc2::Unit& unit_) const {
