@@ -28,6 +28,9 @@ int main(int argc, char* argv[]) {
     // NOTE (alkurbatov): Uncomment to start the game in full screen mode.
     // coordinator.SetFullScreen(true);
 
+    // NOTE (alkurbatov): Uncomment to play at normal speed.
+    // coordinator.SetRealtime(true);
+
     Dispatcher bot("TrainingDummy");
     coordinator.SetParticipants({
         CreateParticipant(sc2::Race::Random, &bot),
@@ -38,9 +41,6 @@ int main(int argc, char* argv[]) {
     coordinator.StartGame(argv[1]);
 
     while (coordinator.Update()) {
-        // NOTE (alkurbatov): Slow down game speed for better look & feel
-        // while making experiments. Uncomment this if needed.
-        // sc2::SleepFor(15);
     }
 
     return 0;
