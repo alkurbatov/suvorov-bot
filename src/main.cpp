@@ -33,8 +33,8 @@ int main(int argc, char* argv[]) {
 
     Dispatcher bot("TrainingDummy");
     coordinator.SetParticipants({
-        CreateParticipant(sc2::Race::Random, &bot),
-        CreateComputer(sc2::Race::Random, sc2::Difficulty::CheatInsane)
+        CreateParticipant(sc2::Race::Random, &bot, "Suvorov"),
+        CreateComputer(sc2::Race::Random, sc2::Difficulty::CheatInsane, "CheatInsane")
     });
 
     coordinator.LaunchStarcraft();
@@ -117,12 +117,14 @@ int main(int argc, char* argv[]) {
     if (options.ComputerOpponent) {
         num_agents = 1;
         coordinator.SetParticipants({
-            CreateParticipant(sc2::Race::Random, &bot),
+            CreateParticipant(sc2::Race::Random, &bot, "Suvorov"),
             CreateComputer(options.ComputerRace, options.ComputerDifficulty)
             });
     } else {
         num_agents = 2;
-        coordinator.SetParticipants({CreateParticipant(sc2::Race::Terran, &bot)});
+        coordinator.SetParticipants({
+            CreateParticipant(sc2::Race::Random, &bot, "Suvorov")
+            });
     }
 
     std::cout << "Connecting to port " << options.GamePort << std::endl;
@@ -131,7 +133,7 @@ int main(int argc, char* argv[]) {
     coordinator.SetRawAffectsSelection(true);
     coordinator.JoinGame();
     coordinator.SetTimeoutMS(10000);
-    std::cout << " Successfully joined game" << std::endl;
+    std::cout << "Successfully joined game" << std::endl;
 
     while (coordinator.Update()) {
     }

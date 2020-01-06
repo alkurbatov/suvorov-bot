@@ -126,6 +126,8 @@ struct Observer {
 
     sc2::Race GetCurrentRace() const;
 
+    std::string GetEnemyName() const;
+
     const std::vector<sc2::ChatMessage>& GetChatMessages() const;
 
     uint32_t GetGameLoop() const;

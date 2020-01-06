@@ -329,6 +329,20 @@ sc2::Race Observer::GetCurrentRace() const {
     return m_observer->GetGameInfo().player_info[id - 1].race_actual;
 }
 
+std::string Observer::GetEnemyName() const {
+    for (auto& i : m_observer->GetGameInfo().player_info) {
+        if (i.player_id ==  m_observer->GetPlayerID())
+            continue;
+
+        if (i.player_name.empty())
+            return "Unknown";
+
+        return i.player_name;
+    }
+
+    return "Unknown";
+}
+
 const std::vector<sc2::ChatMessage>& Observer::GetChatMessages() const {
     return m_observer->GetChatMessages();
 }

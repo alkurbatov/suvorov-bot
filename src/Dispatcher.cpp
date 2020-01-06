@@ -42,6 +42,10 @@ void Dispatcher::OnGameStart() {
     m_plugins.clear();
     gHistory.info() << "New game started!" << std::endl;
 
+    // NOTE(alkurbatov): Either we are not allowed to retrieve names
+    // or this is another bug.
+    // gHistory.info() << "Enemy name: " << gAPI->observer().GetEnemyName() << std::endl;
+
     sc2::Race current_race = gAPI->observer().GetCurrentRace();
     gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
 
