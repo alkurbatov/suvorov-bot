@@ -331,7 +331,7 @@ sc2::Race Observer::GetCurrentRace() const {
 
 std::string Observer::GetEnemyName() const {
     for (auto& i : m_observer->GetGameInfo().player_info) {
-        if (i.player_id ==  m_observer->GetPlayerID())
+        if (i.player_id == m_observer->GetPlayerID())
             continue;
 
         if (i.player_name.empty())

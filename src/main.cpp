@@ -34,7 +34,12 @@ int main(int argc, char* argv[]) {
     Dispatcher bot("TrainingDummy");
     coordinator.SetParticipants({
         CreateParticipant(sc2::Race::Random, &bot, "Suvorov"),
-        CreateComputer(sc2::Race::Random, sc2::Difficulty::CheatInsane, "CheatInsane")
+        CreateComputer(
+            sc2::Race::Random,
+            sc2::Difficulty::CheatInsane,
+            sc2::AIBuild::Rush,
+            "CheatInsane"
+        )
     });
 
     coordinator.LaunchStarcraft();

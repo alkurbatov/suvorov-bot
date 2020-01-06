@@ -42,7 +42,7 @@ void Dispatcher::OnGameStart() {
     m_plugins.clear();
     gHistory.info() << "New game started!" << std::endl;
 
-    // NOTE(alkurbatov): Either we are not allowed to retrieve names
+    // NOTE (alkurbatov): Either we are not allowed to retrieve names
     // or this is another bug.
     // gHistory.info() << "Enemy name: " << gAPI->observer().GetEnemyName() << std::endl;
 
