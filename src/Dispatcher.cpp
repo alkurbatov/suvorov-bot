@@ -111,6 +111,9 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
+    gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
+        " is idle" << std::endl;
+
     gHub->OnUnitIdle(*unit_);
 
     for (const auto& i : m_plugins)
