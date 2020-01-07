@@ -2,7 +2,7 @@
 #
 # The MIT License (MIT)
 #
-# Copyright (c) 2017-2019 Alexander Kurbatov
+# Copyright (c) 2017-2020 Alexander Kurbatov
 
 echo "Configuring for ${BUILD_CONFIGURATION}"
 

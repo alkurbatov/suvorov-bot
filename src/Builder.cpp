@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2019 Alexander Kurbatov
+// Copyright (c) 2017-2020 Alexander Kurbatov
 
 #include "blueprints/Blueprint.h"
 #include "core/API.h"

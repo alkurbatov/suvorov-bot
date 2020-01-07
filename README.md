@@ -180,6 +180,6 @@ We follow slightly modified [Google C++ Style Guide](https://google.github.io/st
 See [.travis/lint.sh](.travis/lint.sh) for details.
 
 ## License
-Copyright (c) 2017-2019 Alexander Kurbatov
+Copyright (c) 2017-2020 Alexander Kurbatov
 
 Licensed under the [MIT license](LICENSE).
