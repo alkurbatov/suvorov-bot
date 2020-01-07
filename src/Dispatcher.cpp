@@ -82,7 +82,7 @@ void Dispatcher::OnGameEnd() {
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
     gHistory.info() << sc2::UnitTypeToName(building_->unit_type) <<
-        ": construction complete" << std::endl;
+        "(" << building_->tag << ") constructed" << std::endl;
 }
 
 void Dispatcher::OnStep() {
@@ -102,7 +102,7 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
         return;
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-        " was created" << std::endl;
+        "(" << unit_->tag << ") was created" << std::endl;
 
     gHub->OnUnitCreated(*unit_);
 
@@ -112,7 +112,7 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-        " is idle" << std::endl;
+         "(" << unit_->tag << ") is idle" << std::endl;
 
     gHub->OnUnitIdle(*unit_);
 
@@ -125,7 +125,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
         return;
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-        " was destroyed" << std::endl;
+         "(" << unit_->tag << ") was destroyed" << std::endl;
 
     gHub->OnUnitDestroyed(*unit_);
 
