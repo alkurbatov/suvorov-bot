@@ -116,6 +116,8 @@ struct Observer {
 
     uint32_t GetVespene() const;
 
+    uint32_t GetLarvaCount() const;
+
     float GetAvailableFood() const;
 
     sc2::UnitTypeData GetUnitTypeData(sc2::UNIT_TYPEID id_) const;

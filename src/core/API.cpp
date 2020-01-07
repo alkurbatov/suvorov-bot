@@ -182,6 +182,10 @@ uint32_t Observer::GetVespene() const {
     return m_observer->GetVespene();
 }
 
+uint32_t Observer::GetLarvaCount() const {
+    return m_observer->GetLarvaCount();
+}
+
 float Observer::GetAvailableFood() const {
     return GetFoodCap() - GetFoodUsed();
 }
