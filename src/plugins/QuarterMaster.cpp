@@ -88,28 +88,22 @@ void QuarterMaster::OnStep(Builder* builder_) {
         return;
 
     auto units = gAPI->observer().GetUnits();
-    const std::list<Order>& construction_orders = builder_->GetConstructionOrders();
-    const std::list<Order>& training_orders = builder_->GetTrainingOrders();
+    std::list<Order> orders = builder_->GetOrders();
 
     float expected_consumption =
         gAPI->observer().GetFoodUsed()
         + 8.0f  // NOTE (alkurbatov): Plan ahead.
         + std::accumulate(
-            training_orders.begin(),
-            training_orders.end(),
+            orders.begin(),
+            orders.end(),
             0.0f,
             CalcConsumption());
 
     float expected_supply =
         std::accumulate(units().begin(), units().end(), 0.0f, CalcSupplies())
         + std::accumulate(
-            construction_orders.begin(),
-            construction_orders.end(),
-            0.0f,
-            CalcSupplies())
-        + std::accumulate(
-            training_orders.begin(),
-            training_orders.end(),
+            orders.begin(),
+            orders.end(),
             0.0f,
             CalcSupplies());
 
@@ -123,15 +117,15 @@ void QuarterMaster::OnStep(Builder* builder_) {
 
     switch (gHub->GetCurrentRace()) {
         case sc2::Race::Terran:
-            builder_->ScheduleConstruction(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT, true);
+            builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT, true);
             return;
 
         case sc2::Race::Zerg:
-            builder_->ScheduleTraining(sc2::UNIT_TYPEID::ZERG_OVERLORD, nullptr, true);
+            builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::ZERG_OVERLORD, true);
             return;
 
         default:
-            builder_->ScheduleConstruction(sc2::UNIT_TYPEID::PROTOSS_PYLON, true);
+            builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_PYLON, true);
             return;
     }
 }

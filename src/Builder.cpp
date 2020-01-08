@@ -22,86 +22,65 @@ void Builder::OnStep() {
 
     m_available_food = gAPI->observer().GetAvailableFood();
 
-    auto it = m_construction_orders.begin();
-    while (it != m_construction_orders.end()) {
+    auto it = m_must_do.begin();
+    while (it != m_must_do.end()) {
         if (!Build(&(*it)))
             break;
 
-        it = m_construction_orders.erase(it);
+        it = m_must_do.erase(it);
     }
 
-    it = m_training_orders.begin();
-    while (it != m_training_orders.end()) {
+    it = m_nice_to_have.begin();
+    while (it != m_nice_to_have.end()) {
         if (!Build(&(*it))) {
             ++it;
             continue;
         }
 
-        it = m_training_orders.erase(it);
+        it = m_nice_to_have.erase(it);
     }
 }
 
-void Builder::ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent) {
+void Builder::ScheduleObligatoryOrder(sc2::UNIT_TYPEID id_, bool urgent) {
     sc2::UnitTypeData structure = gAPI->observer().GetUnitTypeData(id_);
 
     // Prevent deadlock.
     if (structure.tech_requirement != sc2::UNIT_TYPEID::INVALID &&
         gAPI->observer().CountUnitType(structure.tech_requirement) == 0 &&
-        CountScheduledStructures(structure.tech_requirement) == 0) {
-            ScheduleConstruction(structure.tech_requirement);
+        CountScheduledOrders(structure.tech_requirement) == 0) {
+            ScheduleObligatoryOrder(structure.tech_requirement);
     }
 
     if (urgent) {
-        m_construction_orders.emplace_front(structure);
+        m_must_do.emplace_front(structure);
         return;
     }
 
-    m_construction_orders.emplace_back(structure);
+    m_must_do.emplace_back(structure);
 }
 
 void Builder::ScheduleUpgrade(sc2::UPGRADE_ID id_) {
-    m_construction_orders.emplace_back(gAPI->observer().GetUpgradeData(id_));
+    m_must_do.emplace_back(gAPI->observer().GetUpgradeData(id_));
 }
 
-void Builder::ScheduleTraining(sc2::UNIT_TYPEID id_,
-    const sc2::Unit* unit_, bool urgent) {
-    auto data = gAPI->observer().GetUnitTypeData(id_);
-
-    if (urgent) {
-        m_training_orders.emplace_front(data, unit_);
-        return;
-    }
-
-    m_training_orders.emplace_back(data, unit_);
+void Builder::ScheduleOptionalOrder(sc2::UNIT_TYPEID id_, const sc2::Unit* assignee_) {
+    m_nice_to_have.emplace_back(gAPI->observer().GetUnitTypeData(id_), assignee_);
 }
 
-void Builder::ScheduleOrders(const std::vector<Order>& orders_) {
-    // FIXME (alkurbatov): this call must be more intellectual
-    // and able to select a proper queue.
-    for (const auto& i : orders_)
-        m_training_orders.emplace_back(i);
+std::list<Order> Builder::GetOrders() const {
+    std::list<Order> all_orders(m_must_do);
+
+    std::copy(
+        m_nice_to_have.begin(),
+        m_nice_to_have.end(),
+        std::back_inserter(all_orders));
+
+    return all_orders;
 }
 
-const std::list<Order>& Builder::GetConstructionOrders() const {
-    return m_construction_orders;
-}
-
-const std::list<Order>& Builder::GetTrainingOrders() const {
-    return m_training_orders;
-}
-
-int64_t Builder::CountScheduledStructures(sc2::UNIT_TYPEID id_) const {
-    return std::count_if(
-        m_construction_orders.begin(),
-        m_construction_orders.end(),
-        IsOrdered(id_));
-}
-
-int64_t Builder::CountScheduledTrainings(sc2::UNIT_TYPEID id_) const {
-    return std::count_if(
-        m_training_orders.begin(),
-        m_training_orders.end(),
-        IsOrdered(id_));
+int64_t Builder::CountScheduledOrders(sc2::UNIT_TYPEID id_) const {
+    return std::count_if(m_must_do.begin(), m_must_do.end(), IsOrdered(id_)) +
+        std::count_if(m_nice_to_have.begin(), m_nice_to_have.end(), IsOrdered(id_));
 }
 
 bool Builder::Build(Order* order_) {

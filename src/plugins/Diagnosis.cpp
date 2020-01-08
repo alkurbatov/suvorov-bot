@@ -71,10 +71,11 @@ void Diagnosis::OnStep(Builder* builder_) {
 
     gAPI->debug().DrawText("Build order:");
 
-    if (builder_->GetConstructionOrders().empty()) {
+    std::list<Order> orders = builder_->GetOrders();
+    if (orders.empty()) {
         gAPI->debug().DrawText("Empty");
     } else {
-        for (const auto& i : builder_->GetConstructionOrders())
+        for (const auto& i : orders)
             gAPI->debug().DrawText(i.name);
     }
 

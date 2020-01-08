@@ -49,7 +49,7 @@ void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
             return;
 
         default:
-            builder_->ScheduleConstruction(unit_->unit_type.ToType(), true);
+            builder_->ScheduleObligatoryOrder(unit_->unit_type.ToType(), true);
             return;
     }
 }

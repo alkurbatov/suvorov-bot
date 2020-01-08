@@ -29,8 +29,8 @@ void ExtraDrone::OnUnitCreated(const sc2::Unit* unit_, Builder* builder_) {
         if (gAPI->observer().CountUnitType(sc2::UNIT_TYPEID::ZERG_DRONE) < 14)
             return;
 
-        builder_->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_DRONE, true);
-        builder_->ScheduleConstruction(sc2::UNIT_TYPEID::ZERG_EXTRACTOR, true);
+        builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::ZERG_DRONE, true);
+        builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::ZERG_EXTRACTOR, true);
         m_state = State::WAIT_EXTRACTOR_CREATION;
         return;
     }

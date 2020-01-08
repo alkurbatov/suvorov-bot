@@ -18,22 +18,20 @@ struct Builder {
 
     void OnUnitCreated(const sc2::Unit& unit_);
 
-    void ScheduleConstruction(sc2::UNIT_TYPEID id_, bool urgent = false);
+    // NOTE (alkurbatov): Obligatory orders are primarily executed
+    // according to order in the queue.
+    void ScheduleObligatoryOrder(sc2::UNIT_TYPEID id_, bool urgent = false);
+
+    // NOTE (alkurbatov): Optional orders are executed if we have
+    // free resources available. As many as possible orders will be executed.
+    void ScheduleOptionalOrder(sc2::UNIT_TYPEID id_,
+        const sc2::Unit* assignee_ = nullptr);
 
     void ScheduleUpgrade(sc2::UPGRADE_ID id_);
 
-    void ScheduleTraining(sc2::UNIT_TYPEID id_,
-        const sc2::Unit* unit_ = nullptr, bool urgent = false);
+    std::list<Order> GetOrders() const;
 
-    void ScheduleOrders(const std::vector<Order>& orders_);
-
-    const std::list<Order>& GetConstructionOrders() const;
-
-    const std::list<Order>& GetTrainingOrders() const;
-
-    int64_t CountScheduledStructures(sc2::UNIT_TYPEID id_) const;
-
-    int64_t CountScheduledTrainings(sc2::UNIT_TYPEID id_) const;
+    int64_t CountScheduledOrders(sc2::UNIT_TYPEID id_) const;
 
  private:
     bool Build(Order* order_);
@@ -43,6 +41,6 @@ struct Builder {
 
     float m_available_food;
 
-    std::list<Order> m_construction_orders;
-    std::list<Order> m_training_orders;
+    std::list<Order> m_must_do;
+    std::list<Order> m_nice_to_have;
 };

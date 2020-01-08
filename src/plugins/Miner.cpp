@@ -17,7 +17,6 @@ namespace {
 const int mule_energy_cost = 50;
 
 void SecureMineralsIncome(Builder* builder_) {
-    std::vector<Order> orders;
     auto town_halls = gAPI->observer().GetUnits(sc2::IsTownHall());
 
     for (const auto& i : town_halls()) {
@@ -27,22 +26,18 @@ void SecureMineralsIncome(Builder* builder_) {
         if (!i->orders.empty())
             continue;
 
-        if (builder_->CountScheduledTrainings(gHub->GetCurrentWorkerType()) > 0)
+        if (builder_->CountScheduledOrders(gHub->GetCurrentWorkerType()) > 0)
             continue;
 
         // FIXME (alkurbatov): We should set an assignee for drones
         // and pick a larva closest to the assignee.
         if (gHub->GetCurrentRace() == sc2::Race::Zerg) {
-            orders.emplace_back(gAPI->observer().GetUnitTypeData(
-                sc2::UNIT_TYPEID::ZERG_DRONE));
+            builder_->ScheduleOptionalOrder(sc2::UNIT_TYPEID::ZERG_DRONE);
             continue;
         }
 
-        orders.emplace_back(gAPI->observer().GetUnitTypeData(
-            gHub->GetCurrentWorkerType()), i);
+        builder_->ScheduleOptionalOrder(gHub->GetCurrentWorkerType(), i);
     }
-
-    builder_->ScheduleOrders(orders);
 }
 
 void SecureVespeneIncome() {
