@@ -16,7 +16,7 @@
 #include "plugins/RepairMan.h"
 #include "plugins/QuarterMaster.h"
 #include "plugins/WarpSmith.h"
-#include "strategies/protoss/FourWGP.h"
+#include "strategies/protoss/ChargelotPush.h"
 #include "strategies/terran/MarinePush.h"
 #include "strategies/zerg/ZerglingFlood.h"
 
@@ -57,7 +57,7 @@ void Dispatcher::OnGameStart() {
     // FIXME (alkurbatov): Implement smarter strategy picker.
     if (current_race == sc2::Race::Protoss) {
         m_plugins.emplace_back(new WarpSmith());
-        m_plugins.emplace_back(new FourWGP());
+        m_plugins.emplace_back(new ChargelotPush());
     } else if (current_race == sc2::Race::Terran) {
         m_plugins.emplace_back(new MarinePush());
     } else if (current_race == sc2::Race::Zerg) {
