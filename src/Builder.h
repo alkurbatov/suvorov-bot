@@ -27,7 +27,9 @@ struct Builder {
     void ScheduleOptionalOrder(sc2::UNIT_TYPEID id_,
         const sc2::Unit* assignee_ = nullptr);
 
-    void ScheduleUpgrade(sc2::UPGRADE_ID id_);
+    void ScheduleObligatoryOrder(sc2::UPGRADE_ID id_);
+
+    void ScheduleOptionalOrder(sc2::UPGRADE_ID id_);
 
     std::list<Order> GetOrders() const;
 

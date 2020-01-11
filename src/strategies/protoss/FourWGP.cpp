@@ -18,7 +18,7 @@ void FourWGP::OnGameStart(Builder* builder_) {
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_PYLON);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_CYBERNETICSCORE);
-    builder_->ScheduleUpgrade(sc2::UPGRADE_ID::WARPGATERESEARCH);
+    builder_->ScheduleObligatoryOrder(sc2::UPGRADE_ID::WARPGATERESEARCH);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::PROTOSS_GATEWAY);

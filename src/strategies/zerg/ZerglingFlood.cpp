@@ -24,7 +24,7 @@ void ZerglingFlood::OnGameStart(Builder* builder_) {
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::ZERG_EXTRACTOR);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::ZERG_QUEEN);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::ZERG_OVERLORD);
-    builder_->ScheduleUpgrade(sc2::UPGRADE_ID::ZERGLINGMOVEMENTSPEED);
+    builder_->ScheduleObligatoryOrder(sc2::UPGRADE_ID::ZERGLINGMOVEMENTSPEED);
 }
 
 void ZerglingFlood::OnUnitIdle(const sc2::Unit* unit_, Builder* builder_) {

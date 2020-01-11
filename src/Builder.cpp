@@ -59,8 +59,12 @@ void Builder::ScheduleObligatoryOrder(sc2::UNIT_TYPEID id_, bool urgent) {
     m_must_do.emplace_back(structure);
 }
 
-void Builder::ScheduleUpgrade(sc2::UPGRADE_ID id_) {
+void Builder::ScheduleObligatoryOrder(sc2::UPGRADE_ID id_) {
     m_must_do.emplace_back(gAPI->observer().GetUpgradeData(id_));
+}
+
+void Builder::ScheduleOptionalOrder(sc2::UPGRADE_ID id_) {
+    m_nice_to_have.emplace_back(gAPI->observer().GetUpgradeData(id_));
 }
 
 void Builder::ScheduleOptionalOrder(sc2::UNIT_TYPEID id_, const sc2::Unit* assignee_) {
