@@ -58,7 +58,7 @@ void CallDownMULE() {
     if (orbitals.Empty())
         return;
 
-    auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
+    auto units = gAPI->observer().GetUnits(sc2::IsVisibleMineralPatch(),
         sc2::Unit::Alliance::Neutral);
 
     for (const auto& i : orbitals()) {
@@ -87,7 +87,7 @@ void Miner::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
     if (!sc2::IsTownHall()(*unit_))
         return;
 
-    auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
+    auto units = gAPI->observer().GetUnits(sc2::IsVisibleMineralPatch(),
         sc2::Unit::Alliance::Neutral);
 
     const sc2::Unit* mineral_target = units.GetClosestUnit(unit_->pos);
@@ -98,7 +98,7 @@ void Miner::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
 }
 
 void Miner::OnUnitIdle(const sc2::Unit* unit_, Builder*) {
-    auto units = gAPI->observer().GetUnits(IsVisibleMineralPatch(),
+    auto units = gAPI->observer().GetUnits(sc2::IsVisibleMineralPatch(),
         sc2::Unit::Alliance::Neutral);
 
     switch (unit_->unit_type.ToType()) {

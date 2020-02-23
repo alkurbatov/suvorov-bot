@@ -91,46 +91,15 @@ bool IsCombatUnit::operator()(const sc2::Unit& unit_) const {
     }
 }
 
-bool IsVisibleMineralPatch::operator()(const sc2::Unit& unit_) const {
-    return unit_.mineral_contents > 0;
-}
-
 bool IsFoggyResource::operator()(const sc2::Unit& unit_) const {
-    switch (unit_.unit_type.ToType()) {
-        // Mineral types.
-        case sc2::UNIT_TYPEID::NEUTRAL_BATTLESTATIONMINERALFIELD750:
-        case sc2::UNIT_TYPEID::NEUTRAL_BATTLESTATIONMINERALFIELD:
-        case sc2::UNIT_TYPEID::NEUTRAL_LABMINERALFIELD750:
-        case sc2::UNIT_TYPEID::NEUTRAL_LABMINERALFIELD:
-        case sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD750:
-        case sc2::UNIT_TYPEID::NEUTRAL_MINERALFIELD:
-        case sc2::UNIT_TYPEID::NEUTRAL_PURIFIERMINERALFIELD750:
-        case sc2::UNIT_TYPEID::NEUTRAL_PURIFIERMINERALFIELD:
-        case sc2::UNIT_TYPEID::NEUTRAL_PURIFIERRICHMINERALFIELD750:
-        case sc2::UNIT_TYPEID::NEUTRAL_PURIFIERRICHMINERALFIELD:
-        case sc2::UNIT_TYPEID::NEUTRAL_RICHMINERALFIELD750:
-        case sc2::UNIT_TYPEID::NEUTRAL_RICHMINERALFIELD:
+    if (!sc2::IsGeyser()(unit_) && !sc2::IsMineralPatch()(unit_))
+        return false;
 
-        // Geyser types.
-        case sc2::UNIT_TYPEID::NEUTRAL_VESPENEGEYSER:
-        case sc2::UNIT_TYPEID::NEUTRAL_PROTOSSVESPENEGEYSER:
-        case sc2::UNIT_TYPEID::NEUTRAL_SPACEPLATFORMGEYSER:
-        case sc2::UNIT_TYPEID::NEUTRAL_PURIFIERVESPENEGEYSER:
-        case sc2::UNIT_TYPEID::NEUTRAL_SHAKURASVESPENEGEYSER:
-        case sc2::UNIT_TYPEID::NEUTRAL_RICHVESPENEGEYSER:
-            return unit_.display_type != sc2::Unit::DisplayType::Visible;
-
-        default:
-            return false;
-    }
-}
-
-bool IsVisibleGeyser::operator()(const sc2::Unit& unit_) const {
-    return unit_.vespene_contents > 0;
+    return unit_.display_type != sc2::Unit::DisplayType::Visible;
 }
 
 bool IsFreeGeyser::operator()(const sc2::Unit& unit_) const {
-    return IsVisibleGeyser()(unit_) && !gHub->IsOccupied(unit_);
+    return sc2::IsVisibleGeyser()(unit_) && !gHub->IsOccupied(unit_);
 }
 
 bool IsRefinery::operator()(const sc2::Unit& unit_) const {

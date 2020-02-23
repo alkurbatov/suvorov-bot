@@ -7,6 +7,8 @@
 #include "core/API.h"
 #include "core/Helpers.h"
 
+#include <sc2api/sc2_unit_filters.h>
+
 #include <algorithm>
 #include <cmath>
 
@@ -199,7 +201,7 @@ bool Hub::IsTargetOccupied(const sc2::UnitOrder& order_) const {
 }
 
 void Hub::ClaimObject(const sc2::Unit& unit_) {
-    if (IsVisibleGeyser()(unit_)) {
+    if (sc2::IsVisibleGeyser()(unit_)) {
         m_captured_geysers.Add(Geyser(unit_));
         gHistory.info() << "Claim object " <<
             sc2::UnitTypeToName(unit_.unit_type) << std::endl;
