@@ -101,6 +101,12 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
     if (unit_->alliance != sc2::Unit::Alliance::Self || IsGasWorker()(*unit_))
         return;
 
+    if (unit_->display_type == sc2::Unit::DisplayType::Placeholder) {
+        gHistory.info() <<"Placeholder of " << sc2::UnitTypeToName(unit_->unit_type) <<
+            " was detected" << std::endl;
+        return;
+    }
+
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
         "(" << unit_->tag << ") was created" << std::endl;
 
