@@ -46,7 +46,7 @@ Feel free to post questions on the unofficial Starcraft II AI Discord server. [I
 
 4. A compiler with C++14 support.
 
-5. Windows: Download and install [Visual Studio](https://www.visualstudio.com/downloads/)
+5. Windows: Download and install Visual Studio ([2019](https://www.visualstudio.com/downloads/) or older).
 
 6. Linux: Install 'gcc-c++'.
 
@@ -68,7 +68,10 @@ $ cd suvorov-bot
 $ mkdir build
 $ cd build
 
-:: Generate VS solution.
+:: Create Visual Studio project files.
+:: For Visual Studio 2019.
+$ cmake ../ -G "Visual Studio 16 2019"
+:: For Visual Studio 2017.
 $ cmake ../ -G "Visual Studio 15 2017 Win64"
 
 :: Build the project using Visual Studio.
