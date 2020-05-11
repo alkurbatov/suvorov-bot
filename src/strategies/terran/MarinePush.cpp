@@ -9,7 +9,7 @@ namespace {
 Historican gHistory("strategy.marine_push");
 }  // namespace
 
-MarinePush::MarinePush(): Strategy(1600.0f) {
+MarinePush::MarinePush(): Strategy(16.0f) {
 }
 
 void MarinePush::OnGameStart(Builder* builder_) {
