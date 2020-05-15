@@ -33,7 +33,7 @@ targets_t PickTargets() {
         if (i->orders.empty())
             continue;
 
-        if (!i->buffs.empty() && i->buffs.front() == sc2::BUFF_ID::CHRONOBOOSTED)
+        if (!i->buffs.empty() && i->buffs.front() == sc2::BUFF_ID::CHRONOBOOSTENERGYCOST)
             continue;
 
         targets.push(*i);
@@ -66,7 +66,7 @@ void WarpSmith::OnStep(Builder*) {
         if (i->energy < chronoboost_cost)
             continue;
 
-        gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CHRONOBOOST, targets.front());
+        gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CHRONOBOOSTENERGYCOST, targets.front());
         targets.pop();
     }
 }

@@ -27,6 +27,7 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::BUILD_ASSIMILATOR:
             return std::make_shared<Refinery>();
 
+        case sc2::ABILITY_ID::MORPH_BANELING:
         case sc2::ABILITY_ID::MORPH_BROODLORD:
         case sc2::ABILITY_ID::MORPH_GREATERSPIRE:
         case sc2::ABILITY_ID::MORPH_HIVE:
@@ -36,7 +37,6 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
         case sc2::ABILITY_ID::MORPH_OVERSEER:
         case sc2::ABILITY_ID::MORPH_PLANETARYFORTRESS:
         case sc2::ABILITY_ID::MORPH_RAVAGER:
-        case sc2::ABILITY_ID::TRAIN_BANELING:
             return std::make_shared<Mutation>();
 
         case sc2::ABILITY_ID::TRAIN_ADEPT:
