@@ -66,7 +66,8 @@ void WarpSmith::OnStep(Builder*) {
         if (i->energy < chronoboost_cost)
             continue;
 
-        gAPI->action().Cast(*i, sc2::ABILITY_ID::EFFECT_CHRONOBOOSTENERGYCOST, targets.front());
+        gAPI->action().Cast(*i,
+            sc2::ABILITY_ID::EFFECT_CHRONOBOOSTENERGYCOST, targets.front());
         targets.pop();
     }
 }
