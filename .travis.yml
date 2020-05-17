@@ -18,5 +18,4 @@ install:
 
 script:
   - .travis/lint.sh
-  - .travis/configure.sh
   - .travis/build.sh
