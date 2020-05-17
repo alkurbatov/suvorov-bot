@@ -4,6 +4,8 @@
 #
 # Copyright (c) 2017-2020 Alexander Kurbatov
 
+set -ev
+
 python cpplint.py \
     --linelength=90 \
     --filter=-build/header_guard,-build/include,-build/c++11 \

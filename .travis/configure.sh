@@ -6,6 +6,8 @@
 
 # On Windows, configures path to VS2019 to give cmake a hint where to search it.
 
+set -ev
+
 echo "Configuring for ${BUILD_CONFIGURATION}"
 
 if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
