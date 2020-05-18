@@ -6,7 +6,7 @@
 
 set -ev
 
-if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+if [[ "${TRAVIS_OS_NAME}" == "windows" ]]; then
   choco install visualstudio2019community
   choco install visualstudio2019-workload-nativedesktop
 fi
