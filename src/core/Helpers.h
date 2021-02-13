@@ -55,10 +55,6 @@ struct IsIdleUnit {
     sc2::UNIT_TYPEID m_type;
 };
 
-struct IsWorker {
-    bool operator()(const sc2::Unit& unit_) const;
-};
-
 struct IsGasWorker {
     bool operator()(const sc2::Unit& unit_) const;
 };

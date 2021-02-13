@@ -121,14 +121,8 @@ bool IsIdleUnit::operator()(const sc2::Unit& unit_) const {
     return IsUnit(m_type)(unit_) && unit_.orders.empty();
 }
 
-bool IsWorker::operator()(const sc2::Unit& unit_) const {
-    return unit_.unit_type == sc2::UNIT_TYPEID::TERRAN_SCV ||
-        unit_.unit_type == sc2::UNIT_TYPEID::ZERG_DRONE ||
-        unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_PROBE;
-}
-
 bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
-    if (!IsWorker()(unit_))
+    if (!sc2::IsWorker()(unit_))
         return false;
 
     if (unit_.orders.empty())
