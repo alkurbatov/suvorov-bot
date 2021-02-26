@@ -209,7 +209,6 @@ sc2::UnitTypeData Observer::GetUnitTypeData(sc2::UNIT_TYPEID id_) const {
             break;
 
         case sc2::UNIT_TYPEID::TERRAN_MARAUDER:
-        case sc2::UNIT_TYPEID::TERRAN_REAPER:
             data.tech_requirement = sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB;
             break;
 
