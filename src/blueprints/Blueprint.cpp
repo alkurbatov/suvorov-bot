@@ -99,11 +99,11 @@ std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
                 sc2::UNIT_TYPEID::TERRAN_FACTORYTECHLAB);
 
         case sc2::ABILITY_ID::TRAIN_MARINE:
+        case sc2::ABILITY_ID::TRAIN_REAPER:
             return std::make_shared<Unit>(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
 
         case sc2::ABILITY_ID::TRAIN_GHOST:
         case sc2::ABILITY_ID::TRAIN_MARAUDER:
-        case sc2::ABILITY_ID::TRAIN_REAPER:
             return std::make_shared<HighTechUnit>(
                 sc2::UNIT_TYPEID::TERRAN_BARRACKS,
                 sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
