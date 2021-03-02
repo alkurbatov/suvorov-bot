@@ -133,6 +133,8 @@ struct Hub {
 
     Worker* GetClosestFreeWorker(const sc2::Point2D& location_);
 
+    sc2::UNIT_TYPEID GetCurrentSupplyType() const;
+
     sc2::UNIT_TYPEID GetCurrentWorkerType() const;
 
     bool AssignRefineryConstruction(Order* order_, const sc2::Unit* geyser_);
@@ -152,6 +154,7 @@ struct Hub {
  private:
     sc2::Race m_current_race;
     Expansions m_expansions;
+    sc2::UNIT_TYPEID m_current_supply_type;
     sc2::UNIT_TYPEID m_current_worker_type;
 
     Cache<Geyser> m_captured_geysers;

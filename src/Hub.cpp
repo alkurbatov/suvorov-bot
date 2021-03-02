@@ -37,20 +37,24 @@ bool SortByDistance::operator()(const Expansion& lhs_, const Expansion& rhs_) co
 
 Hub::Hub(sc2::Race current_race_, const Expansions& expansions_):
     m_current_race(current_race_), m_expansions(expansions_),
+    m_current_supply_type(sc2::UNIT_TYPEID::INVALID),
     m_current_worker_type(sc2::UNIT_TYPEID::INVALID) {
     std::sort(m_expansions.begin(), m_expansions.end(),
         SortByDistance(gAPI->observer().StartingLocation()));
 
     switch (m_current_race) {
         case sc2::Race::Protoss:
+            m_current_supply_type = sc2::UNIT_TYPEID::PROTOSS_PYLON;
             m_current_worker_type = sc2::UNIT_TYPEID::PROTOSS_PROBE;
             return;
 
         case sc2::Race::Terran:
+            m_current_supply_type = sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT;
             m_current_worker_type = sc2::UNIT_TYPEID::TERRAN_SCV;
             return;
 
         case sc2::Race::Zerg:
+            m_current_supply_type = sc2::UNIT_TYPEID::ZERG_OVERLORD;
             m_current_worker_type = sc2::UNIT_TYPEID::ZERG_DRONE;
             return;
 
@@ -219,6 +223,10 @@ Worker* Hub::GetClosestFreeWorker(const sc2::Point2D& location_) {
 
     m_free_workers.Swap(*closest_worker, m_busy_workers);
     return &m_busy_workers.Back();
+}
+
+sc2::UNIT_TYPEID Hub::GetCurrentSupplyType() const {
+    return m_current_supply_type;
 }
 
 sc2::UNIT_TYPEID Hub::GetCurrentWorkerType() const {
