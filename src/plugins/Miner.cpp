@@ -20,10 +20,10 @@ void SecureMineralsIncome(Builder* builder_) {
     auto town_halls = gAPI->observer().GetUnits(sc2::IsTownHall());
 
     for (const auto& i : town_halls()) {
-        if (i->assigned_harvesters >= i->ideal_harvesters)
+        if (!i->orders.empty() || i->build_progress != BUILD_FINISHED)
             continue;
 
-        if (!i->orders.empty())
+        if (i->assigned_harvesters > i->ideal_harvesters)
             continue;
 
         if (builder_->CountScheduledOrders(gHub->GetCurrentWorkerType()) > 0)
@@ -73,6 +73,69 @@ void CallDownMULE() {
     }
 }
 
+const Expansion* GetBestMiningExpansionNear(const sc2::Unit* unit_) {
+    if (!unit_)
+        return nullptr;
+
+    sc2::Point2D worker_loc = unit_->pos;
+    float unsaturated_dist = std::numeric_limits<float>::max();
+    const Expansion* closest_unsaturated = nullptr;
+    float saturated_dist = std::numeric_limits<float>::max();
+    const Expansion* closest_saturated = nullptr;
+
+    std::vector<const Expansion*> saturated_expansions;
+
+    // Find closest unsaturated expansion
+    for (auto& i : gHub->GetExpansions()) {
+        if (i.owner != Owner::SELF)
+            continue;
+
+        const sc2::Unit* th = gAPI->observer().GetUnit(i.town_hall_tag);
+        if (th->build_progress < BUILD_FINISHED)
+            continue;
+
+        float dist = sc2::DistanceSquared2D(worker_loc, th->pos);
+
+        if (th->assigned_harvesters >= th->ideal_harvesters) {
+            if (dist < saturated_dist) {
+                closest_saturated = &i;
+                saturated_dist = dist;
+            }
+
+            continue;
+        }
+
+        if (dist < unsaturated_dist) {
+            closest_unsaturated = &i;
+            unsaturated_dist = dist;
+        }
+    }
+
+    if (closest_unsaturated != nullptr)
+        return closest_unsaturated;  // Return nearest unsaturated
+
+    return closest_saturated;  // No unsaturated, send to nearest saturated
+}
+
+void DistrubuteMineralWorker(const sc2::Unit* unit_) {
+    if (!unit_)
+        return;
+
+    sc2::Point2D target_loc = gAPI->observer().StartingLocation();
+    const Expansion* expansion = GetBestMiningExpansionNear(unit_);
+    if (expansion)
+        target_loc = expansion->town_hall_location;
+
+    auto patches = gAPI->observer().GetUnits(
+        sc2::IsVisibleMineralPatch(), sc2::Unit::Alliance::Neutral);
+    const sc2::Unit* mineral_target = patches.GetClosestUnit(target_loc);
+
+    if (!mineral_target)
+        return;
+
+    gAPI->action().Cast(*unit_, sc2::ABILITY_ID::SMART, *mineral_target);
+}
+
 }  // namespace
 
 void Miner::OnStep(Builder* builder_) {
@@ -84,37 +147,11 @@ void Miner::OnStep(Builder* builder_) {
 }
 
 void Miner::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
-    if (!sc2::IsTownHall()(*unit_))
-        return;
-
-    auto units = gAPI->observer().GetUnits(sc2::IsVisibleMineralPatch(),
-        sc2::Unit::Alliance::Neutral);
-
-    const sc2::Unit* mineral_target = units.GetClosestUnit(unit_->pos);
-    if (!mineral_target)
-        return;
-
-    gAPI->action().Cast(*unit_, sc2::ABILITY_ID::RALLY_WORKERS, *mineral_target);
+    if (unit_->unit_type == gHub->GetCurrentWorkerType())
+        DistrubuteMineralWorker(unit_);
 }
 
 void Miner::OnUnitIdle(const sc2::Unit* unit_, Builder*) {
-    auto units = gAPI->observer().GetUnits(sc2::IsVisibleMineralPatch(),
-        sc2::Unit::Alliance::Neutral);
-
-    switch (unit_->unit_type.ToType()) {
-        case sc2::UNIT_TYPEID::PROTOSS_PROBE:
-        case sc2::UNIT_TYPEID::TERRAN_SCV:
-        case sc2::UNIT_TYPEID::ZERG_DRONE: {
-            const sc2::Unit* mineral_target = units.GetClosestUnit(
-                gAPI->observer().StartingLocation());
-            if (!mineral_target)
-                return;
-
-            gAPI->action().Cast(*unit_, sc2::ABILITY_ID::SMART, *mineral_target);
-            break;
-        }
-
-        default:
-            break;
-    }
+    if (unit_->unit_type == gHub->GetCurrentWorkerType())
+        DistrubuteMineralWorker(unit_);
 }

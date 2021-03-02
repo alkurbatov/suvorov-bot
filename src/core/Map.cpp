@@ -94,7 +94,23 @@ sc2::Point3D Cluster::Center() const {
 }  // namespace
 
 Expansion::Expansion(const sc2::Point3D& town_hall_location_):
-    town_hall_location(town_hall_location_), owner(Owner::NEUTRAL) {
+    town_hall_location(town_hall_location_), owner(Owner::NEUTRAL),
+    town_hall_tag(sc2::NullTag), worker_tag(sc2::NullTag) {
+}
+
+void Expansion::SetOwner(const sc2::Unit& unit_, Owner owner_) {
+    town_hall_tag = unit_.tag;
+    owner = owner_;
+
+    // Terran worker_tag should remain as it constructs TownHall
+    if (gAPI->observer().GetCurrentRace() != sc2::Race::Terran)
+        worker_tag = sc2::NullTag;
+}
+
+void Expansion::RemoveOwner() {
+    owner = Owner::NEUTRAL;
+    town_hall_tag = sc2::NullTag;
+    worker_tag = sc2::NullTag;
 }
 
 Expansions CalculateExpansionLocations() {
@@ -151,6 +167,9 @@ Expansions CalculateExpansionLocations() {
 
         start_index += query_size[i.id];
     }
+
+    // Include start location. TownHall tag will be added during its OnCreated event.
+    expansions.emplace_back(gAPI->observer().StartingLocation());
 
     return expansions;
 }

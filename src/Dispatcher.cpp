@@ -145,6 +145,16 @@ void Dispatcher::OnUpgradeCompleted(sc2::UpgradeID id_) {
         i->OnUpgradeCompleted(id_);
 }
 
+void Dispatcher::OnUnitEnterVision(const sc2::Unit* unit_) {
+//    gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
+//        "(" << unit_->tag << ")  entered vision" << std::endl;
+
+    gHub->OnUnitEnterVision(*unit_);
+
+    for (const auto& i : m_plugins)
+        i->OnUnitEnterVision(unit_, m_builder.get());
+}
+
 void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
         const std::vector<std::string>& protocol_errors) {
     for (const auto i : client_errors) {

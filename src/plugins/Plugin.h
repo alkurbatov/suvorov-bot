@@ -30,6 +30,9 @@ struct Plugin {
     virtual void OnUpgradeCompleted(sc2::UpgradeID) {
     }
 
+    virtual void OnUnitEnterVision(const sc2::Unit*, Builder*) {
+    }
+
     virtual void OnGameEnd() {
     }
 };

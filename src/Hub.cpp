@@ -98,17 +98,9 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_NEXUS:
         case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
         case sc2::UNIT_TYPEID::ZERG_HATCHERY:
-            for (auto& i : m_expansions) {
-                if (std::floor(i.town_hall_location.x) != std::floor(unit_.pos.x) ||
-                        std::floor(i.town_hall_location.y) != std::floor(unit_.pos.y))
-                    continue;
-
-                i.owner = Owner::SELF;
-                gHistory.info() << "Capture region: (" <<
-                    unit_.pos.x << ", " << unit_.pos.y <<
-                    ")" << std::endl;
-                return;
-            }
+            CaptureExpansion(unit_);
+            gHistory.info() << "Capture region: (" << unit_.pos.x <<
+                ", " << unit_.pos.y << ")" << std::endl;
             return;
 
         default:
@@ -121,12 +113,28 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_PROBE:
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
-            if (m_busy_workers.Remove(Worker(unit_))) {
-                gHistory.info() << "Our busy worker was destroyed" << std::endl;
+            if (m_free_workers.Remove(Worker(unit_)))
                 return;
+
+            m_busy_workers.Remove(Worker(unit_));
+            gHistory.info() << "Our busy worker was destroyed" << std::endl;
+
+            auto it = std::find_if(m_expansions.begin(), m_expansions.end(),
+                [unit_](const Expansion& expansion_) {
+                    return expansion_.worker_tag == unit_.tag;
+                });
+
+            if (it == m_expansions.end())
+                return;
+
+            if (it->owner == Owner::CONTESTED)  // was enroute to build TownHall
+                it->RemoveOwner();
+
+            if (it->owner == Owner::SELF) {  // TownHall still under construction
+                // NOTE (impulsecloud): decide whether to cancel or send new worker
+                // may need military escort to clear region
             }
 
-            m_free_workers.Remove(Worker(unit_));
             return;
         }
 
@@ -152,17 +160,9 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_HATCHERY:
         case sc2::UNIT_TYPEID::ZERG_HIVE:
         case sc2::UNIT_TYPEID::ZERG_LAIR:
-            for (auto& i : m_expansions) {
-                if (std::floor(i.town_hall_location.x) != std::floor(unit_.pos.x) ||
-                        std::floor(i.town_hall_location.y) != std::floor(unit_.pos.y))
-                    continue;
-
-                i.owner = Owner::NEUTRAL;
-                gHistory.info() << "Lost region: (" <<
-                    unit_.pos.x << ", " << unit_.pos.y <<
-                    ")" << std::endl;
-                return;
-            }
+            RemoveExpansionOwner(unit_);
+            gHistory.info() << "Lost region: (" << unit_.pos.x
+            << ", " << unit_.pos.y << ")" << std::endl;
             return;
 
         default:
@@ -175,7 +175,7 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::PROTOSS_PROBE:
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
-            if (m_free_workers.Swap(Worker(unit_), m_busy_workers))
+            if (m_busy_workers.Swap(Worker(unit_), m_free_workers))
                 gHistory.info() << "Our busy worker has finished task" << std::endl;
 
             return;
@@ -193,6 +193,25 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
 
         default:
             break;
+    }
+}
+
+void Hub::OnUnitEnterVision(const sc2::Unit& unit_) {
+    switch (unit_.unit_type.ToType()) {
+        case sc2::UNIT_TYPEID::PROTOSS_NEXUS:
+        case sc2::UNIT_TYPEID::TERRAN_COMMANDCENTER:
+        case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
+        case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
+        case sc2::UNIT_TYPEID::ZERG_HATCHERY:
+        case sc2::UNIT_TYPEID::ZERG_HIVE:
+        case sc2::UNIT_TYPEID::ZERG_LAIR:
+            EnemyOwnsExpansion(unit_);
+            gHistory.info() << "Enemy owns region: (" << unit_.pos.x
+            << ", " << unit_.pos.y << ")" << std::endl;
+            return;
+
+        default:
+            return;
     }
 }
 
@@ -243,13 +262,13 @@ bool Hub::AssignRefineryConstruction(Order* order_, const sc2::Unit* geyser_) {
     return true;
 }
 
-bool Hub::AssignBuildTask(Order* order_, const sc2::Point2D& point_) {
+sc2::Tag Hub::AssignBuildTask(Order* order_, const sc2::Point2D& point_) {
     Worker* worker = GetClosestFreeWorker(point_);
     if (!worker)
-        return false;
+        return sc2::NullTag;
 
     worker->Build(order_, point_);
-    return true;
+    return worker->Tag();
 }
 
 void Hub::AssignVespeneHarvester(const sc2::Unit& refinery_) {
@@ -279,7 +298,7 @@ const Expansions& Hub::GetExpansions() const {
     return m_expansions;
 }
 
-const sc2::Point3D* Hub::GetNextExpansion() {
+Expansion*  Hub::GetNextExpansion() {
     auto it = std::find_if(m_expansions.begin(), m_expansions.end(),
         [](const Expansion& expansion_) {
             return expansion_.owner == Owner::NEUTRAL;
@@ -289,7 +308,44 @@ const sc2::Point3D* Hub::GetNextExpansion() {
         return nullptr;
 
     it->owner = Owner::CONTESTED;
-    return &(it->town_hall_location);
+    return &(*it);
+}
+
+Expansion* Hub::GetExpansionOfTownhall(const sc2::Unit& unit_) {
+    auto it = std::find_if(m_expansions.begin(), m_expansions.end(),
+        [unit_](const Expansion& e) {
+            return std::floor(e.town_hall_location.x) == std::floor(unit_.pos.x) &&
+                std::floor(e.town_hall_location.y) == std::floor(unit_.pos.y);
+        });
+
+    if (it == m_expansions.end())
+        return nullptr;
+
+    return &(*it);
+}
+
+void Hub::CaptureExpansion(const sc2::Unit& unit_) {
+    auto expansion = GetExpansionOfTownhall(unit_);
+    if (!expansion)
+        return;
+
+    expansion->SetOwner(unit_, Owner::SELF);
+}
+
+void Hub::EnemyOwnsExpansion(const sc2::Unit& unit_) {
+    auto expansion = GetExpansionOfTownhall(unit_);
+    if (!expansion)
+        return;
+
+    expansion->SetOwner(unit_, Owner::ENEMY);
+}
+
+void Hub::RemoveExpansionOwner(const sc2::Unit& unit_) {
+    auto expansion = GetExpansionOfTownhall(unit_);
+    if (!expansion)
+        return;
+
+    expansion->RemoveOwner();
 }
 
 std::unique_ptr<Hub> gHub;

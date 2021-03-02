@@ -6,6 +6,7 @@
 #include "Hub.h"
 #include "QuarterMaster.h"
 #include "core/API.h"
+#include "core/Helpers.h"
 
 #include <numeric>
 
@@ -24,7 +25,7 @@ float CalcSupplies::operator()(float sum, const sc2::Unit* unit_) const {
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND:
         case sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMANDFLYING:
         case sc2::UNIT_TYPEID::TERRAN_PLANETARYFORTRESS:
-            if (unit_->build_progress < 1.0f)
+            if (unit_->build_progress < BUILD_FINISHED)
                 return sum;
             return sum + 15.0f;
 
@@ -58,7 +59,7 @@ struct CalcConsumptionRate {
 };
 
 float CalcConsumptionRate::operator()(float sum, const sc2::Unit* unit_) const {
-    if (unit_->build_progress != 1.0f)
+    if (unit_->build_progress != BUILD_FINISHED)
         return sum;
 
     switch (unit_->unit_type.ToType()) {
