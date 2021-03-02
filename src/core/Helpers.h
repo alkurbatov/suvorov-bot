@@ -11,6 +11,8 @@
 
 #include <set>
 
+const float BUILD_FINISHED = 1.0f;
+
 struct IsUnit {
     explicit IsUnit(sc2::UNIT_TYPEID type_);
 

@@ -123,6 +123,8 @@ struct Hub {
 
     void OnUnitIdle(const sc2::Unit& unit_);
 
+    void OnUnitEnterVision(const sc2::Unit& unit_);
+
     bool IsOccupied(const sc2::Unit& unit_) const;
 
     bool IsTargetOccupied(const sc2::UnitOrder& order_) const;
@@ -139,7 +141,7 @@ struct Hub {
 
     bool AssignRefineryConstruction(Order* order_, const sc2::Unit* geyser_);
 
-    bool AssignBuildTask(Order* order_, const sc2::Point2D& point_);
+    sc2::Tag AssignBuildTask(Order* order_, const sc2::Point2D& point_);
 
     void AssignVespeneHarvester(const sc2::Unit& refinery_);
 
@@ -149,9 +151,19 @@ struct Hub {
 
     const Expansions& GetExpansions() const;
 
-    const sc2::Point3D* GetNextExpansion();
+    Expansion* GetNextExpansion();
+
+    const Expansion* GetBestMiningExpansionNear(const sc2::Unit* unit_) const;
 
  private:
+    Expansion* GetExpansionOfTownhall(const sc2::Unit& unit_);
+
+    void CaptureExpansion(const sc2::Unit& unit_);
+
+    void EnemyOwnsExpansion(const sc2::Unit& unit_);
+
+    void RemoveExpansionOwner(const sc2::Unit& unit_);
+
     sc2::Race m_current_race;
     Expansions m_expansions;
     sc2::UNIT_TYPEID m_current_supply_type;

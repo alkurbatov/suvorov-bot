@@ -32,6 +32,8 @@ struct Dispatcher: sc2::Agent {
 
     void OnUpgradeCompleted(sc2::UpgradeID id_) final;
 
+    void OnUnitEnterVision(const sc2::Unit* unit_) final;
+
     void OnError(const std::vector<sc2::ClientError>& client_errors,
         const std::vector<std::string>& protocol_errors = {}) final;
 
