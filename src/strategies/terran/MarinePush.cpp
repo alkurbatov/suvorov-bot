@@ -15,22 +15,17 @@ MarinePush::MarinePush(): Strategy(16.0f) {
 void MarinePush::OnGameStart(Builder* builder_) {
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_REFINERY);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_ORBITALCOMMAND);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKSTECHLAB);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
     builder_->ScheduleObligatoryOrder(sc2::UPGRADE_ID::SHIELDWALL);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKS);
-    builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
     builder_->ScheduleOptionalOrder(sc2::UPGRADE_ID::STIMPACK);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKSREACTOR);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKSREACTOR);
-    builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
-    builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_SUPPLYDEPOT);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKSREACTOR);
     builder_->ScheduleObligatoryOrder(sc2::UNIT_TYPEID::TERRAN_BARRACKSREACTOR);
 }
