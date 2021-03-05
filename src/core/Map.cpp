@@ -8,6 +8,7 @@
 #include "core/API.h"
 
 #include "sc2lib/sc2_search.h"
+#include <sc2api/sc2_unit_filters.h>
 
 #include <cmath>
 
@@ -50,7 +51,7 @@ size_t CalculateQueries(float radius, float step_size, const sc2::Point2D& cente
 struct Cluster {
     explicit Cluster(uint64_t id_);
 
-    void AddPoint(const sc2::Point3D& point_);
+    void AddResource(const sc2::Unit* resource_);
 
     float Height() const;
 
@@ -60,6 +61,7 @@ struct Cluster {
     sc2::Point3D center_of_mass;
     sc2::Point3D town_hall_location;
     std::vector<sc2::Point3D> points;
+    std::vector<const sc2::Unit*> resources;
 };
 
 typedef std::vector<Cluster> Clusters;
@@ -68,16 +70,18 @@ Cluster::Cluster(uint64_t id_): id(id_) {
     points.reserve(10);
 }
 
-void Cluster::AddPoint(const sc2::Point3D& point_) {
+void Cluster::AddResource(const sc2::Unit* resource_) {
+    resources.push_back(resource_);
+
     if (points.empty()) {
-        center_of_mass = point_;
+        center_of_mass = resource_->pos;
     } else {
         center_of_mass =
-            (center_of_mass * static_cast<float>(points.size() - 1) + point_)
+            (center_of_mass * static_cast<float>(points.size() - 1) + resource_->pos)
                 / static_cast<float>(points.size());
     }
 
-    points.push_back(point_);
+    points.push_back(resource_->pos);
 }
 
 float Cluster::Height() const {
@@ -95,6 +99,32 @@ sc2::Point3D Cluster::Center() const {
 
 Expansion::Expansion(const sc2::Point3D& town_hall_location_):
     town_hall_location(town_hall_location_), owner(Owner::NEUTRAL) {
+}
+
+void Expansion::AddResource(const sc2::Unit* resource_) {
+    if (sc2::IsGeyser()(resource_->unit_type))
+        geysers.push_back(resource_->tag);
+    else
+        minerals.push_back(resource_->tag);
+}
+
+const sc2::Unit* Expansion::getClosestMineralTo(const sc2::Point2D& point_) const {
+    float distance = std::numeric_limits<float>::max();
+
+    const sc2::Unit* target = nullptr;
+    for (const auto i : minerals) {
+        const sc2::Unit* unit = gAPI->observer().GetUnit(i);
+        if (!unit)
+            continue;
+
+        float d = sc2::DistanceSquared2D(unit->pos, point_);
+        if (d < distance) {
+            distance = d;
+            target = unit;
+        }
+    }
+
+    return target;
 }
 
 Expansions CalculateExpansionLocations() {
@@ -115,7 +145,7 @@ Expansions CalculateExpansionLocations() {
 
         for (auto& j : clusters) {
             if (sc2::DistanceSquared3D(i->pos, j.points.back()) < 225.0f) {
-                j.AddPoint(i->pos);
+                j.AddResource(&(*i));
                 cluster_found = true;
                 break;
             }
@@ -123,7 +153,7 @@ Expansions CalculateExpansionLocations() {
 
         if (!cluster_found) {
             clusters.emplace_back(clusters.size());
-            clusters.back().AddPoint(i->pos);
+            clusters.back().AddResource(&(*i));
         }
     }
 
@@ -146,11 +176,27 @@ Expansions CalculateExpansionLocations() {
                 queries[j].target_pos.y,
                 i.Height());
             expansions.emplace_back(town_hall_location);
+            for (auto res: i.resources)
+                expansions.back().AddResource(res);
             break;
         }
 
         start_index += query_size[i.id];
     }
+
+    // NOTE (implusecloud): Include start location, since CanBePlaced will fail
+    // TownHall tag will be added during its OnCreated event.
+    expansions.emplace_back(gAPI->observer().StartingLocation());
+    
+    auto minerals = gAPI->observer().GetUnits(
+        sc2::IsVisibleMineralPatch(), sc2::Unit::Alliance::Neutral);
+    for (auto& i : minerals())
+        expansions.back().AddResource(i);
+    
+    auto geysers = gAPI->observer().GetUnits(
+        sc2::IsVisibleGeyser(), sc2::Unit::Alliance::Neutral);
+    for (auto& i : geysers())
+        expansions.back().AddResource(i);
 
     return expansions;
 }

@@ -73,6 +73,42 @@ void CallDownMULE() {
     }
 }
 
+void DistrubuteMineralWorker(const sc2::Unit* unit_) {
+    if (!unit_)
+        return;
+
+    const Expansion* expansion_target = nullptr;
+    float target_dist = std::numeric_limits<float>::max();
+
+    for (auto& i : gHub->GetExpansions()) {
+        if (i.owner != Owner::SELF)
+            continue;
+
+        const sc2::Unit* th = gAPI->observer().GetUnit(i.town_hall_tag);
+        float dist = DistanceSquared2D(unit_->pos, th->pos);
+
+        if (dist < target_dist && th->build_progress == 1.0f
+            && th->assigned_harvesters < th->ideal_harvesters) {
+            target_dist = dist;
+            expansion_target = &i;
+        }
+    }
+
+    const sc2::Unit* mineral_target = nullptr;
+    if (expansion_target)
+        mineral_target = expansion_target->getClosestMineralTo(unit_->pos);
+    else {
+        mineral_target = gAPI->observer().GetUnits(
+        sc2::IsVisibleMineralPatch(), sc2::Unit::Alliance::Neutral)
+        .GetClosestUnit(gAPI->observer().StartingLocation());
+    }
+
+    if (!mineral_target)
+        return;
+
+    gAPI->action().Cast(*unit_, sc2::ABILITY_ID::SMART, *mineral_target);
+}
+
 }  // namespace
 
 void Miner::OnStep(Builder* builder_) {
