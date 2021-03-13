@@ -125,6 +125,11 @@ void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
         i->OnUnitIdle(unit_, m_builder.get());
 }
 
+void Dispatcher::OnUnitDamaged(const sc2::Unit* unit_, float health_, float shields_) {
+    for (const auto& i : m_plugins)
+        i->OnUnitDamaged(unit_, health_, shields_, m_builder.get());
+}
+
 void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
     if (unit_->alliance != sc2::Unit::Alliance::Self)
         return;
@@ -146,9 +151,6 @@ void Dispatcher::OnUpgradeCompleted(sc2::UpgradeID id_) {
 }
 
 void Dispatcher::OnUnitEnterVision(const sc2::Unit* unit_) {
-//    gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-//        "(" << unit_->tag << ")  entered vision" << std::endl;
-
     gHub->OnUnitEnterVision(*unit_);
 
     for (const auto& i : m_plugins)

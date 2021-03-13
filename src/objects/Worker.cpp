@@ -27,3 +27,8 @@ void Worker::GatherVespene(const sc2::Unit& target_) {
     gAPI->action().Cast(ToUnit(), sc2::ABILITY_ID::SMART, target_);
     m_job = Job::GATHERING_VESPENE;
 }
+
+void Worker::Repair(const sc2::Unit& target_) {
+    gAPI->action().Cast(ToUnit(), sc2::ABILITY_ID::EFFECT_REPAIR, target_);
+    m_job = Job::REPAIRING;
+}

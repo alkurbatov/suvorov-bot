@@ -271,6 +271,16 @@ sc2::Tag Hub::AssignBuildTask(Order* order_, const sc2::Point2D& point_) {
     return worker->Tag();
 }
 
+bool Hub::AssignRepairTask(const sc2::Unit& damaged_) {
+    const sc2::Point2D repair_location(damaged_.pos);
+    Worker* worker = GetClosestFreeWorker(repair_location);
+    if (!worker)
+        return false;
+
+    worker->Repair(damaged_);
+    return true;
+}
+
 void Hub::AssignVespeneHarvester(const sc2::Unit& refinery_) {
     Worker* worker = GetClosestFreeWorker(refinery_.pos);
     if (!worker)

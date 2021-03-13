@@ -143,6 +143,8 @@ struct Hub {
 
     sc2::Tag AssignBuildTask(Order* order_, const sc2::Point2D& point_);
 
+    bool AssignRepairTask(const sc2::Unit& damaged_);
+
     void AssignVespeneHarvester(const sc2::Unit& refinery_);
 
     bool AssignLarva(Order* order_);
