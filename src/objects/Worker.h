@@ -13,6 +13,7 @@ enum Job {
     BUILDING = 2,
     BUILDING_REFINERY = 3,
     REPAIRING = 4,
+    ATTACKING = 5,
 };
 
 struct Worker: GameObject {
@@ -23,6 +24,8 @@ struct Worker: GameObject {
     void Build(Order* order_, const sc2::Point2D& point_);
 
     void GatherVespene(const sc2::Unit& target_);
+
+    void Attack(const sc2::Unit& target_);
 
     void Repair(const sc2::Unit& target_);
 

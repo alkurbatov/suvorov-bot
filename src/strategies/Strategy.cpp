@@ -4,6 +4,7 @@
 
 #include "Historican.h"
 #include "Strategy.h"
+#include "Hub.h"
 #include "core/API.h"
 #include "core/Helpers.h"
 
@@ -46,4 +47,15 @@ void Strategy::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
         " added to attack group" << std::endl;
 
     m_units.push_back(unit_);
+}
+
+void Strategy::OnUnitEnterVision(const sc2::Unit* unit_, Builder*) {
+    if (IsCombatUnit()(*unit_))
+        return;
+
+    if (m_attackFirstScout) {
+        gHub->AssignWorkerAttack(*unit_);
+        // gHub->AssignWorkerAttack(*unit_);  // send 2nd if desired
+        m_attackFirstScout = false;  // only attack first scout
+    }
 }

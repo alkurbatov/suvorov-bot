@@ -289,6 +289,14 @@ void Hub::AssignVespeneHarvester(const sc2::Unit& refinery_) {
     worker->GatherVespene(refinery_);
 }
 
+void Hub::AssignWorkerAttack(const sc2::Unit& target_) {
+    Worker* worker = GetClosestFreeWorker(target_.pos);
+    if (!worker)
+        return;
+
+    worker->Attack(target_);
+}
+
 bool Hub::AssignLarva(Order* order_) {
     if (m_larva.Empty())
         return false;

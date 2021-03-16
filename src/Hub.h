@@ -147,6 +147,8 @@ struct Hub {
 
     void AssignVespeneHarvester(const sc2::Unit& refinery_);
 
+    void AssignWorkerAttack(const sc2::Unit& target_);
+
     bool AssignLarva(Order* order_);
 
     const Cache<GameObject>&  GetLarvas() const;
