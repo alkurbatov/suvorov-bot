@@ -27,3 +27,13 @@ void Worker::GatherVespene(const sc2::Unit& target_) {
     gAPI->action().Cast(ToUnit(), sc2::ABILITY_ID::SMART, target_);
     m_job = Job::GATHERING_VESPENE;
 }
+
+void Worker::Repair(const sc2::Unit& target_) {
+    // NOTE (impulsecloud): STOP first, then queue REPAIR to avoid bug
+    // when Minerals drop to 0 unexpectedly, REPAIR commands fail & keep GATHERING
+    // this bypasses OnIdle and leaves worker in BUSY list otherwise
+    gAPI->action().Cast(ToUnit(), sc2::ABILITY_ID::STOP_STOP);
+    gAPI->action().Cast(ToUnit(), sc2::ABILITY_ID::EFFECT_REPAIR, target_, true);
+    gAPI->action().ToggleAutocast(Tag(), sc2::ABILITY_ID::EFFECT_REPAIR_SCV);
+    m_job = Job::REPAIRING;
+}

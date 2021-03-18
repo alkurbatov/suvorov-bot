@@ -33,9 +33,17 @@ void Action::Attack(const sc2::Units& units_, const sc2::Point2D& point_) {
     m_action->UnitCommand(units_, sc2::ABILITY_ID::ATTACK_ATTACK, point_);
 }
 
+void Action::Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_) {
+    m_action->UnitCommand(&assignee_, convert::ToAbilityID(ability_));
+}
+
 void Action::Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
-    const sc2::Unit& target_) {
-    m_action->UnitCommand(&assignee_, convert::ToAbilityID(ability_), &target_);
+    const sc2::Unit& target_, bool queued) {
+    m_action->UnitCommand(&assignee_, convert::ToAbilityID(ability_), &target_, queued);
+}
+
+void Action::ToggleAutocast(sc2::Tag tag_, sc2::AbilityID ability_) {
+    m_action->ToggleAutocast(tag_, ability_);
 }
 
 void Action::Cancel(const sc2::Unit& assignee_) {

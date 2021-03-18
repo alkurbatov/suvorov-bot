@@ -143,6 +143,17 @@ bool IsGasWorker::operator()(const sc2::Unit& unit_) const {
     return false;
 }
 
+bool IsRepairer::operator()(const sc2::Unit& unit_) const {
+    if (!sc2::IsWorker()(unit_))
+        return false;
+
+    if (unit_.orders.empty())
+        return false;
+
+    return unit_.orders.front().ability_id == sc2::ABILITY_ID::EFFECT_REPAIR ||
+        unit_.orders.front().ability_id == sc2::ABILITY_ID::EFFECT_REPAIR_SCV;
+}
+
 bool IsIdleTownHall::operator()(const sc2::Unit& unit_) const {
     return sc2::IsTownHall()(unit_) &&
         unit_.orders.empty() && unit_.build_progress == BUILD_FINISHED;

@@ -2,15 +2,50 @@
 //
 // Copyright (c) 2017-2020 Alexander Kurbatov
 
+#include "Historican.h"
+#include "Hub.h"
 #include "RepairMan.h"
 #include "core/API.h"
 #include "core/Helpers.h"
 
+#include <sc2api/sc2_unit_filters.h>
+
+namespace {
+Historican gHistory("repairman");
+
+}  // namespace
+
 void RepairMan::OnStep(Builder*) {
-    if (gAPI->observer().GetCurrentRace() != sc2::Race::Terran)
+    if (gHub->GetCurrentRace() != sc2::Race::Terran || m_damaged_buildings.empty() ||
+        gAPI->observer().GetMinerals() == 0)
         return;
 
-    // FIXME (alkuratov): Put buildings repair code here.
+    m_damaged_buildings.remove_if( [](const sc2::Unit* unit_) {
+        return unit_->health == unit_->health_max || !unit_->is_alive;
+    });
+
+    if (m_damaged_buildings.empty())
+        return;
+
+    auto repairers = gAPI->observer().GetUnits(IsRepairer());
+
+    if (repairers().size() >= 3 )
+        return;
+
+    AssignRepairTask(*m_damaged_buildings.front());
+}
+
+void RepairMan::OnUnitDamaged(const sc2::Unit* unit_,
+                             float health_, float shields_, Builder*) {
+    if (gHub->GetCurrentRace() != sc2::Race::Terran || !sc2::IsBuilding()(*unit_) ||
+        unit_->alliance != sc2::Unit::Alliance::Self)
+        return;
+
+    if (unit_->health + health_ < unit_->health_max)
+        return;  // only send repairer the first time it's damaged
+
+    m_damaged_buildings.push_back(unit_);
+    AssignRepairTask(*unit_);
 }
 
 void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
@@ -52,4 +87,13 @@ void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
             builder_->ScheduleObligatoryOrder(unit_->unit_type.ToType(), true);
             return;
     }
+}
+
+void RepairMan::AssignRepairTask(const sc2::Unit& damaged_) {
+    const sc2::Point2D repair_location(damaged_.pos);
+    Worker* worker = gHub->GetClosestFreeWorker(repair_location);
+    if (!worker)
+        return;
+
+    worker->Repair(damaged_);
 }

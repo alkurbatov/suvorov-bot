@@ -28,8 +28,12 @@ struct Action {
 
     void Attack(const sc2::Units& units_, const sc2::Point2D& point_);
 
+    void Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_);
+
     void Cast(const sc2::Unit& assignee_, sc2::ABILITY_ID ability_,
-        const sc2::Unit& target_);
+        const sc2::Unit& target_, bool queued = false);
+
+    void ToggleAutocast(sc2::Tag tag_, sc2::AbilityID ability_);
 
     void Cancel(const sc2::Unit& assignee_);
 
