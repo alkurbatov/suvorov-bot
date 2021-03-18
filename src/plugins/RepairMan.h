@@ -12,7 +12,8 @@
 struct RepairMan : Plugin {
     void OnStep(Builder* builder_) final;
 
-    void OnUnitDamaged(const sc2::Unit* unit_, float health_, float shields_, Builder*) final;
+    void OnUnitDamaged(const sc2::Unit* unit_,
+        float health_, float shields_, Builder*) final;
 
     void OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) final;
 

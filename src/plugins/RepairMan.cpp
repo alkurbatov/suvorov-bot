@@ -20,7 +20,7 @@ void RepairMan::OnStep(Builder*) {
         gAPI->observer().GetMinerals() == 0)
         return;
 
-    m_damaged_buildings.remove_if( [](const sc2::Unit* unit_) {
+    m_damaged_buildings.remove_if([](const sc2::Unit* unit_) {
         return unit_->health == unit_->health_max || !unit_->is_alive;
     });
 
