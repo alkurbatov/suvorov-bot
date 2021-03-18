@@ -21,6 +21,9 @@ struct Plugin {
     virtual void OnUnitCreated(const sc2::Unit*, Builder*) {
     }
 
+    virtual void OnUnitDamaged(const sc2::Unit*, float, float, Builder*) {
+    }
+
     virtual void OnUnitDestroyed(const sc2::Unit*, Builder*) {
     }
 

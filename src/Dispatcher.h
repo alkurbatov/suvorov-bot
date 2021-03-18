@@ -28,6 +28,8 @@ struct Dispatcher: sc2::Agent {
 
     void OnUnitIdle(const sc2::Unit* unit_) final;
 
+    void OnUnitDamaged(const sc2::Unit* unit_, float health_, float shields_) final;
+
     void OnUnitDestroyed(const sc2::Unit* unit_) final;
 
     void OnUpgradeCompleted(sc2::UpgradeID id_) final;
