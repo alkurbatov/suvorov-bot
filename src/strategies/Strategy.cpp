@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2020 Alexander Kurbatov
+// Copyright (c) 2017-2021 Alexander Kurbatov
 
 #include "Historican.h"
 #include "Strategy.h"
