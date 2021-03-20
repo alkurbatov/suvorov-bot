@@ -35,8 +35,7 @@ void RepairMan::OnStep(Builder*) {
     AssignRepairTask(*m_damaged_buildings.front());
 }
 
-void RepairMan::OnUnitDamaged(const sc2::Unit* unit_,
-                             float health_, float shields_, Builder*) {
+void RepairMan::OnUnitDamaged(const sc2::Unit* unit_, float health_, float, Builder*) {
     if (gHub->GetCurrentRace() != sc2::Race::Terran || !sc2::IsBuilding()(*unit_) ||
         unit_->alliance != sc2::Unit::Alliance::Self)
         return;
