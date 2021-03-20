@@ -54,7 +54,7 @@ void RepairMan::OnUnitDestroyed(const sc2::Unit* unit_, Builder* builder_) {
 
     // NOTE (alkurbatov): If build_progress < 1.0f a unit might be
     // destroyed by the CancelConstruction command.
-    if (unit_->build_progress < BUILD_FINISHED)
+    if (!unit_->IsBuildFinished())
         return;
 
     switch (unit_->unit_type.ToType()) {

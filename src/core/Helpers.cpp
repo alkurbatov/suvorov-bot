@@ -12,14 +12,14 @@ IsUnit::IsUnit(sc2::UNIT_TYPEID type_): m_type(type_) {
 }
 
 bool IsUnit::operator()(const sc2::Unit& unit_) const {
-    return unit_.unit_type == m_type && unit_.build_progress >= BUILD_FINISHED;
+    return unit_.unit_type == m_type && unit_.IsBuildFinished();
 }
 
 OneOfUnits::OneOfUnits(const std::set<sc2::UNIT_TYPEID>& types_): m_types(types_) {
 }
 
 bool OneOfUnits::operator()(const sc2::Unit& unit_) const {
-    return unit_.build_progress == BUILD_FINISHED &&
+    return unit_.IsBuildFinished() &&
         m_types.find(unit_.unit_type) != m_types.end();
 }
 
@@ -103,7 +103,7 @@ bool IsFreeGeyser::operator()(const sc2::Unit& unit_) const {
 }
 
 bool IsRefinery::operator()(const sc2::Unit& unit_) const {
-    if (unit_.build_progress != BUILD_FINISHED)
+    if (!unit_.IsBuildFinished())
         return false;
 
     return unit_.unit_type == sc2::UNIT_TYPEID::PROTOSS_ASSIMILATOR ||
@@ -156,7 +156,7 @@ bool IsRepairer::operator()(const sc2::Unit& unit_) const {
 
 bool IsIdleTownHall::operator()(const sc2::Unit& unit_) const {
     return sc2::IsTownHall()(unit_) &&
-        unit_.orders.empty() && unit_.build_progress == BUILD_FINISHED;
+        unit_.orders.empty() && unit_.IsBuildFinished();
 }
 
 bool IsCommandCenter::operator()(const sc2::Unit& unit_) const {

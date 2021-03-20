@@ -20,7 +20,7 @@ void SecureMineralsIncome(Builder* builder_) {
     auto town_halls = gAPI->observer().GetUnits(sc2::IsTownHall());
 
     for (const auto& i : town_halls()) {
-        if (!i->orders.empty() || i->build_progress != BUILD_FINISHED)
+        if (!i->orders.empty() || !i->IsBuildFinished())
             continue;
 
         if (i->assigned_harvesters > i->ideal_harvesters)
@@ -91,7 +91,7 @@ const Expansion* GetBestMiningExpansionNear(const sc2::Unit* unit_) {
             continue;
 
         const sc2::Unit* th = gAPI->observer().GetUnit(i.town_hall_tag);
-        if (th->build_progress < BUILD_FINISHED)
+        if (!th->IsBuildFinished())
             continue;
 
         float dist = sc2::DistanceSquared2D(worker_loc, th->pos);
