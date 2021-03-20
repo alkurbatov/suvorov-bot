@@ -61,7 +61,7 @@ Feel free to post questions on the unofficial Starcraft II AI Discord server. [I
 ### Windows (Visual Studio)
 ```bat
 :: Get the project.
-$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git
+$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git
 $ cd suvorov-bot
 
 :: Create build directory.
@@ -84,7 +84,7 @@ $ bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
 ### Windows (cmdline)
 ```bat
 :: Get the project.
-$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git
+$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git
 $ cd suvorov-bot
 
 :: Create build directory.
@@ -109,7 +109,7 @@ $ bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
 ### Linux (cmdline)
 ```bash
 # Get the project.
-$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
+$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
 # Create build directory.
 $ mkdir build && cd build
@@ -129,7 +129,7 @@ $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.SC2Map
 ### OS X (Xcode)
 ```bash
 # Get the project.
-$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
+$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
 # Create build directory.
 $ mkdir build && cd build
@@ -149,7 +149,7 @@ $ ./bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
 ### OS X (cmdline)
 ```bash
 # Get the project.
-$ git clone --recursive https://github.com/alkurbatov/suvorov-bot.git && cd suvorov-bot
+$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
 # Create build directory.
 $ mkdir build && cd build
