@@ -9,6 +9,10 @@
 #include <sc2api/sc2_unit.h>
 
 struct Plugin {
+    Plugin();
+
+    explicit Plugin(uint32_t gameloop_frequency);
+
     virtual ~Plugin() {
     }
 
@@ -38,4 +42,9 @@ struct Plugin {
 
     virtual void OnGameEnd() {
     }
+
+    virtual bool CheckFrequency(uint32_t count_) const;
+
+ private:
+    const uint32_t m_frequency;
 };

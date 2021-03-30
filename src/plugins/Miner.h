@@ -8,6 +8,8 @@
 #include "Plugin.h"
 
 struct Miner : Plugin {
+    Miner();
+
     void OnStep(Builder* builder_) final;
 
     void OnUnitCreated(const sc2::Unit* unit_, Builder*) final;

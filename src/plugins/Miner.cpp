@@ -138,6 +138,9 @@ void DistrubuteMineralWorker(const sc2::Unit* unit_) {
 
 }  // namespace
 
+Miner::Miner(): Plugin(7) {
+}
+
 void Miner::OnStep(Builder* builder_) {
     SecureMineralsIncome(builder_);
     SecureVespeneIncome();
@@ -151,7 +154,12 @@ void Miner::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
         DistrubuteMineralWorker(unit_);
 }
 
-void Miner::OnUnitIdle(const sc2::Unit* unit_, Builder*) {
+void Miner::OnUnitIdle(const sc2::Unit* unit_, Builder* builder_) {
     if (unit_->unit_type == gHub->GetCurrentWorkerType())
         DistrubuteMineralWorker(unit_);
+
+    if (sc2::IsTownHall()(unit_->unit_type) &&
+        unit_->assigned_harvesters <= unit_->ideal_harvesters &&
+        builder_->CountScheduledOrders(gHub->GetCurrentWorkerType()) < 1)
+        builder_->ScheduleOptionalOrder(gHub->GetCurrentWorkerType(), unit_);
 }

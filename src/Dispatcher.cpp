@@ -27,7 +27,8 @@ namespace {
 Historican gHistory("dispatcher");
 }  // namespace
 
-Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()) {
+Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()),
+    m_steps(0) {
     gAPI.reset(new API::Interface(Actions(), Control(), Debug(), Observation(), Query()));
     m_plugins.reserve(10);
 
@@ -91,9 +92,11 @@ void Dispatcher::OnStep() {
     gHub->OnStep();
 
     for (const auto& i : m_plugins)
-        i->OnStep(m_builder.get());
+        if (i->CheckFrequency(m_steps))
+            i->OnStep(m_builder.get());
 
     m_builder->OnStep();
+    m_steps++;
 }
 
 void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
