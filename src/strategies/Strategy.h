@@ -13,7 +13,12 @@ struct Strategy : Plugin {
 
     void OnUnitCreated(const sc2::Unit* unit_, Builder*) override;
 
+    void OnUnitEnterVision(const sc2::Unit* unit_, Builder*) override;
+
+    void AssignWorkerAttack(const sc2::Unit& target_);
+
  protected:
+    bool m_attackFirstScout = true;
     float m_attack_limit;
     sc2::Units m_units;
 };

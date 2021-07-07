@@ -37,3 +37,8 @@ void Worker::Repair(const sc2::Unit& target_) {
     gAPI->action().ToggleAutocast(Tag(), sc2::ABILITY_ID::EFFECT_REPAIR_SCV);
     m_job = Job::REPAIRING;
 }
+
+void Worker::Attack(const sc2::Unit& target_) {
+    gAPI->action().Cast(ToUnit(), sc2::ABILITY_ID::SMART, target_);
+    m_job = Job::ATTACKING;
+}
