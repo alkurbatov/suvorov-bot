@@ -1,6 +1,6 @@
 # suvorov-bot
 
-[![Build Status](https://travis-ci.org/alkurbatov/suvorov-bot.svg?branch=master)](https://travis-ci.org/alkurbatov/suvorov-bot)
+[![Build Status](https://github.com/alkurbatov/suvorov-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/alkurbatov/suvorov-bot/actions/workflows/ci.yml)
 
 - [suvorov-bot](#suvorov-bot)
     - [About](#about)
