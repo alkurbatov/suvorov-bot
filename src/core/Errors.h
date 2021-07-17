@@ -11,6 +11,6 @@
 
 struct InvalidBuildCommand : std::runtime_error {
     explicit InvalidBuildCommand(sc2::ABILITY_ID id_): std::runtime_error(
-        "Invalid build command " + std::to_string(static_cast<int>(id_)) {
+        "Invalid build command " + std::to_string(static_cast<int>(id_))) {
     }
 };
