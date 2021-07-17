@@ -6,13 +6,13 @@
 file(GLOB_RECURSE BOT_SOURCES "*.cpp" "*.h")
 
 include_directories(SYSTEM
-    ${PROJECT_SOURCE_DIR}/cpp-sc2/include
-    ${PROJECT_SOURCE_DIR}/cpp-sc2/contrib/protobuf/src
-    ${PROJECT_BINARY_DIR}/cpp-sc2/generated
+    ${PROJECT_SOURCE_DIR}/contrib/cpp-sc2/include
+    ${PROJECT_SOURCE_DIR}/contrib/cpp-sc2/contrib/protobuf/src
+    ${PROJECT_BINARY_DIR}/contrib/cpp-sc2/generated
     "."
 )
 
-link_directories(${PROJECT_BINARY_DIR}/cpp-sc2/bin)
+link_directories(${PROJECT_BINARY_DIR}/contrib/cpp-sc2/bin)
 
 if (MSVC)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX-")
