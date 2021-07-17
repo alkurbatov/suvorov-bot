@@ -64,46 +64,14 @@ Feel free to post questions on the unofficial Starcraft II AI Discord server. [I
 $ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git
 $ cd suvorov-bot
 
-:: Create build directory.
-$ mkdir build
-$ cd build
+:: Generate Visual Studio project files.
+$ cmake -B build -G "Visual Studio 16 2019"
 
-:: Create Visual Studio project files.
-:: For Visual Studio 2019.
-$ cmake ../ -G "Visual Studio 16 2019"
-:: For Visual Studio 2017.
-$ cmake ../ -G "Visual Studio 15 2017 Win64"
-
-:: Build the project using Visual Studio.
-$ start Suvorov.sln
+:: Start Visual Studio and build the project.
+$ start build/Suvorov.sln
 
 :: Launch the bot with the specified path to a SC2 map, e.g.
-$ bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
-```
-
-### Windows (cmdline)
-```bat
-:: Get the project.
-$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git
-$ cd suvorov-bot
-
-:: Create build directory.
-$ mkdir build
-$ cd build
-
-:: Create Visual Studio project files.
-:: For Visual Studio 2019.
-$ cmake ../ -G "Visual Studio 16 2019"
-:: For Visual Studio 2017.
-$ cmake ../ -G "Visual Studio 15 2017 Win64"
-
-:: Build the project.
-$ cmake --build . --parallel
-:: For the debug build.
-$ cmake --build . --config Debug --parallel
-
-:: Launch the bot with the specified path to a SC2 map, e.g.
-$ bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
+$ build\bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
 ```
 
 ### Linux (cmdline)
@@ -111,19 +79,16 @@ $ bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
 # Get the project.
 $ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
-# Create build directory.
-$ mkdir build && cd build
-
 # Generate a Makefile.
 # Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
 # Debug build also contains additional debug features and chat commands support.
-$ cmake ../
+$ cmake -B build
 
 # Build the project.
-$ VERBOSE=1 cmake --build . --parallel
+$ cmake --build build --parallel
 
 # Launch the bot with the specified absolute path to a SC2 map, e.g.
-$ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.SC2Map"
+$ ./build/bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.SC2Map"
 ```
 
 ### OS X (Xcode)
@@ -131,44 +96,21 @@ $ ./bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.SC2Map
 # Get the project.
 $ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
-# Create build directory.
-$ mkdir build && cd build
-
 # Generate a Makefile.
 # Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
 # Debug build also contains additional debug features and chat commands support.
-$ cmake ../ -G Xcode
+$ cmake -B build -G Xcode
 
-# Build the project using Xcode.
-$ open Suvorov.xcodeproj/
-
-# Launch the bot with the specified path to a SC2 map, e.g.
-$ ./bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
-```
-
-### OS X (cmdline)
-```bash
-# Get the project.
-$ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
-
-# Create build directory.
-$ mkdir build && cd build
-
-# Generate a Makefile.
-# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
-# Debug build also contains additional debug features and chat commands support.
-$ cmake ../
-
-# Build the project.
-$ VERBOSE=1 cmake --build . --parallel
+# Start Xcode and build the project.
+$ open build/Suvorov.xcodeproj
 
 # Launch the bot with the specified path to a SC2 map, e.g.
-$ ./bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
+$ ../build/bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
 ```
 
 ## Coding Standard
 We follow slightly modified [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
-See [.travis/lint.sh](.travis/lint.sh) for details.
+See [.github/workflows/linter.yaml](.github/workflows/linter.yaml).
 
 ## License
 Copyright (c) 2017-2021 Alexander Kurbatov
