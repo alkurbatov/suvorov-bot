@@ -5,12 +5,11 @@
 *.SC2Replay
 
 # Build sandbox.
-build
+build/
 
 # IDE - VSCode
-.vscode/*
-!.vscode/launch.json
-!.vscode/tasks.json
+.vscode/
+.#*
 
 # Google linter
 cpplint.py
