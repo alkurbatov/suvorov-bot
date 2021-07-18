@@ -1,0 +1,35 @@
+name: Build for AIArena
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+      - 'contrib/**'
+      - 'CMakeLists.txt'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'contrib/**'
+      - 'CMakeLists.txt'
+
+env:
+  BUILD_TYPE: Release
+  BUILD_DIR: ${{github.workspace}}/build
+  SC2_VERSION: 4.10.0
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
+    - name: Configure
+      run: cmake -B ${{env.BUILD_DIR}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DBUILD_FOR_LADDER=ON -DSC2_VERSION=${{env.SC2_VERSION}}
+
+    - name: Build
+      run: cmake --build ${{env.BUILD_DIR}} --config ${{env.BUILD_TYPE}} --parallel 2
