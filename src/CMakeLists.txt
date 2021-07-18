@@ -2,6 +2,10 @@
 #
 # Copyright (c) 2017-2021 Alexander Kurbatov
 
+if (BUILD_FOR_LADDER)
+    ADD_DEFINITIONS(-DBUILD_FOR_LADDER)
+endif ()
+
 # All the source files for the bot.
 file(GLOB_RECURSE BOT_SOURCES "*.cpp" "*.h")
 

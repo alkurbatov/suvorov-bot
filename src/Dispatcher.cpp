@@ -65,7 +65,7 @@ void Dispatcher::OnGameStart() {
         m_plugins.emplace_back(new ZerglingFlood());
     }
 
-#ifdef DEBUG
+#ifndef BUILD_FOR_LADDER
     m_plugins.emplace_back(new Diagnosis());
 #endif
 

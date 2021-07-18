@@ -80,8 +80,7 @@ $ build\bin\Debug\Suvorov.exe Ladder2019Season3/AcropolisLE.SC2Map
 $ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
 # Generate a Makefile.
-# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
-# Debug build also contains additional debug features and chat commands support.
+# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed.
 $ cmake -B build
 
 # Build the project.
@@ -97,15 +96,36 @@ $ ./build/bin/Suvorov "/Users/alkurbatov/work/tmp/Ladder2019Season3/AcropolisLE.
 $ git clone --recursive git@github.com:alkurbatov/suvorov-bot.git && cd suvorov-bot
 
 # Generate a Makefile.
-# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed
-# Debug build also contains additional debug features and chat commands support.
+# Use 'cmake -DCMAKE_BUILD_TYPE=Debug ../' if debuginfo is needed.
 $ cmake -B build -G Xcode
 
 # Start Xcode and build the project.
 $ open build/Suvorov.xcodeproj
 
 # Launch the bot with the specified path to a SC2 map, e.g.
-$ ../build/bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
+$ ./build/bin/Suvorov "Ladder2019Season3/AcropolisLE.SC2Map"
+```
+
+## Additional options
+
+### Game client version
+By default, the API assumes the latest version of the game client. The assumed version can be found in cmake's output, e.g.:
+```bash
+$ cmake ../ | grep 'SC2 version'
+Target SC2 version: 5.0.5
+...
+```
+
+However, sometimes one may need to compile with an older version of the game, e.g. to play with a Linux build which is
+always behind the Windows version. It is possible by specifying the game version manually, e.g.:
+```bash
+$ cmake -DSC2_VERSION=4.10.0 ../
+```
+
+### AIArena ladder build
+To compile a bot capable to play on [the AIArena ladder](https://aiarena.net), configure the project in the following way:
+```bash
+$ cmake -DBUILD_FOR_LADDER=ON -DSC2_VERSION=4.10.0 ../
 ```
 
 ## Coding Standard
