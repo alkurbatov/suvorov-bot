@@ -24,8 +24,4 @@ inline sc2::AbilityID ToAbilityID(sc2::ABILITY_ID id_) {
     return static_cast<sc2::AbilityID>(id_);
 }
 
-sc2::Difficulty StringToDifficulty(const std::string& name_);
-
-sc2::Race StringToRace(const std::string& name_);
-
 }  // namespace convert

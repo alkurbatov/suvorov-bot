@@ -12,6 +12,7 @@
 #include <sc2utils/sc2_manage_process.h>
 
 #include <iostream>
+#include <string>
 
 #ifdef DEBUG
 int main(int argc, char* argv[]) {
@@ -53,30 +54,24 @@ int main(int argc, char* argv[]) {
 #else
 
 namespace {
-
 struct Options {
-    Options(): GamePort(0), StartPort(0), ComputerOpponent(false) {
+    Options(): GamePort(0), StartPort(0) {
     }
 
     int32_t GamePort;
     int32_t StartPort;
     std::string ServerAddress;
     std::string OpponentId;
-    bool ComputerOpponent;
-    sc2::Difficulty ComputerDifficulty;
-    sc2::Race ComputerRace;
 };
 
 void ParseArguments(int argc, char* argv[], Options* options_) {
     sc2::ArgParser arg_parser(argv[0]);
-    arg_parser.AddOptions({
+    arg_parser.AddOptions(
+        {
             {"-g", "--GamePort", "Port of client to connect to", false},
             {"-o", "--StartPort", "Starting server port", false},
             {"-l", "--LadderServer", "Ladder server address", false},
             {"-x", "--OpponentId", "PlayerId of opponent", false},
-            {"-c", "--ComputerOpponent", "If we set up a computer opponent", false},
-            {"-a", "--ComputerRace", "Race of computer oppent", false},
-            {"-d", "--ComputerDifficulty", "Difficulty of computer opponent", false}
         });
 
     arg_parser.Parse(argc, argv);
@@ -94,19 +89,6 @@ void ParseArguments(int argc, char* argv[], Options* options_) {
         options_->OpponentId = OpponentId;
 
     arg_parser.Get("LadderServer", options_->ServerAddress);
-
-    std::string CompOpp;
-    if (arg_parser.Get("ComputerOpponent", CompOpp)) {
-        options_->ComputerOpponent = true;
-        std::string CompRace;
-
-        if (arg_parser.Get("ComputerRace", CompRace))
-            options_->ComputerRace = convert::StringToRace(CompRace);
-
-        std::string CompDiff;
-        if (arg_parser.Get("ComputerDifficulty", CompDiff))
-            options_->ComputerDifficulty = convert::StringToDifficulty(CompDiff);
-    }
 }
 
 }  // namespace
@@ -118,24 +100,20 @@ int main(int argc, char* argv[]) {
     sc2::Coordinator coordinator;
     Dispatcher bot(options.OpponentId);
 
-    size_t num_agents;
-    if (options.ComputerOpponent) {
-        num_agents = 1;
-        coordinator.SetParticipants({
-            CreateParticipant(sc2::Race::Random, &bot, "Suvorov"),
-            CreateComputer(options.ComputerRace, options.ComputerDifficulty)
-            });
-    } else {
-        num_agents = 2;
-        coordinator.SetParticipants({
-            CreateParticipant(sc2::Race::Random, &bot, "Suvorov")
-            });
-    }
+    const size_t num_agents = 2;
+    coordinator.SetParticipants({
+        CreateParticipant(sc2::Race::Random, &bot, "Suvorov")
+    });
 
     std::cout << "Connecting to port " << options.GamePort << std::endl;
     coordinator.Connect(options.GamePort);
     coordinator.SetupPorts(num_agents, options.StartPort, false);
+
+    // NB (alkurbatov): Increase speed of steps processing.
+    // Disables ability to control your bot during game.
+    // Recommended for competitions.
     coordinator.SetRawAffectsSelection(true);
+
     coordinator.JoinGame();
     coordinator.SetTimeoutMS(10000);
     std::cout << "Successfully joined game" << std::endl;
