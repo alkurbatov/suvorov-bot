@@ -9,10 +9,13 @@ endif ()
 # All the source files for the bot.
 file(GLOB_RECURSE BOT_SOURCES "*.cpp" "*.h")
 
+configure_file(Version.h.in ${PROJECT_BINARY_DIR}/Version.h)
+
 include_directories(SYSTEM
     ${PROJECT_SOURCE_DIR}/contrib/cpp-sc2/include
     ${PROJECT_SOURCE_DIR}/contrib/cpp-sc2/contrib/protobuf/src
     ${PROJECT_BINARY_DIR}/contrib/cpp-sc2/generated
+    ${PROJECT_BINARY_DIR}
     "."
 )
 

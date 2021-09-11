@@ -6,6 +6,10 @@ cmake_minimum_required(VERSION 3.1)
 
 project(Suvorov)
 
+set(PROJECT_VERSION_MAJOR 0)
+set(PROJECT_VERSION_MINOR 2)
+set(PROJECT_VERSION_PATCH 0)
+
 # Specify output directories.
 set(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin")
 

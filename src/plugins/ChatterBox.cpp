@@ -3,10 +3,14 @@
 // Copyright (c) 2017-2021 Alexander Kurbatov
 
 #include "ChatterBox.h"
+#include "Version.h"
 #include "core/API.h"
 
+#include <string>
+
 void ChatterBox::OnGameStart(Builder*) {
-    gAPI->action().SendMessage("Suvorov v0.1.0 by @alkurbatov");
+    std::string hello(std::string("Suvorov v") + PROJECT_VERSION_STR + " by @alkurbatov");
+    gAPI->action().SendMessage(hello);
     gAPI->action().SendMessage("gl hf");
 }
 
