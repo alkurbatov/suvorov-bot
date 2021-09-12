@@ -9,7 +9,11 @@
 #include <string>
 
 void ChatterBox::OnGameStart(Builder*) {
-    std::string hello(std::string("Suvorov v") + PROJECT_VERSION_STR + " by @alkurbatov");
+    std::string hello(
+        std::string(PROJECT_NAME) +
+        " v" + PROJECT_VERSION +
+        " by @" + PROJECT_AUTHOR);
+
     gAPI->action().SendMessage(hello);
     gAPI->action().SendMessage("gl hf");
 }

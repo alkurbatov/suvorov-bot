@@ -6,6 +6,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(Suvorov)
 
+set(PROJECT_AUTHOR alkurbatov)
+
 set(PROJECT_VERSION_MAJOR 0)
 set(PROJECT_VERSION_MINOR 2)
 set(PROJECT_VERSION_PATCH 0)
