@@ -130,7 +130,7 @@ $ cmake -DBUILD_FOR_LADDER=ON -DSC2_VERSION=4.10.0 ../
 
 ## Coding Standard
 We follow slightly modified [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html).
-See [.github/workflows/linter.yaml](.github/workflows/linter.yaml).
+See the linter job in [GitHub Actions CI](.github/workflows/ci.yml).
 
 ## License
 Copyright (c) 2017-2021 Alexander Kurbatov
