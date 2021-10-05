@@ -22,13 +22,9 @@ include_directories(SYSTEM
 link_directories(${PROJECT_BINARY_DIR}/contrib/cpp-sc2/bin)
 
 if (MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /WX- /EHsc")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /EHsc")
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything \
-        -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded \
-        -Wno-switch-enum -Wno-weak-vtables -Wno-exit-time-destructors \
-        -Wno-float-equal -Wno-global-constructors"
-    )
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 elseif (CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic \
         -Woverloaded-virtual -Wctor-dtor-privacy -Wnon-virtual-dtor \
