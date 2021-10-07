@@ -38,5 +38,5 @@ void ZerglingFlood::OnUnitIdle(const sc2::Unit* unit_, Builder* builder_) {
         return;
 
     builder_->ScheduleOptionalOrder(sc2::UNIT_TYPEID::ZERG_ZERGLING);
-    gHistory.info() << "Schedule Zerglings training" << std::endl;
+    gHistory.info() << "Schedule Zerglings training" << '\n';
 }

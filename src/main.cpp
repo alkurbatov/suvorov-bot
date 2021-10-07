@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
         CreateParticipant(sc2::Race::Random, &bot, "Suvorov")
     });
 
-    std::cout << "Connecting to port " << options.GamePort << std::endl;
+    std::cout << "Connecting to port " << options.GamePort << '\n';
     coordinator.Connect(options.GamePort);
     coordinator.SetupPorts(num_agents, options.StartPort, false);
 
@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
 
     coordinator.JoinGame();
     coordinator.SetTimeoutMS(10000);
-    std::cout << "Successfully joined game" << std::endl;
+    std::cout << "Successfully joined game" << '\n';
 
     while (coordinator.Update()) {
     }
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Provide either name of the map file or path to it!" << std::endl;
+        std::cerr << "Provide either name of the map file or path to it!" << '\n';
         return -1;
     }
 

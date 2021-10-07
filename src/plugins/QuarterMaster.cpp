@@ -138,7 +138,7 @@ void QuarterMaster::OnStep(Builder* builder_) {
         return;
 
     gHistory.info() << "Request additional supplies: " <<
-        expected_consumption << " >= " << expected_supply << std::endl;
+        expected_consumption << " >= " << expected_supply << '\n';
 
     m_skip_until_frame = gAPI->observer().GetGameLoop() + m_frames_to_skip;
 

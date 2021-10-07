@@ -19,7 +19,7 @@ Diagnosis::Diagnosis(): m_draw_grids(false) {
 void Diagnosis::OnStep(Builder* builder_) {
     for (const auto& i : gAPI->observer().GetChatMessages()) {
         if (i.message == "gg") {
-            gHistory.warning() << "The game was finished forcibly." << std::endl;
+            gHistory.warning() << "The game was finished forcibly." << '\n';
             gAPI->debug().EndGame();
             return;
         }
@@ -87,5 +87,5 @@ void Diagnosis::OnStep(Builder* builder_) {
 
 void Diagnosis::OnGameEnd() {
     gAPI->control().SaveReplay();
-    gHistory.info() << "Replay saved" << std::endl;
+    gHistory.info() << "Replay saved" << '\n';
 }

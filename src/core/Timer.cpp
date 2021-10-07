@@ -18,6 +18,6 @@ Timer::~Timer() {
     // in realtime mode.
     if (duration > 40000) {
         Historican("timer").warning()
-            << "Step processing took: " << duration << " mcs" << std::endl;
+            << "Step processing took: " << duration << " mcs" << '\n';
     }
 }

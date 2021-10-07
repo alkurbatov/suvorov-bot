@@ -55,5 +55,5 @@ void ChargelotPush::OnUnitIdle(const sc2::Unit* unit_, Builder* builder_) {
         return;
 
     builder_->ScheduleOptionalOrder(sc2::UNIT_TYPEID::PROTOSS_ZEALOT, unit_);
-    gHistory.info() << "Schedule Zealot training" << std::endl;
+    gHistory.info() << "Schedule Zealot training" << '\n';
 }

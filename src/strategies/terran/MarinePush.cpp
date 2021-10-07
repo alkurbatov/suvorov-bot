@@ -37,5 +37,5 @@ void MarinePush::OnUnitIdle(const sc2::Unit* unit_, Builder* builder_) {
         return;
 
     builder_->ScheduleOptionalOrder(sc2::UNIT_TYPEID::TERRAN_MARINE, unit_);
-    gHistory.info() << "Schedule Marine training" << std::endl;
+    gHistory.info() << "Schedule Marine training" << '\n';
 }

@@ -35,16 +35,16 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
         return;
 
     gHistory.info() << "Playing against an opponent with id "
-        << opponent_id_ << std::endl;
+        << opponent_id_ << '\n';
 }
 
 void Dispatcher::OnGameStart() {
     m_plugins.clear();
-    gHistory.info() << "New game started!" << std::endl;
+    gHistory.info() << "New game started!" << '\n';
 
     // NOTE (alkurbatov): Either we are not allowed to retrieve names
     // or this is another bug.
-    // gHistory.info() << "Enemy name: " << gAPI->observer().GetEnemyName() << std::endl;
+    // gHistory.info() << "Enemy name: " << gAPI->observer().GetEnemyName() << '\n';
 
     sc2::Race current_race = gAPI->observer().GetCurrentRace();
     gHub.reset(new Hub(current_race, CalculateExpansionLocations()));
@@ -74,7 +74,7 @@ void Dispatcher::OnGameStart() {
 }
 
 void Dispatcher::OnGameEnd() {
-    gHistory.info() << "Game over!" << std::endl;
+    gHistory.info() << "Game over!" << '\n';
 
     for (const auto& i : m_plugins)
         i->OnGameEnd();
@@ -82,7 +82,7 @@ void Dispatcher::OnGameEnd() {
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
     gHistory.info() << sc2::UnitTypeToName(building_->unit_type) <<
-        "(" << building_->tag << ") constructed" << std::endl;
+        "(" << building_->tag << ") constructed" << '\n';
 }
 
 void Dispatcher::OnStep() {
@@ -102,12 +102,12 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
     if (unit_->display_type == sc2::Unit::DisplayType::Placeholder) {
         gHistory.info() <<"Placeholder of " << sc2::UnitTypeToName(unit_->unit_type) <<
-            " was detected" << std::endl;
+            " was detected" << '\n';
         return;
     }
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-        "(" << unit_->tag << ") was created" << std::endl;
+        "(" << unit_->tag << ") was created" << '\n';
 
     gHub->OnUnitCreated(*unit_);
 
@@ -117,7 +117,7 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-         "(" << unit_->tag << ") is idle" << std::endl;
+         "(" << unit_->tag << ") is idle" << '\n';
 
     gHub->OnUnitIdle(*unit_);
 
@@ -135,7 +135,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
         return;
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-         "(" << unit_->tag << ") was destroyed" << std::endl;
+         "(" << unit_->tag << ") was destroyed" << '\n';
 
     gHub->OnUnitDestroyed(*unit_);
 
@@ -144,7 +144,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUpgradeCompleted(sc2::UpgradeID id_) {
-    gHistory.info() << sc2::UpgradeIDToName(id_) << " completed" << std::endl;
+    gHistory.info() << sc2::UpgradeIDToName(id_) << " completed" << '\n';
 
     for (const auto& i : m_plugins)
         i->OnUpgradeCompleted(id_);
@@ -161,9 +161,9 @@ void Dispatcher::OnError(const std::vector<sc2::ClientError>& client_errors,
         const std::vector<std::string>& protocol_errors) {
     for (const auto i : client_errors) {
         gHistory.error() << "Encountered client error: " <<
-            static_cast<int>(i) << std::endl;
+            static_cast<int>(i) << '\n';
     }
 
     for (const auto& i : protocol_errors)
-        gHistory.error() << "Encountered protocol error: " << i << std::endl;
+        gHistory.error() << "Encountered protocol error: " << i << '\n';
 }

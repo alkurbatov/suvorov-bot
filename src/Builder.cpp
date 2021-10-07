@@ -124,6 +124,6 @@ bool Builder::Build(Order* order_) {
     m_vespene -= order_->vespene_cost;
     m_available_food -= order_->food_required;
 
-    Historican("builder").info() << "Started building a " << order_->name << std::endl;
+    Historican("builder").info() << "Started building a " << order_->name << '\n';
     return true;
 }

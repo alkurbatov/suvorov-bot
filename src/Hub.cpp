@@ -87,11 +87,11 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
             Geyser obj(unit_);
 
             if (m_captured_geysers.Remove(obj))  // might be claimed geyser
-                gHistory.info() << "Release claimed geyser " << std::endl;
+                gHistory.info() << "Release claimed geyser " << '\n';
 
             m_captured_geysers.Add(obj);
             gHistory.info() << "Capture object " <<
-                sc2::UnitTypeToName(unit_.unit_type) << std::endl;
+                sc2::UnitTypeToName(unit_.unit_type) << '\n';
             return;
         }
 
@@ -100,7 +100,7 @@ void Hub::OnUnitCreated(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_HATCHERY:
             CaptureExpansion(unit_);
             gHistory.info() << "Capture region: (" << unit_.pos.x <<
-                ", " << unit_.pos.y << ")" << std::endl;
+                ", " << unit_.pos.y << ")" << '\n';
             return;
 
         default:
@@ -117,7 +117,7 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
                 return;
 
             m_busy_workers.Remove(Worker(unit_));
-            gHistory.info() << "Our busy worker was destroyed" << std::endl;
+            gHistory.info() << "Our busy worker was destroyed" << '\n';
 
             auto it = std::find_if(m_expansions.begin(), m_expansions.end(),
                 [unit_](const Expansion& expansion_) {
@@ -147,7 +147,7 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_EXTRACTOR: {
             if (m_captured_geysers.Remove(Geyser(unit_))) {
                 gHistory.info() << "Release object " <<
-                    sc2::UnitTypeToName(unit_.unit_type) << std::endl;
+                    sc2::UnitTypeToName(unit_.unit_type) << '\n';
             }
 
             return;
@@ -162,7 +162,7 @@ void Hub::OnUnitDestroyed(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_LAIR:
             RemoveExpansionOwner(unit_);
             gHistory.info() << "Lost region: (" << unit_.pos.x
-            << ", " << unit_.pos.y << ")" << std::endl;
+            << ", " << unit_.pos.y << ")" << '\n';
             return;
 
         default:
@@ -176,7 +176,7 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::TERRAN_SCV:
         case sc2::UNIT_TYPEID::ZERG_DRONE: {
             if (m_busy_workers.Swap(Worker(unit_), m_free_workers))
-                gHistory.info() << "Our busy worker has finished task" << std::endl;
+                gHistory.info() << "Our busy worker has finished task" << '\n';
 
             return;
         }
@@ -185,7 +185,7 @@ void Hub::OnUnitIdle(const sc2::Unit& unit_) {
             GameObject obj = GameObject(unit_);
             if (!m_larva.IsCached(obj)) {
                 m_larva.Add(obj);
-                gHistory.info() << "Picked up an idle larva." << std::endl;
+                gHistory.info() << "Picked up an idle larva." << '\n';
             }
 
             return;
@@ -207,7 +207,7 @@ void Hub::OnUnitEnterVision(const sc2::Unit& unit_) {
         case sc2::UNIT_TYPEID::ZERG_LAIR:
             EnemyOwnsExpansion(unit_);
             gHistory.info() << "Enemy owns region: (" << unit_.pos.x
-            << ", " << unit_.pos.y << ")" << std::endl;
+            << ", " << unit_.pos.y << ")" << '\n';
             return;
 
         default:
@@ -227,7 +227,7 @@ void Hub::ClaimObject(const sc2::Unit& unit_) {
     if (sc2::IsVisibleGeyser()(unit_)) {
         m_captured_geysers.Add(Geyser(unit_));
         gHistory.info() << "Claim object " <<
-            sc2::UnitTypeToName(unit_.unit_type) << std::endl;
+            sc2::UnitTypeToName(unit_.unit_type) << '\n';
     }
 }
 
