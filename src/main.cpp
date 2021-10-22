@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
 
     coordinator.JoinGame();
     coordinator.SetTimeoutMS(10000);
-    std::cout << "Successfully joined game" << '\n';
+    std::cout << "Successfully joined game\n";
 
     while (coordinator.Update()) {
     }
@@ -91,7 +91,7 @@ int main(int argc, char* argv[]) {
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cerr << "Provide either name of the map file or path to it!" << '\n';
+        std::cerr << "Provide either name of the map file or path to it!\n";
         return -1;
     }
 

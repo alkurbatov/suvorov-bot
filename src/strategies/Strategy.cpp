@@ -43,7 +43,7 @@ void Strategy::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
         return;
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-        " added to attack group" << '\n';
+        " added to attack group\n";
 
     m_units.push_back(unit_);
 }

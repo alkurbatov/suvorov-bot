@@ -40,7 +40,7 @@ Dispatcher::Dispatcher(const std::string& opponent_id_): m_builder(new Builder()
 
 void Dispatcher::OnGameStart() {
     m_plugins.clear();
-    gHistory.info() << "New game started!" << '\n';
+    gHistory.info() << "New game started!\n";
 
     // NOTE (alkurbatov): Either we are not allowed to retrieve names
     // or this is another bug.
@@ -74,7 +74,7 @@ void Dispatcher::OnGameStart() {
 }
 
 void Dispatcher::OnGameEnd() {
-    gHistory.info() << "Game over!" << '\n';
+    gHistory.info() << "Game over!\n";
 
     for (const auto& i : m_plugins)
         i->OnGameEnd();
@@ -82,7 +82,7 @@ void Dispatcher::OnGameEnd() {
 
 void Dispatcher::OnBuildingConstructionComplete(const sc2::Unit* building_) {
     gHistory.info() << sc2::UnitTypeToName(building_->unit_type) <<
-        "(" << building_->tag << ") constructed" << '\n';
+        "(" << building_->tag << ") constructed\n";
 }
 
 void Dispatcher::OnStep() {
@@ -102,12 +102,12 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
     if (unit_->display_type == sc2::Unit::DisplayType::Placeholder) {
         gHistory.info() <<"Placeholder of " << sc2::UnitTypeToName(unit_->unit_type) <<
-            " was detected" << '\n';
+            " was detected\n";
         return;
     }
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-        "(" << unit_->tag << ") was created" << '\n';
+        "(" << unit_->tag << ") was created\n";
 
     gHub->OnUnitCreated(*unit_);
 
@@ -117,7 +117,7 @@ void Dispatcher::OnUnitCreated(const sc2::Unit* unit_) {
 
 void Dispatcher::OnUnitIdle(const sc2::Unit* unit_) {
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-         "(" << unit_->tag << ") is idle" << '\n';
+         "(" << unit_->tag << ") is idle\n";
 
     gHub->OnUnitIdle(*unit_);
 
@@ -135,7 +135,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
         return;
 
     gHistory.info() << sc2::UnitTypeToName(unit_->unit_type) <<
-         "(" << unit_->tag << ") was destroyed" << '\n';
+         "(" << unit_->tag << ") was destroyed\n";
 
     gHub->OnUnitDestroyed(*unit_);
 
@@ -144,7 +144,7 @@ void Dispatcher::OnUnitDestroyed(const sc2::Unit* unit_) {
 }
 
 void Dispatcher::OnUpgradeCompleted(sc2::UpgradeID id_) {
-    gHistory.info() << sc2::UpgradeIDToName(id_) << " completed" << '\n';
+    gHistory.info() << sc2::UpgradeIDToName(id_) << " completed\n";
 
     for (const auto& i : m_plugins)
         i->OnUpgradeCompleted(id_);
