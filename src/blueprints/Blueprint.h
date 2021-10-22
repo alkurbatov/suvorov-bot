@@ -11,7 +11,7 @@
 #include <memory>
 
 struct Blueprint {
-    virtual ~Blueprint();
+    virtual ~Blueprint() = default;
 
     virtual bool Build(Order* order_) = 0;
 

@@ -9,8 +9,7 @@
 #include <sc2api/sc2_unit.h>
 
 struct Plugin {
-    virtual ~Plugin() {
-    }
+    virtual ~Plugin() = default;
 
     virtual void OnGameStart(Builder*) {
     }

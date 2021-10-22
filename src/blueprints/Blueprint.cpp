@@ -17,9 +17,6 @@
 #include "core/API.h"
 #include "core/Errors.h"
 
-Blueprint::~Blueprint() {
-}
-
 std::shared_ptr<Blueprint> Blueprint::Plot(sc2::ABILITY_ID ability_) {
     switch (ability_) {
         case sc2::ABILITY_ID::BUILD_REFINERY:
