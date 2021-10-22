@@ -12,6 +12,8 @@ struct GameObject {
 
     explicit GameObject(const sc2::Unit& unit_);
 
+    virtual ~GameObject() = default;
+
     bool operator==(const GameObject& obj_) const;
 
     bool operator==(const sc2::Unit& unit_) const;
