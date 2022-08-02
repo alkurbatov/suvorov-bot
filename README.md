@@ -130,6 +130,6 @@ We follow slightly modified [Google C++ Style Guide](https://google.github.io/st
 See the linter job in [GitHub Actions CI](.github/workflows/ci.yml).
 
 ## License
-Copyright (c) 2017-2021 Alexander Kurbatov
+Copyright (c) 2017-2022 Alexander Kurbatov
 
 Licensed under the [MIT license](LICENSE).

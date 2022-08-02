@@ -1,6 +1,6 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2017-2021 Alexander Kurbatov
+// Copyright (c) 2017-2022 Alexander Kurbatov
 
 #include "HighTechUnit.h"
 #include "core/API.h"
