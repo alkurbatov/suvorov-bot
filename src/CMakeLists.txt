@@ -37,19 +37,17 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
 # Create the executable.
 add_executable(Suvorov ${BOT_SOURCES})
-target_link_libraries(Suvorov
-    sc2api sc2lib sc2utils sc2protocol civetweb libprotobuf
-)
+target_link_libraries(Suvorov PRIVATE cpp_sc2)
 
 if (MINGW)
-    target_link_libraries(Suvorov ssp)
+    target_link_libraries(Suvorov PRIVATE ssp)
 endif()
 
 if (APPLE)
-    target_link_libraries(Suvorov "-framework Carbon")
+    target_link_libraries(Suvorov PRIVATE "-framework Carbon")
 endif ()
 
 # Linux specific.
 if (UNIX AND NOT APPLE)
-    target_link_libraries(Suvorov pthread dl)
+    target_link_libraries(Suvorov PRIVATE pthread dl)
 endif ()
