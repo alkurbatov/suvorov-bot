@@ -4,6 +4,7 @@
 
 #include "Historican.h"
 #include "Strategy.h"
+#include "Hub.h"
 #include "core/API.h"
 #include "core/Helpers.h"
 
@@ -46,4 +47,22 @@ void Strategy::OnUnitCreated(const sc2::Unit* unit_, Builder*) {
         " added to attack group\n";
 
     m_units.push_back(unit_);
+}
+
+void Strategy::OnUnitEnterVision(const sc2::Unit* unit_, Builder*) {
+    if (IsCombatUnit()(*unit_))
+        return;
+
+    if (m_attackFirstScout) {
+        AssignWorkerAttack(*unit_);
+        m_attackFirstScout = false;  // only attack first scout, first time seen
+    }
+}
+
+void Strategy::AssignWorkerAttack(const sc2::Unit& target_) {
+    Worker* worker = gHub->GetClosestFreeWorker(target_.pos);
+    if (!worker)
+        return;
+
+    worker->Attack(target_);
 }
